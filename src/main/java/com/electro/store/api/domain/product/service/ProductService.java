@@ -1,5 +1,6 @@
 package com.electro.store.api.domain.product.service;
 
+import com.electro.store.api.domain.product.exception.Product.ProductNotFoundException;
 import com.electro.store.api.domain.product.model.entity.Product;
 import com.electro.store.api.domain.product.model.entity.ProductCategory;
 import com.electro.store.api.domain.product.repository.ProductRepository;

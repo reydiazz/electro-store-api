@@ -1,5 +1,6 @@
 package com.electro.store.api.domain.product.service;
 
+import com.electro.store.api.domain.product.exception.ProductCategory.ProductCategoryNotFoundException;
 import com.electro.store.api.domain.product.model.entity.ProductCategory;
 import com.electro.store.api.domain.product.repository.ProductCategoryRepository;
 import com.electro.store.api.domain.product.web.request.CreateProductCategoryRequest;
@@ -43,7 +44,7 @@ public class ProductCategoryService {
 
     public ProductCategory findByCodeOrThrow(String code){
         return repository.findById(code).orElseThrow(
-                () -> new ProductCategoryNotFundException(code)
+                () -> new ProductCategoryNotFoundException(code)
         );
     }
 }
