@@ -16,17 +16,17 @@ public class Product {
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_code", nullable = false)
     private ProductCategory category;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "brand", nullable = false)
+    @Column(name = "brand")
     private String brand;
 
-    @Column(name = "model", nullable = false)
+    @Column(name = "model")
     private String model;
 
     @Column(name = "sale_price", nullable = false)
@@ -35,14 +35,14 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "warranty_months", nullable = false)
     private Integer warrantyMonths;
 
     public Product (String code, ProductCategory category, String name, String brand,
-                    String model, BigDecimal salePrice, Integer stock, String description,
+                    String model, BigDecimal salePrice, String description,
                     Integer warrantyMonths)
     {
      this.code = code;
@@ -51,13 +51,13 @@ public class Product {
      this.brand = brand;
      this.model = model;
      this.salePrice = salePrice;
-     this.stock = stock;
+     this.stock = 0;
      this.description = description;
      this.warrantyMonths = warrantyMonths;
     }
 
     public void update (ProductCategory category, String name, String brand,
-                        String model, BigDecimal salePrice, Integer stock, String description,
+                        String model, BigDecimal salePrice, String description,
                         Integer warrantyMonths)
     {
         this.category = category;
@@ -65,7 +65,6 @@ public class Product {
         this.brand = brand;
         this.model = model;
         this.salePrice = salePrice;
-        this.stock = stock;
         this.description = description;
         this.warrantyMonths = warrantyMonths;
     }

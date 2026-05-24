@@ -1,0 +1,15 @@
+package com.electro.store.api.domain.product.web.response;
+
+import java.math.BigDecimal;
+
+public record ProductResponse(
+        String code,
+        ProductCategoryResponse category,
+        String name,
+        String brand,
+        String model,
+        BigDecimal salePrice,
+        String description,
+        Integer warrantyMonths
+) {
+}
