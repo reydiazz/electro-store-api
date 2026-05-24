@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public record UpdateEmployeeRequest(
         @NotBlank(message = "Employee data is required")
-        UpdateCustomerRequest person,
+        UpdatePersonRequest person,
         @NotNull(message = "Employee position is required")
         EmployeePosition position,
         @NotNull(message = "Employee salary not be empty")
