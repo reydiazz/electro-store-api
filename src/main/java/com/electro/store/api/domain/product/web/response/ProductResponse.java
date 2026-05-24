@@ -9,6 +9,7 @@ public record ProductResponse(
         String brand,
         String model,
         BigDecimal salePrice,
+        Integer stock,
         String description,
         Integer warrantyMonths
 ) {
