@@ -1,6 +1,5 @@
 package com.electro.store.api.domain.people.service;
 
-
 import com.electro.store.api.domain.people.exception.PersonNotFoundException;
 import com.electro.store.api.domain.people.model.entity.Person;
 import com.electro.store.api.domain.people.repository.PersonRepository;
@@ -53,9 +52,6 @@ public class PersonService {
                 () -> new PersonNotFoundException(code)
         );
     }
-
-
-
 
 
 
