@@ -9,7 +9,7 @@ public enum EmployeeErrorCode implements ErrorCode {
 
     private final HttpStatus httpStatus;
 
-    EmployeeErrorCode(HttpStatus httpStatus){
+    EmployeeErrorCode(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
     }
 

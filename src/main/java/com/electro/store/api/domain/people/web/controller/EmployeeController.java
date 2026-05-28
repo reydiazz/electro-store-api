@@ -6,6 +6,8 @@ import com.electro.store.api.domain.people.web.request.UpdateEmployeeRequest;
 import com.electro.store.api.domain.people.web.response.EmployeeResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
 
     private final EmployeeService service;
+
+    @GetMapping
+    public ResponseEntity<Page<EmployeeResponse>> findAll(Pageable pageable) {
+        Page<EmployeeResponse> response = service.findAll(pageable);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
     public ResponseEntity<EmployeeResponse> create(@RequestBody @Valid CreateEmployeeRequest request) {
@@ -36,4 +44,5 @@ public class EmployeeController {
         service.delete(code);
         return ResponseEntity.noContent().build();
     }
+
 }

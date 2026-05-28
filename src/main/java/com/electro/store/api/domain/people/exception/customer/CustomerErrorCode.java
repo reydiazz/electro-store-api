@@ -9,7 +9,7 @@ public enum CustomerErrorCode implements ErrorCode {
 
     private final HttpStatus httpStatus;
 
-    CustomerErrorCode(HttpStatus httpStatus){
+    CustomerErrorCode(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
     }
 

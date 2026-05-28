@@ -45,4 +45,8 @@ public class Person {
         this.nationalId = nationalId;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
 }
