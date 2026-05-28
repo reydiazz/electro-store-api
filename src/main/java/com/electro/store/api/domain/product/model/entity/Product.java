@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
+
     @Id
     @Column(name = "code", nullable = false, unique = true)
     private String code;
@@ -41,25 +42,19 @@ public class Product {
     @Column(name = "warranty_months", nullable = false)
     private Integer warrantyMonths;
 
-    public Product (String code, ProductCategory category, String name, String brand,
-                    String model, BigDecimal salePrice, String description,
-                    Integer warrantyMonths)
-    {
-     this.code = code;
-     this.category = category;
-     this.name = name;
-     this.brand = brand;
-     this.model = model;
-     this.salePrice = salePrice;
-     this.stock = 0;
-     this.description = description;
-     this.warrantyMonths = warrantyMonths;
+    public Product(String code, ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths) {
+        this.code = code;
+        this.category = category;
+        this.name = name;
+        this.brand = brand;
+        this.model = model;
+        this.salePrice = salePrice;
+        this.stock = 0;
+        this.description = description;
+        this.warrantyMonths = warrantyMonths;
     }
 
-    public void update (ProductCategory category, String name, String brand,
-                        String model, BigDecimal salePrice, String description,
-                        Integer warrantyMonths)
-    {
+    public void update(ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths) {
         this.category = category;
         this.name = name;
         this.brand = brand;

@@ -4,10 +4,8 @@ import com.electro.store.api.shared.exception.BusinessException;
 
 public class ProductNotFoundException extends BusinessException {
 
-    public ProductNotFoundException(String code){
-        super(
-                "Product with code " + code + " not found",
-                ProductErrorCode.PRODUCT_NOT_FOUND
-        );
+    public ProductNotFoundException(String code) {
+        super("Product with code " + code + " not found", ProductErrorCode.PRODUCT_NOT_FOUND);
     }
+
 }
