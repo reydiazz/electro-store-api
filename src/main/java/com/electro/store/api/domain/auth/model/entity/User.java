@@ -31,11 +31,11 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    public User(String code, String username, String password, Role role, Employee employee) {
+    public User(String code, String username, String password, Employee employee) {
         this.code = code;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = employee.getSystemRole();
         this.employee = employee;
     }
 
