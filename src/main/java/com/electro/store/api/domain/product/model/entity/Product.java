@@ -64,4 +64,16 @@ public class Product {
         this.warrantyMonths = warrantyMonths;
     }
 
+    public void increaseStock(Integer quantity){
+        this.stock += quantity;
+    }
+
+    public void decreaseStock(Integer quantity){
+        this.stock -= quantity;
+    }
+
+    public boolean hasEnoughStock(Integer quantity){
+        return this.stock >= quantity;
+    }
+
 }

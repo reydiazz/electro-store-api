@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,7 +39,7 @@ public class InventoryGuide {
     private LocalDateTime guideDate;
 
     @OneToMany(mappedBy = "guide", fetch = FetchType.LAZY)
-    private List<GuideDetail> details;
+    private List<GuideDetail> details = new ArrayList<>();
 
     public InventoryGuide(
             String code,
@@ -54,6 +55,10 @@ public class InventoryGuide {
         this.reason = reason;
         this.description = description;
         this.guideDate = guideDate;
+    }
+
+    public void addDetail(GuideDetail detail) {
+        this.details.add(detail);
     }
 
 

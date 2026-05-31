@@ -6,7 +6,7 @@ public class InventoryGuideNotFoundException extends BusinessException {
 
     public InventoryGuideNotFoundException(String code){
         super(
-                "Inventory guide with code " + code + " no found",
+                "Inventory guide with code " + code + " not found",
                 InventoryGuideErrorCode.INVENTORY_GUIDE_NOT_FOUND
         );
     }
