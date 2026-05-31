@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "inventory_guides")
@@ -35,6 +36,9 @@ public class InventoryGuide {
 
     @Column(name = "guide_date", nullable = false)
     private LocalDateTime guideDate;
+
+    @OneToMany(mappedBy = "guide", fetch = FetchType.LAZY)
+    private List<GuideDetail> details;
 
     public InventoryGuide(
             String code,
