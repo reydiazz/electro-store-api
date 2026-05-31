@@ -1,5 +1,7 @@
 package com.electro.store.api.domain.people.model.entity;
 
+import com.electro.store.api.domain.auth.model.enums.Role;
+import com.electro.store.api.domain.people.exception.employee.EmployeePositionHasNoSystemRoleException;
 import com.electro.store.api.domain.people.model.enums.EmployeePosition;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -40,6 +42,15 @@ public class Employee {
         this.person = person;
         this.position = position;
         this.salary = salary;
+    }
+
+    public Role getSystemRole() {
+        return switch (this.position) {
+            case MANAGER -> Role.ADMIN;
+            case SELLER -> Role.RECEPTION;
+            case STOREKEEPER -> Role.STOREKEEPER;
+            default -> throw new EmployeePositionHasNoSystemRoleException(this.position);
+        };
     }
 
 }

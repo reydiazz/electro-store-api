@@ -4,11 +4,8 @@ import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.model.enums.Role;
 import com.electro.store.api.domain.auth.repository.UserRepository;
 import com.electro.store.api.domain.people.model.entity.Employee;
-import com.electro.store.api.domain.people.model.entity.Person;
 import com.electro.store.api.domain.people.model.enums.EmployeePosition;
-import com.electro.store.api.domain.people.repository.EmployeeRepository;
 import com.electro.store.api.domain.people.service.EmployeeService;
-import com.electro.store.api.domain.people.service.PersonService;
 import com.electro.store.api.domain.people.web.request.CreateEmployeeRequest;
 import com.electro.store.api.domain.people.web.request.CreatePersonRequest;
 import com.electro.store.api.domain.people.web.response.EmployeeResponse;
@@ -19,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 
 @SpringBootTest
@@ -67,7 +63,6 @@ class ApplicationTests {
 				code,
 				username,
 				passwordByCrypt,
-				role,
 				employee
 		);
 
