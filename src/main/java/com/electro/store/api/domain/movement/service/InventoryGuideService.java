@@ -1,7 +1,7 @@
 package com.electro.store.api.domain.movement.service;
 
 import com.electro.store.api.domain.auth.model.entity.User;
-import com.electro.store.api.domain.auth.service.UserService;
+import com.electro.store.api.domain.auth.service.AuthService;
 import com.electro.store.api.domain.movement.component.InventoryGuideMapper;
 import com.electro.store.api.domain.movement.exception.InventoryGuide.InventoryGuideNotFoundException;
 import com.electro.store.api.domain.movement.model.entity.GuideDetail;
@@ -35,7 +35,7 @@ public class InventoryGuideService {
     private final GuideDetailRepository detailRepository;
     private final InventoryGuideMapper mapper;
 
-    private final UserService userService;
+    private final AuthService authService;
     private final ProductService productService;
 
     public InventoryGuide findByCodeOrThrow(String code) {
@@ -53,9 +53,7 @@ public class InventoryGuideService {
     @Transactional
     public InventoryGuideResponse create(CreateInventoryGuideRequest request) {
 
-        User user = userService.findByCodeOrThrow(
-                request.userCode()
-        );
+        User user = authService.getAuthenticatedUser();
 
         InventoryGuide guide = new InventoryGuide(
                 CodeGenerator.next(PREFIX),

@@ -2,16 +2,12 @@ package com.electro.store.api.domain.movement.web.request;
 
 import com.electro.store.api.domain.movement.model.enums.GuideType;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 public record CreateInventoryGuideRequest(
-
-        @NotBlank(message = "User code is required")
-        String userCode,
 
         @NotNull(message = "Guide type is required")
         GuideType type,
