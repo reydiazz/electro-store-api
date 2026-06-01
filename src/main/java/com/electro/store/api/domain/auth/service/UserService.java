@@ -9,6 +9,7 @@ import com.electro.store.api.shared.utils.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +31,11 @@ public class UserService {
     public User create(CreateUserRequest request) {
         Employee employee = employeeService.findByCodeOrThrow(request.employeeCode());
         String code = CodeGenerator.next(PREFIX);
+        String password = new BCryptPasswordEncoder().encode(request.password());
         User user = new User(
                 code,
                 request.username(),
-                request.password(),
+                password,
                 employee
         );
         return repository.save(user);
