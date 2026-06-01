@@ -39,8 +39,4 @@ public class User {
         this.employee = employee;
     }
 
-    public void update(Employee employee) {
-        this.employee = employee;
-    }
-
 }
