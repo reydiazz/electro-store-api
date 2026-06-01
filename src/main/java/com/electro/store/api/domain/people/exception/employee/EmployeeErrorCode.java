@@ -23,4 +23,5 @@ public enum EmployeeErrorCode implements ErrorCode {
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
+
 }

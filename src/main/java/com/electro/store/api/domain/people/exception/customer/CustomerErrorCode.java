@@ -22,4 +22,5 @@ public enum CustomerErrorCode implements ErrorCode {
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
+
 }

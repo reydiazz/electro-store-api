@@ -1,5 +1,7 @@
 package com.electro.store.api.domain.people.web.controller;
 
+import com.electro.store.api.domain.people.component.EmployeeMapper;
+import com.electro.store.api.domain.people.model.entity.Employee;
 import com.electro.store.api.domain.people.service.EmployeeService;
 import com.electro.store.api.domain.people.web.request.CreateEmployeeRequest;
 import com.electro.store.api.domain.people.web.request.UpdateEmployeeRequest;
@@ -20,23 +22,24 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
 
     private final EmployeeService service;
+    private final EmployeeMapper mapper;
 
     @GetMapping
     public ResponseEntity<Page<EmployeeResponse>> findAll(Pageable pageable) {
-        Page<EmployeeResponse> response = service.findAll(pageable);
-        return ResponseEntity.ok(response);
+        Page<Employee> page = service.findAll(pageable);
+        return ResponseEntity.ok(page.map(mapper::toResponse));
     }
 
     @PostMapping
     public ResponseEntity<EmployeeResponse> create(@RequestBody @Valid CreateEmployeeRequest request) {
-        EmployeeResponse response = service.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        Employee employee = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(employee));
     }
 
     @PutMapping("/{code}")
     public ResponseEntity<EmployeeResponse> update(@PathVariable String code, @RequestBody @Valid UpdateEmployeeRequest request) {
-        EmployeeResponse response = service.update(code, request);
-        return ResponseEntity.ok(response);
+        Employee employee = service.update(code, request);
+        return ResponseEntity.ok(mapper.toResponse(employee));
     }
 
     @DeleteMapping("/{code}")
