@@ -3,6 +3,11 @@ package com.electro.store.api;
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.model.enums.Role;
 import com.electro.store.api.domain.auth.repository.UserRepository;
+import com.electro.store.api.domain.buys.repository.SupplierRepository;
+import com.electro.store.api.domain.buys.service.SupplierService;
+import com.electro.store.api.domain.buys.web.request.CreateSupplierRequest;
+import com.electro.store.api.domain.buys.web.request.UpdateSupplierRequest;
+import com.electro.store.api.domain.buys.web.response.SupplierResponse;
 import com.electro.store.api.domain.people.model.entity.Employee;
 import com.electro.store.api.domain.people.model.enums.EmployeePosition;
 import com.electro.store.api.domain.people.service.EmployeeService;
@@ -22,52 +27,22 @@ import java.math.BigDecimal;
 class ApplicationTests {
 
 	@Autowired
-	private UserRepository userRepository;
+	private SupplierRepository supplierRepository;
 
 	@Autowired
-	private EmployeeService employeeService;
+	private SupplierService supplierService;
 
 	@Test
-	void createUser(){
+	void createSupplier() {
 
-		String firstName = "John";
-		String lastName = "Doe";
-		String dni = "74224732";
-		String phone = "+51 987 681 912";
-
-		String PREFIX_USER = "USR";
-		String code = CodeGenerator.next(PREFIX_USER);
-		String username = "U23226030";
-		String password = "root";
-		Role role = Role.ADMIN;
-
-		CreatePersonRequest requestPerson = new CreatePersonRequest(
-				firstName,
-				lastName,
-				dni,
-				phone
+		UpdateSupplierRequest request = new UpdateSupplierRequest(
+				"20123456789",
+				"Tv Perú",
+				"999888777",
+				"Electro Perú SAC"
 		);
 
-		CreateEmployeeRequest request = new CreateEmployeeRequest(
-				requestPerson,
-				EmployeePosition.MANAGER,
-				new BigDecimal("3500")
-		);
-
-		EmployeeResponse response = employeeService.create(request);
-		Employee employee = employeeService.findByCodeOrThrow(response.code());
-
-		String passwordByCrypt = new BCryptPasswordEncoder().encode(password);
-
-		User user = new User(
-				code,
-				username,
-				passwordByCrypt,
-				employee
-		);
-
-		userRepository.save(user);
-
+		SupplierResponse response = supplierService.update("SUP2606011501116J863",request);
 	}
 
 }
