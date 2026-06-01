@@ -8,15 +8,12 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record CreateInventoryGuideRequest(
-
         @NotNull(message = "Guide type is required")
         GuideType type,
-
         String reason,
         String description,
-
         @Valid
         @NotEmpty(message = "Guide details are required")
-        List<CreateGuideDetailRequest> details
+        List<CreateGuideDetailRequest> detail
 ) {
 }

@@ -41,14 +41,7 @@ public class InventoryGuide {
     @OneToMany(mappedBy = "guide", fetch = FetchType.LAZY)
     private List<GuideDetail> details = new ArrayList<>();
 
-    public InventoryGuide(
-            String code,
-            User user,
-            GuideType type,
-            String reason,
-            String description,
-            LocalDateTime guideDate
-    ) {
+    public InventoryGuide(String code, User user, GuideType type, String reason, String description, LocalDateTime guideDate) {
         this.code = code;
         this.user = user;
         this.type = type;
@@ -60,6 +53,5 @@ public class InventoryGuide {
     public void addDetail(GuideDetail detail) {
         this.details.add(detail);
     }
-
 
 }

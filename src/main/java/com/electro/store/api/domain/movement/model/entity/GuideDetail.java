@@ -22,20 +22,16 @@ public class GuideDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_code", nullable = false)
-    private Product  product;
+    private Product product;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    public GuideDetail(
-            String code,
-            InventoryGuide guide,
-            Product product,
-            Integer quantity
-    ) {
+    public GuideDetail(String code, InventoryGuide guide, Product product, Integer quantity) {
         this.code = code;
         this.guide = guide;
         this.product = product;
         this.quantity = quantity;
     }
+
 }

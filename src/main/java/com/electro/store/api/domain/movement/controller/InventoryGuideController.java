@@ -41,4 +41,5 @@ public class InventoryGuideController {
         InventoryGuideResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 }

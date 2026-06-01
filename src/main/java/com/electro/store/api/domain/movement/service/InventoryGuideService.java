@@ -3,7 +3,7 @@ package com.electro.store.api.domain.movement.service;
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.service.AuthService;
 import com.electro.store.api.domain.movement.component.InventoryGuideMapper;
-import com.electro.store.api.domain.movement.exception.InventoryGuide.InventoryGuideNotFoundException;
+import com.electro.store.api.domain.movement.exception.InventoryGuideNotFoundException;
 import com.electro.store.api.domain.movement.model.entity.GuideDetail;
 import com.electro.store.api.domain.movement.model.entity.InventoryGuide;
 import com.electro.store.api.domain.movement.model.enums.GuideType;
@@ -66,7 +66,7 @@ public class InventoryGuideService {
 
         InventoryGuide savedGuide = repository.save(guide);
 
-        for (CreateGuideDetailRequest detailRequest : request.details()) {
+        for (CreateGuideDetailRequest detailRequest : request.detail()) {
 
             Product product = productService.findByCodeOrThrow(
                     detailRequest.productCode()
