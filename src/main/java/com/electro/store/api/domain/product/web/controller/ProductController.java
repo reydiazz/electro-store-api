@@ -1,4 +1,4 @@
-package com.electro.store.api.domain.product.controller;
+package com.electro.store.api.domain.product.web.controller;
 
 import com.electro.store.api.domain.product.service.ProductService;
 import com.electro.store.api.domain.product.web.request.CreateProductRequest;

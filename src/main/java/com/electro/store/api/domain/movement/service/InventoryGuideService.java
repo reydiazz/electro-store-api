@@ -12,7 +12,7 @@ import com.electro.store.api.domain.movement.repository.InventoryGuideRepository
 import com.electro.store.api.domain.movement.web.request.CreateGuideDetailRequest;
 import com.electro.store.api.domain.movement.web.request.CreateInventoryGuideRequest;
 import com.electro.store.api.domain.movement.web.response.InventoryGuideResponse;
-import com.electro.store.api.domain.product.exception.Product.InsufficientStockException;
+import com.electro.store.api.domain.product.exception.product.InsufficientStockException;
 import com.electro.store.api.domain.product.model.entity.Product;
 import com.electro.store.api.domain.product.service.ProductService;
 import com.electro.store.api.shared.utils.CodeGenerator;

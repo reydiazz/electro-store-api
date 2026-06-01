@@ -1,16 +1,15 @@
-package com.electro.store.api.domain.product.exception.Product;
+package com.electro.store.api.domain.product.exception.category;
 
 import com.electro.store.api.shared.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
-public enum ProductErrorCode implements ErrorCode {
+public enum ProductCategoryErrorCode implements ErrorCode {
 
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND),
-    INSUFFICIENT_STOCK(HttpStatus.BAD_REQUEST);
+    PRODUCT_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND);
 
     private final HttpStatus httpStatus;
 
-    ProductErrorCode(HttpStatus httpStatus) {
+    ProductCategoryErrorCode(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
     }
 

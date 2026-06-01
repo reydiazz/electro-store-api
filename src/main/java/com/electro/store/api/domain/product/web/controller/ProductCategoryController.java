@@ -1,5 +1,7 @@
-package com.electro.store.api.domain.product.controller;
+package com.electro.store.api.domain.product.web.controller;
 
+import com.electro.store.api.domain.product.component.ProductCategoryMapper;
+import com.electro.store.api.domain.product.model.entity.ProductCategory;
 import com.electro.store.api.domain.product.service.ProductCategoryService;
 import com.electro.store.api.domain.product.web.request.CreateProductCategoryRequest;
 import com.electro.store.api.domain.product.web.request.UpdateProductCategoryRequest;
@@ -19,26 +21,27 @@ import org.springframework.web.bind.annotation.*;
 public class ProductCategoryController {
 
     private final ProductCategoryService service;
+    private final ProductCategoryMapper mapper;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
     public ResponseEntity<Page<ProductCategoryResponse>> findAll(Pageable pageable) {
-        Page<ProductCategoryResponse> response = service.findAll(pageable);
-        return ResponseEntity.ok(response);
+        Page<ProductCategory> page = service.findAll(pageable);
+        return ResponseEntity.ok(page.map(mapper::toResponse));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductCategoryResponse> create(@Valid @RequestBody CreateProductCategoryRequest request) {
-        ProductCategoryResponse response = service.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        ProductCategory category = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(category));
     }
 
     @PutMapping("/{code}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductCategoryResponse> update(@PathVariable String code, @Valid @RequestBody UpdateProductCategoryRequest request) {
-        ProductCategoryResponse response = service.update(code, request);
-        return ResponseEntity.ok(response);
+        ProductCategory category = service.update(code, request);
+        return ResponseEntity.ok(mapper.toResponse(category));
     }
 
     @DeleteMapping("/{code}")

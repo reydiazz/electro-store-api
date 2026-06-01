@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProductMapper {
 
-    public ProductResponse toResponse(Product product){
+    public ProductResponse toResponse(Product product) {
         return new ProductResponse(
                 product.getCode(),
                 product.getCategory().getName(),

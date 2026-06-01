@@ -1,6 +1,5 @@
 package com.electro.store.api.domain.auth.service;
 
-import com.electro.store.api.domain.auth.exception.user.UserNotFoundException;
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.repository.UserRepository;
 import com.electro.store.api.domain.auth.web.request.CreateUserRequest;
@@ -38,13 +37,6 @@ public class UserService {
                 employee
         );
         return repository.save(user);
-    }
-
-    public User findByCodeOrThrow(String code){
-        return repository.findById(code).orElseThrow(
-                () -> new UserNotFoundException(code)
-        );
-
     }
 
 }
