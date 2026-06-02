@@ -1,11 +1,11 @@
-package com.electro.store.api.domain.people.exception.customer;
+package com.electro.store.api.domain.auth.exception.user;
 
 import com.electro.store.api.shared.exception.BusinessException;
 
-public class CustomerTaxIdAlreadyExistsException extends BusinessException {
+public class UsernameAlreadyExistsException extends BusinessException {
 
-    public CustomerTaxIdAlreadyExistsException(String taxId) {
-        super("Customer with tax id '%s' already exists".formatted(taxId), CustomerErrorCode.CUSTOMER_TAX_ID_ALREADY_EXISTS);
+    public UsernameAlreadyExistsException(String username) {
+        super("User with username '%s' already exists".formatted(username), UserErrorCode.USERNAME_ALREADY_EXISTS);
     }
 
 }

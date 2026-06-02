@@ -1,11 +1,12 @@
-package com.electro.store.api.domain.auth.exception;
+package com.electro.store.api.domain.auth.exception.user;
 
 import com.electro.store.api.shared.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public enum UserErrorCode implements ErrorCode {
 
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND);
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND),
+    USERNAME_ALREADY_EXISTS(HttpStatus.CONFLICT);
 
     private final HttpStatus httpStatus;
 

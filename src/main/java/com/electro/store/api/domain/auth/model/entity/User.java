@@ -39,4 +39,10 @@ public class User {
         this.employee = employee;
     }
 
+    public void update(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
 }

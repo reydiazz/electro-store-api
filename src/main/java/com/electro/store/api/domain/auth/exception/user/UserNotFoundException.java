@@ -1,4 +1,4 @@
-package com.electro.store.api.domain.auth.exception;
+package com.electro.store.api.domain.auth.exception.user;
 
 import com.electro.store.api.shared.exception.BusinessException;
 
