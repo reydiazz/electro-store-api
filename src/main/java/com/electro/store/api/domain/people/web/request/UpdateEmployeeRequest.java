@@ -2,13 +2,12 @@ package com.electro.store.api.domain.people.web.request;
 
 import com.electro.store.api.domain.people.model.enums.EmployeePosition;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
 public record UpdateEmployeeRequest(
-        @NotBlank(message = "Employee data is required")
+        @NotNull(message = "Employee data is required")
         UpdatePersonRequest person,
         @NotNull(message = "Employee position is required")
         EmployeePosition position,
