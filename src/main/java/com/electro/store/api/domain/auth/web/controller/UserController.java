@@ -2,6 +2,7 @@ package com.electro.store.api.domain.auth.web.controller;
 
 import com.electro.store.api.domain.auth.component.UserMapper;
 import com.electro.store.api.domain.auth.model.entity.User;
+import com.electro.store.api.domain.auth.model.enums.Role;
 import com.electro.store.api.domain.auth.service.UserService;
 import com.electro.store.api.domain.auth.web.request.CreateUserRequest;
 import com.electro.store.api.domain.auth.web.request.UpdateUserRequest;
@@ -28,6 +29,11 @@ public class UserController {
     public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable) {
         Page<User> page = service.findAll(pageable);
         return ResponseEntity.ok(page.map(mapper::toResponse));
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<Role[]> getRoles() {
+        return ResponseEntity.ok(Role.values());
     }
 
     @PostMapping
