@@ -7,7 +7,6 @@ public record UpdatePersonRequest(
         String firstName,
         @NotBlank(message = "Person last name is required")
         String lastName,
-        @NotBlank(message = "Person national id is required")
         String nationalId,
         String phone
 ) {

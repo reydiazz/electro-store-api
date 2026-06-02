@@ -27,7 +27,7 @@ public class Person {
     @Column(name = "national_id", unique = true)
     private String nationalId;
 
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true)
     private String phone;
 
     public Person(String code, String firstName, String lastName, String phone, String nationalId) {

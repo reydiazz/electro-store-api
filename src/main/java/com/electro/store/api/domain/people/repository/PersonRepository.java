@@ -7,6 +7,10 @@ public interface PersonRepository extends JpaRepository<Person, String> {
 
     boolean existsByNationalId(String nationalId);
 
-    boolean existsByNationalIdAndCodeNot(String nationalId, String code);
+    boolean existsByNationalIdAndCodeNot(String phone, String code);
+
+    boolean existsByPhoneAndCodeNot(String phone, String code);
+
+    boolean existsByPhone(String phone);
 
 }
