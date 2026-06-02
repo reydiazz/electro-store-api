@@ -1,6 +1,5 @@
 package com.electro.store.api.domain.buys.model.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,25 +12,25 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "suppliers")
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public class Suppliers {
+public class Supplier {
 
     @Id
     @Column(name = "code", unique = true, nullable = false)
     private String code;
 
-    @Column(name = "tax_id")
+    @Column(name = "tax_id", nullable = false, unique = true)
     private String taxId;
 
     @Column(name = "trade_name", nullable = false)
     private String tradeName;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "legal_name")
+    @Column(name = "legal_name", nullable = false, unique = true)
     private String legalName;
 
-    public Suppliers(String code, String taxId, String tradeName, String phone, String legalName) {
+    public Supplier(String code, String taxId, String tradeName, String phone, String legalName) {
         this.code = code;
         this.taxId = taxId;
         this.tradeName = tradeName;
@@ -45,4 +44,5 @@ public class Suppliers {
         this.phone = phone;
         this.legalName = legalName;
     }
+
 }

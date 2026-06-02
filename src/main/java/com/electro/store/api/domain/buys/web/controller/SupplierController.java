@@ -1,6 +1,8 @@
 package com.electro.store.api.domain.buys.web.controller;
 
 
+import com.electro.store.api.domain.buys.component.SupplierMapper;
+import com.electro.store.api.domain.buys.model.entity.Supplier;
 import com.electro.store.api.domain.buys.service.SupplierService;
 import com.electro.store.api.domain.buys.web.request.CreateSupplierRequest;
 import com.electro.store.api.domain.buys.web.request.UpdateSupplierRequest;
@@ -16,36 +18,35 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN')")
 @RequestMapping("/api/suppliers")
 public class SupplierController {
 
-    private  final SupplierService service;
+    private final SupplierService service;
+    private final SupplierMapper mapper;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<Page<SupplierResponse>> findAll(Pageable pageable){
-        Page<SupplierResponse> response = service.findAll(pageable);
-        return  ResponseEntity.ok(response);
+    public ResponseEntity<Page<SupplierResponse>> findAll(Pageable pageable) {
+        Page<Supplier> page = service.findAll(pageable);
+        return ResponseEntity.ok(page.map(mapper::toResponse));
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<SupplierResponse> create(@RequestBody @Valid CreateSupplierRequest request){
-        SupplierResponse response = service.create(request);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<SupplierResponse> create(@RequestBody @Valid CreateSupplierRequest request) {
+        Supplier supplier = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(supplier));
     }
 
     @PutMapping("/{code}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<SupplierResponse> update(@PathVariable String code, @RequestBody @Valid UpdateSupplierRequest request){
-        SupplierResponse response = service.update(code,request);
-        return  ResponseEntity.ok(response);
+    public ResponseEntity<SupplierResponse> update(@PathVariable String code, @RequestBody @Valid UpdateSupplierRequest request) {
+        Supplier response = service.update(code, request);
+        return ResponseEntity.ok(mapper.toResponse(response));
     }
 
     @DeleteMapping("/{code}")
-    public ResponseEntity<Void> delete(@PathVariable String code){
+    public ResponseEntity<Void> delete(@PathVariable String code) {
         service.delete(code);
-        return  ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
