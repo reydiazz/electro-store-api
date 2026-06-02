@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ProductCategoryErrorCode implements ErrorCode {
 
-    PRODUCT_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND);
+    PRODUCT_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND),
+    PRODUCT_CATEGORY_ALREADY_EXISTS(HttpStatus.CONFLICT);
 
     private final HttpStatus httpStatus;
 

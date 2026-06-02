@@ -1,5 +1,6 @@
 package com.electro.store.api.domain.product.service;
 
+import com.electro.store.api.domain.product.exception.category.ProductCategoryNameAlreadyExistsException;
 import com.electro.store.api.domain.product.exception.category.ProductCategoryNotFoundException;
 import com.electro.store.api.domain.product.model.entity.ProductCategory;
 import com.electro.store.api.domain.product.repository.ProductCategoryRepository;
@@ -26,6 +27,7 @@ public class ProductCategoryService {
 
     @Transactional
     public ProductCategory create(CreateProductCategoryRequest request) {
+        verifyName(request.name());
         String code = CodeGenerator.next(PREFIX);
         ProductCategory category = new ProductCategory(code, request.name());
         return repository.save(category);
@@ -33,6 +35,7 @@ public class ProductCategoryService {
 
     @Transactional
     public ProductCategory update(String code, UpdateProductCategoryRequest request) {
+        verifyName(request.name(), code);
         ProductCategory category = findByCodeOrThrow(code);
         category.update(request.name());
         return category;
@@ -48,6 +51,18 @@ public class ProductCategoryService {
         return repository.findById(code).orElseThrow(
                 () -> new ProductCategoryNotFoundException(code)
         );
+    }
+
+    private void verifyName(String name) {
+        if (repository.existsByName(name)) {
+            throw new ProductCategoryNameAlreadyExistsException(name);
+        }
+    }
+
+    private void verifyName(String name, String code) {
+        if (repository.existsByNameAndCodeNot(name, code)) {
+            throw new ProductCategoryNameAlreadyExistsException(name);
+        }
     }
 
 }

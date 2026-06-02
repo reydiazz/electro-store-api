@@ -18,7 +18,7 @@ public class ProductCategory {
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     public ProductCategory(String code, String name) {
