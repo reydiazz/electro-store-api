@@ -1,5 +1,6 @@
 package com.electro.store.api.domain.people.service;
 
+import com.electro.store.api.domain.people.exception.customer.CustomerTaxIdAlreadyExistsException;
 import com.electro.store.api.domain.people.exception.employee.EmployeeNotFoundException;
 import com.electro.store.api.domain.people.model.entity.Customer;
 import com.electro.store.api.domain.people.model.entity.Person;
@@ -29,6 +30,7 @@ public class CustomerService {
 
     @Transactional
     public Customer create(CreateCustomerRequest request) {
+        verifyTaxId(request.taxId());
         String code = CodeGenerator.next(PREFIX);
         Person person = personService.create(request.person());
         Customer customer = new Customer(code, person, request.taxId());
@@ -37,6 +39,7 @@ public class CustomerService {
 
     @Transactional
     public Customer update(String code, UpdateCustomerRequest request) {
+        verifyTaxId(request.taxId(), code);
         Customer customer = findByCodeOrThrow(code);
         Person person = personService.update(customer.getPerson().getCode(), request.person());
         customer.update(person, request.taxId());
@@ -54,6 +57,18 @@ public class CustomerService {
         return repository.findById(code).orElseThrow(
                 () -> new EmployeeNotFoundException(code)
         );
+    }
+
+    private void verifyTaxId(String taxId, String code) {
+        if (repository.existsByTaxIdAndCodeNot(taxId, code) && taxId != null) {
+            throw new CustomerTaxIdAlreadyExistsException(taxId);
+        }
+    }
+
+    private void verifyTaxId(String taxId) {
+        if (repository.existsByTaxId(taxId) && taxId != null) {
+            throw new CustomerTaxIdAlreadyExistsException(taxId);
+        }
     }
 
 }
