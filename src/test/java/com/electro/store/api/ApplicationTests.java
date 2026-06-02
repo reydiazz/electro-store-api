@@ -1,5 +1,6 @@
 package com.electro.store.api;
 
+import com.electro.store.api.domain.auth.model.enums.Role;
 import com.electro.store.api.domain.auth.service.UserService;
 import com.electro.store.api.domain.auth.web.request.CreateUserRequest;
 import com.electro.store.api.domain.people.model.entity.Employee;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.swing.text.Position;
 import java.math.BigDecimal;
 
 @SpringBootTest
@@ -31,10 +33,12 @@ class ApplicationTests {
 		String sueldo = "3500";
 		String username = "root";
 		String password = "root";
+		Role role = Role.ADMIN;
+		EmployeePosition position = EmployeePosition.MANAGER;
 		CreatePersonRequest requestPerson = new CreatePersonRequest(firstName, lastName, dni, phone);
-		CreateEmployeeRequest request = new CreateEmployeeRequest(requestPerson, EmployeePosition.MANAGER, new BigDecimal(sueldo));
+		CreateEmployeeRequest request = new CreateEmployeeRequest(requestPerson, position, new BigDecimal(sueldo));
 		Employee employee = employeeService.create(request);
-		CreateUserRequest requestUser = new CreateUserRequest(username, password, employee.getCode());
+		CreateUserRequest requestUser = new CreateUserRequest(username, password, role ,employee.getCode());
 		userService.create(requestUser);
 	}
 

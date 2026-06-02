@@ -2,6 +2,7 @@ package com.electro.store.api.domain.people.web.controller;
 
 import com.electro.store.api.domain.people.component.EmployeeMapper;
 import com.electro.store.api.domain.people.model.entity.Employee;
+import com.electro.store.api.domain.people.model.enums.EmployeePosition;
 import com.electro.store.api.domain.people.service.EmployeeService;
 import com.electro.store.api.domain.people.web.request.CreateEmployeeRequest;
 import com.electro.store.api.domain.people.web.request.UpdateEmployeeRequest;
@@ -28,6 +29,23 @@ public class EmployeeController {
     public ResponseEntity<Page<EmployeeResponse>> findAll(Pageable pageable) {
         Page<Employee> page = service.findAll(pageable);
         return ResponseEntity.ok(page.map(mapper::toResponse));
+    }
+
+    @GetMapping("/positions")
+    public ResponseEntity<EmployeePosition[]> getPositions() {
+        return ResponseEntity.ok(EmployeePosition.values());
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<EmployeeResponse> findByCode(@PathVariable String code) {
+        Employee employee = service.findByCode(code);
+        return ResponseEntity.ok(mapper.toResponse(employee));
+    }
+
+    @GetMapping("/national-id/{nationalId}")
+    public ResponseEntity<EmployeeResponse> findByNationalId(@PathVariable String nationalId) {
+        Employee employee = service.findByNationalId(nationalId);
+        return ResponseEntity.ok(mapper.toResponse(employee));
     }
 
     @PostMapping

@@ -32,12 +32,7 @@ public class UserService {
         Employee employee = employeeService.findByCodeOrThrow(request.employeeCode());
         String code = CodeGenerator.next(PREFIX);
         String password = new BCryptPasswordEncoder().encode(request.password());
-        User user = new User(
-                code,
-                request.username(),
-                password,
-                employee
-        );
+        User user = new User(code, request.username(), password, request.role(), employee);
         return repository.save(user);
     }
 

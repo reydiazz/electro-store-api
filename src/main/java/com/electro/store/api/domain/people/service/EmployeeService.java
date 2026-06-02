@@ -27,6 +27,16 @@ public class EmployeeService {
         return repository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Employee findByCode(String code) {
+        return findByCodeOrThrow(code);
+    }
+
+    @Transactional(readOnly = true)
+    public Employee findByNationalId(String nationalId) {
+        return findByNationalIdOrThrow(nationalId);
+    }
+
     @Transactional
     public Employee create(CreateEmployeeRequest request) {
         String code = CodeGenerator.next(PREFIX);
@@ -51,7 +61,13 @@ public class EmployeeService {
 
     public Employee findByCodeOrThrow(String code) {
         return repository.findById(code).orElseThrow(
-                () -> new EmployeeNotFoundException(code)
+                () -> new EmployeeNotFoundException("Employee with code '%s' not found".formatted(code))
+        );
+    }
+
+    private Employee findByNationalIdOrThrow(String nationalId) {
+        return repository.findByPersonNationalId(nationalId).orElseThrow(
+                () -> new EmployeeNotFoundException("Employee with national id '%s' not found".formatted(nationalId))
         );
     }
 

@@ -44,13 +44,4 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Role getSystemRole() {
-        return switch (this.position) {
-            case MANAGER -> Role.ADMIN;
-            case SELLER -> Role.RECEPTION;
-            case STOREKEEPER -> Role.STOREKEEPER;
-            default -> throw new EmployeePositionHasNoSystemRoleException(this.position);
-        };
-    }
-
 }
