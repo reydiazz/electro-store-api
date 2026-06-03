@@ -48,6 +48,12 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public void delete(String code) {
+        User user = findByCodeOrThrow(code);
+        repository.delete(user);
+    }
+
     private void verifyUsername(String username, String code) {
         if (repository.existsByUsernameAndCodeNot(username, code)) {
             throw new UsernameAlreadyExistsException(username);

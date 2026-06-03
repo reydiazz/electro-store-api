@@ -48,4 +48,10 @@ public class UserController {
         return ResponseEntity.ok(mapper.toResponse(user));
     }
 
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Void> delete(@PathVariable String code) {
+        service.delete(code);
+        return ResponseEntity.noContent().build();
+    }
+
 }
