@@ -1,8 +1,8 @@
 package com.electro.store.api.domain.auth.service;
 
 import com.electro.store.api.domain.auth.component.AuthMapper;
-import com.electro.store.api.domain.auth.exception.AuthenticatedPrincipalNotFoundException;
-import com.electro.store.api.domain.auth.exception.NoAuthenticatedUserException;
+import com.electro.store.api.domain.auth.exception.auth.AuthenticatedPrincipalNotFoundException;
+import com.electro.store.api.domain.auth.exception.auth.NoAuthenticatedUserException;
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.web.request.LoginRequest;
 import com.electro.store.api.domain.auth.web.response.LoginResponse;
