@@ -1,7 +1,7 @@
 package com.electro.store.api.domain.people.service;
 
+import com.electro.store.api.domain.people.exception.customer.CustomerNotFoundException;
 import com.electro.store.api.domain.people.exception.customer.CustomerTaxIdAlreadyExistsException;
-import com.electro.store.api.domain.people.exception.employee.EmployeeNotFoundException;
 import com.electro.store.api.domain.people.model.entity.Customer;
 import com.electro.store.api.domain.people.model.entity.Person;
 import com.electro.store.api.domain.people.repository.CustomerRepository;
@@ -55,7 +55,7 @@ public class CustomerService {
 
     public Customer findByCodeOrThrow(String code) {
         return repository.findById(code).orElseThrow(
-                () -> new EmployeeNotFoundException(code)
+                () -> new CustomerNotFoundException(code)
         );
     }
 
