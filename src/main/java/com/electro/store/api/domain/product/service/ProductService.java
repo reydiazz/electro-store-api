@@ -35,7 +35,7 @@ public class ProductService {
     public ProductResponse create(CreateProductRequest request) {
         String code = CodeGenerator.next(PREFIX);
         ProductCategory category = categoryService.findByCodeOrThrow(request.categoryCode());
-        Product product = new Product(code, category, request.name(), request.brand(), request.model(), request.salePrice(), request.description(), request.warrantyMonths());
+        Product product = new Product(code, category, request.name(), request.brand(), request.model(), request.salePrice(), request.description(), request.warrantyMonths(), request.lowStock());
         Product saved = repository.save(product);
         return mapper.toResponse(saved);
     }
@@ -44,7 +44,7 @@ public class ProductService {
     public ProductResponse update(String code, UpdateProductRequest request) {
         Product product = findByCodeOrThrow(code);
         ProductCategory category = categoryService.findByCodeOrThrow(request.categoryCode());
-        product.update(category, request.name(), request.brand(), request.model(), request.salePrice(), request.description(), request.warrantyMonths());
+        product.update(category, request.name(), request.brand(), request.model(), request.salePrice(), request.description(), request.warrantyMonths(), request.lowStock());
         return mapper.toResponse(product);
     }
 

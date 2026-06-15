@@ -1,0 +1,5 @@
+ALTER TABLE users
+    ADD status BIT NOT NULL DEFAULT 1;
+
+ALTER TABLE products
+    ADD low_stock INT NOT NULL DEFAULT 5;

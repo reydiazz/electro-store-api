@@ -11,6 +11,7 @@ public record ProductResponse(
         BigDecimal salePrice,
         Integer stock,
         String description,
-        Integer warrantyMonths
+        Integer warrantyMonths,
+        Integer lowStock
 ) {
 }

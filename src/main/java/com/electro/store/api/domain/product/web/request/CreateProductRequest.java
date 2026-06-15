@@ -20,6 +20,8 @@ public record CreateProductRequest(
         String description,
         @NotNull(message = "Warranty months is required")
         @PositiveOrZero(message = "Warranty months must be zero or a positive number")
-        Integer warrantyMonths
+        Integer warrantyMonths,
+        @NotNull(message = "Low stock  is required")
+        Integer lowStock
 ) {
 }

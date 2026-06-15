@@ -31,6 +31,9 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Column(nullable = false)
+    private boolean status = true;
+
     public User(String code, String username, String password, Role role,Employee employee) {
         this.code = code;
         this.username = username;

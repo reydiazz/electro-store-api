@@ -19,7 +19,8 @@ public class ProductMapper {
                 product.getSalePrice(),
                 product.getStock(),
                 product.getDescription(),
-                product.getWarrantyMonths()
+                product.getWarrantyMonths(),
+                product.getLowStock()
         );
     }
 

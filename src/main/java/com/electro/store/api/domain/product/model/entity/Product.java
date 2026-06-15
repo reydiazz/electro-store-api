@@ -42,7 +42,10 @@ public class Product {
     @Column(name = "warranty_months", nullable = false)
     private Integer warrantyMonths;
 
-    public Product(String code, ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths) {
+    @Column(name = "low_stock", nullable = false)
+    private Integer lowStock;
+
+    public Product(String code, ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths, Integer lowStock) {
         this.code = code;
         this.category = category;
         this.name = name;
@@ -52,9 +55,10 @@ public class Product {
         this.stock = 0;
         this.description = description;
         this.warrantyMonths = warrantyMonths;
+        this.lowStock = lowStock;
     }
 
-    public void update(ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths) {
+    public void update(ProductCategory category, String name, String brand, String model, BigDecimal salePrice, String description, Integer warrantyMonths, Integer lowStock) {
         this.category = category;
         this.name = name;
         this.brand = brand;
@@ -62,6 +66,7 @@ public class Product {
         this.salePrice = salePrice;
         this.description = description;
         this.warrantyMonths = warrantyMonths;
+        this.lowStock = lowStock;
     }
 
     public void increaseStock(Integer quantity) {
