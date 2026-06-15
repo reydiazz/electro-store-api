@@ -1,0 +1,26 @@
+package com.electro.store.api.domain.sales.exception;
+
+import com.electro.store.api.shared.exception.ErrorCode;
+import org.springframework.http.HttpStatus;
+
+public enum SaleErrorCode implements ErrorCode {
+
+    SALE_NOT_FOUND(HttpStatus.NOT_FOUND),
+    SALE_EMPTY_DETAILS(HttpStatus.BAD_REQUEST);
+
+    private final HttpStatus httpStatus;
+
+    SaleErrorCode(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
+    @Override
+    public String getCode() {
+        return name();
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+}
