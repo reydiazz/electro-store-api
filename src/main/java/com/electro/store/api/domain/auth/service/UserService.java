@@ -1,6 +1,7 @@
 package com.electro.store.api.domain.auth.service;
 
 import com.electro.store.api.domain.auth.exception.user.UserNotFoundException;
+import com.electro.store.api.domain.auth.exception.user.UserSelfDeactivationException;
 import com.electro.store.api.domain.auth.exception.user.UsernameAlreadyExistsException;
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.repository.UserRepository;
@@ -23,6 +24,7 @@ public class UserService {
     public static final String PREFIX = "USR";
     private final UserRepository repository;
 
+    private final AuthService authService;
     private final EmployeeService employeeService;
 
     @Transactional(readOnly = true)
@@ -49,9 +51,31 @@ public class UserService {
     }
 
     @Transactional
+    public User deactivate(String code) {
+        User user = findByCodeOrThrow(code);
+        preventSelfDeactivation(user);
+        user.deactivate();
+        return user;
+    }
+
+    @Transactional
+    public User activate(String code) {
+        User user = findByCodeOrThrow(code);
+        user.activate();
+        return user;
+    }
+
+    @Transactional
     public void delete(String code) {
         User user = findByCodeOrThrow(code);
         repository.delete(user);
+    }
+
+    private void preventSelfDeactivation(User user) {
+        User current = authService.getAuthenticatedUser();
+        if (current.getCode().equals(user.getCode())) {
+            throw new UserSelfDeactivationException();
+        }
     }
 
     private void verifyUsername(String username, String code) {

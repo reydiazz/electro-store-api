@@ -8,6 +8,7 @@ public record UserResponse(
         String employeeCode,
         String firstName,
         String lastName,
-        Role role
+        Role role,
+        boolean status
 ) {
 }

@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 public enum UserErrorCode implements ErrorCode {
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND),
-    USERNAME_ALREADY_EXISTS(HttpStatus.CONFLICT);
+    USERNAME_ALREADY_EXISTS(HttpStatus.CONFLICT),
+    USER_SELF_DEACTIVATION(HttpStatus.CONFLICT);
 
     private final HttpStatus httpStatus;
 

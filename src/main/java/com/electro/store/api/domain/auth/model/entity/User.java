@@ -32,7 +32,7 @@ public class User {
     private Role role;
 
     @Column(nullable = false)
-    private boolean status = true;
+    private boolean status;
 
     public User(String code, String username, String password, Role role,Employee employee) {
         this.code = code;
@@ -40,12 +40,21 @@ public class User {
         this.password = password;
         this.role = role;
         this.employee = employee;
+        this.status = true;
     }
 
     public void update(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public void deactivate() {
+        this.status = false;
+    }
+
+    public void activate() {
+        this.status = true;
     }
 
 }

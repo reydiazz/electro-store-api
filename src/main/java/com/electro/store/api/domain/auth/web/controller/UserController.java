@@ -48,6 +48,18 @@ public class UserController {
         return ResponseEntity.ok(mapper.toResponse(user));
     }
 
+    @PatchMapping("/deactivate/{code}")
+    public ResponseEntity<UserResponse> deactivate(@PathVariable String code) {
+        User user = service.deactivate(code);
+        return ResponseEntity.ok(mapper.toResponse(user));
+    }
+
+    @PatchMapping("/activate/{code}")
+    public ResponseEntity<UserResponse> activate(@PathVariable String code) {
+        User user = service.activate(code);
+        return ResponseEntity.ok(mapper.toResponse(user));
+    }
+
     @DeleteMapping("/{code}")
     public ResponseEntity<Void> delete(@PathVariable String code) {
         service.delete(code);

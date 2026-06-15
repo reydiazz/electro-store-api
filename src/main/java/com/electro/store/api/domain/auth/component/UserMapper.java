@@ -14,7 +14,8 @@ public class UserMapper {
                 user.getEmployee().getCode(),
                 user.getEmployee().getPerson().getFirstName(),
                 user.getEmployee().getPerson().getLastName(),
-                user.getRole()
+                user.getRole(),
+                user.isStatus()
         );
     }
 
