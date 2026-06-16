@@ -26,8 +26,10 @@ public class ProductService {
     private final ProductCategoryService categoryService;
 
     @Transactional
-    public Page<ProductResponse> findAll(Pageable pageable) {
-        Page<Product> products = repository.findAll(pageable);
+    public Page<ProductResponse> findAll(String search, Pageable pageable) {
+        Page<Product> products = (search != null && !search.trim().isEmpty())
+                ? repository.search(search.trim(), pageable)
+                : repository.findAll(pageable);
         return products.map(mapper::toResponse);
     }
 

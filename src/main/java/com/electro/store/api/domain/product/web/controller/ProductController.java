@@ -22,8 +22,10 @@ public class ProductController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
-    public ResponseEntity<Page<ProductResponse>> findAll(Pageable pageable) {
-        Page<ProductResponse> response = service.findAll(pageable);
+    public ResponseEntity<Page<ProductResponse>> findAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable) {
+        Page<ProductResponse> response = service.findAll(search, pageable);
         return ResponseEntity.ok(response);
     }
 
