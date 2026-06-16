@@ -27,4 +27,9 @@ public record UserPrincipal(User user) implements UserDetails {
         return List.of(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole()));
     }
 
+    @Override
+    public boolean isEnabled() {
+        return user.isStatus();
+    }
+
 }
