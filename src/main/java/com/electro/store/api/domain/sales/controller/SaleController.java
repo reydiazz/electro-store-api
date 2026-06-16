@@ -20,10 +20,13 @@ public class SaleController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<Page<SaleResponse>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<SaleResponse>> findAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable
+    ) {
 
         Page<SaleResponse> response =
-                service.findAll(pageable);
+                service.findAll(search, pageable);
 
         return ResponseEntity.ok(response);
     }

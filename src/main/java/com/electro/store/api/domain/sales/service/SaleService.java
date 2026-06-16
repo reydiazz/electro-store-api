@@ -54,8 +54,13 @@ public class SaleService {
     }
 
     @Transactional(readOnly = true)
-    public Page<SaleResponse> findAll(Pageable pageable) {
-        Page<Sale> sales = repository.findAll(pageable);
+    public Page<SaleResponse> findAll(String search, Pageable pageable) {
+        Page<Sale> sales;
+        if (search != null && !search.trim().isEmpty()) {
+            sales = repository.search(search.trim(), pageable);
+        } else {
+            sales = repository.findAll(pageable);
+        }
         return sales.map(mapper::toResponse);
     }
 
