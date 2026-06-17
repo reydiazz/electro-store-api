@@ -1,6 +1,5 @@
 package com.electro.store.api.domain.buys.service;
 
-
 import com.electro.store.api.domain.auth.model.entity.User;
 import com.electro.store.api.domain.auth.service.AuthService;
 import com.electro.store.api.domain.buys.component.PurchaseMapper;
@@ -29,31 +28,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PurchaseService {
 
-    public static  final String PREFIX ="PUR";
-    public  static  final String  DETAIL_PREFIX = "PDT";
+    public static final String PREFIX = "PUR";
+    public static final String DETAIL_PREFIX = "PDT";
 
     private final PurchasesRepository repository;
     private final PurchasesDetailsRepository detailsRepository;
-    private  final PurchaseMapper mapper;
+    private final PurchaseMapper mapper;
 
     private final AuthService authService;
     private final ProductService productService;
     private final SupplierService supplierService;
 
     @Transactional(readOnly = true)
-    public PurchasesResponse findByCode(String code){
+    public PurchasesResponse findByCode(String code) {
         Purchases purchases = findByCodeOrThrow(code);
         return mapper.toResponse(purchases);
     }
 
     @Transactional(readOnly = true)
-    public Page<PurchasesResponse> findAll (Pageable pageable){
+    public Page<PurchasesResponse> findAll(Pageable pageable) {
         Page<Purchases> purchases = repository.findAll(pageable);
         return purchases.map(mapper::toResponse);
     }
+
     @Transactional
     public PurchasesResponse create(CreatePurchaseRequest request) {
-
         User user = authService.getAuthenticatedUser();
         Supplier supplier = supplierService.findByCodeOrThrow(
                 request.supplierCode()
@@ -77,6 +76,7 @@ public class PurchaseService {
             String productCode = entry.getKey();
             Integer quantity = entry.getValue();
             var product = productService.findByCodeOrThrow(productCode);
+            product.increaseStock(quantity);
             PurchasesDetails detail = new PurchasesDetails(
                     CodeGenerator.next(DETAIL_PREFIX),
                     savedPurchase,
@@ -89,6 +89,7 @@ public class PurchaseService {
 
         return mapper.toResponse(savedPurchase);
     }
+
     public Purchases findByCodeOrThrow(String code) {
         return repository.findById(code)
                 .orElseThrow(() -> new PurchaseNotFoundException(code));
