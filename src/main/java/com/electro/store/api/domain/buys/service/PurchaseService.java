@@ -64,25 +64,15 @@ public class PurchaseService {
                 LocalDateTime.now()
         );
         Purchases savedPurchase = repository.save(purchase);
-        Map<String, Integer> groupedProducts = request.detail()
-                .stream()
-                .collect(Collectors.toMap(
-                        CreatePurchaseDetailRequest::productCode,
-                        CreatePurchaseDetailRequest::quantity,
-                        Integer::sum
-                ));
-
-        for (Map.Entry<String, Integer> entry : groupedProducts.entrySet()) {
-            String productCode = entry.getKey();
-            Integer quantity = entry.getValue();
-            var product = productService.findByCodeOrThrow(productCode);
-            product.increaseStock(quantity);
+        for (CreatePurchaseDetailRequest detailReq : request.detail()) {
+            var product = productService.findByCodeOrThrow(detailReq.productCode());
+            product.increaseStock(detailReq.quantity());
             PurchasesDetails detail = new PurchasesDetails(
                     CodeGenerator.next(DETAIL_PREFIX),
                     savedPurchase,
                     product,
-                    product.getSalePrice(),
-                    quantity
+                    detailReq.purchasePrice(),
+                    detailReq.quantity()
             );
             detailsRepository.save(detail);
         }
