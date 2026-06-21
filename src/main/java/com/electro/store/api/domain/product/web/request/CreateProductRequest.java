@@ -12,7 +12,9 @@ public record CreateProductRequest(
         String categoryCode,
         @NotBlank(message = "Product name is required")
         String name,
+        @NotBlank(message = "Brand name is required")
         String brand,
+        @NotBlank(message = "Model name is required")
         String model,
         @NotNull(message = "Product sale price is required")
         @DecimalMin(value = "0.01", message = "Product sale price must be greater than zero")
