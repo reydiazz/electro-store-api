@@ -7,6 +7,7 @@ import com.electro.store.api.domain.product.model.entity.ProductCategory;
 import com.electro.store.api.domain.product.repository.ProductRepository;
 import com.electro.store.api.domain.product.web.request.CreateProductRequest;
 import com.electro.store.api.domain.product.web.request.UpdateProductRequest;
+import com.electro.store.api.domain.product.web.response.ProductMetricsResponse;
 import com.electro.store.api.domain.product.web.response.ProductResponse;
 import com.electro.store.api.shared.utils.CodeGenerator;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +62,20 @@ public class ProductService {
         return repository.findById(code).orElseThrow(
                 () -> new ProductNotFoundException(code)
         );
+    }
+
+    @Transactional(readOnly = true)
+    public ProductMetricsResponse getMetrics() {
+        long totalProducts = repository.count();
+        long lowStockCount = repository.countLowStock();
+        long outOfStockCount = repository.countOutOfStock();
+        long totalCategories = repository.countDistinctCategories();
+        return new ProductMetricsResponse(totalProducts, lowStockCount, outOfStockCount, totalCategories);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> findDistinctBrands() {
+        return repository.findDistinctBrands();
     }
 
 }

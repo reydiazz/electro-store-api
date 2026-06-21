@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.electro.store.api.domain.product.web.response.ProductMetricsResponse;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -27,6 +30,18 @@ public class ProductController {
             Pageable pageable) {
         Page<ProductResponse> response = service.findAll(search, pageable);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/metrics")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    public ResponseEntity<ProductMetricsResponse> getMetrics() {
+        return ResponseEntity.ok(service.getMetrics());
+    }
+
+    @GetMapping("/brands")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    public ResponseEntity<List<String>> getBrands() {
+        return ResponseEntity.ok(service.findDistinctBrands());
     }
 
     @PostMapping
