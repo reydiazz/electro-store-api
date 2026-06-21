@@ -27,8 +27,11 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
     public ResponseEntity<Page<ProductResponse>> findAll(
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String stockStatus,
             Pageable pageable) {
-        Page<ProductResponse> response = service.findAll(search, pageable);
+        Page<ProductResponse> response = service.findAll(search, categoryName, brand, stockStatus, pageable);
         return ResponseEntity.ok(response);
     }
 

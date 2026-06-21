@@ -15,6 +15,21 @@ public interface ProductRepository extends JpaRepository<Product, String> {
            "LOWER(p.brand) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Product> search(@Param("search") String search, Pageable pageable);
 
+    @Query("SELECT p FROM Product p WHERE " +
+           "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(p.code) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(p.brand) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+           "(:categoryName IS NULL OR p.category.name = :categoryName) AND " +
+           "(:brand IS NULL OR p.brand = :brand) AND " +
+           "(:stockStatus IS NULL OR " +
+           "(:stockStatus = 'Con Stock' AND p.stock > 0) OR " +
+           "(:stockStatus = 'Stock Bajo' AND p.stock > 0 AND p.stock <= p.lowStock) OR " +
+           "(:stockStatus = 'Agotados' AND p.stock = 0))")
+    Page<Product> searchWithFilters(
+            @Param("search") String search,
+            @Param("categoryName") String categoryName,
+            @Param("brand") String brand,
+            @Param("stockStatus") String stockStatus,
+            Pageable pageable);
+
     @Query("SELECT COUNT(p) FROM Product p WHERE p.stock > 0 AND p.stock <= p.lowStock")
     long countLowStock();
 

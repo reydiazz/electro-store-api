@@ -27,11 +27,19 @@ public class ProductService {
 
     private final ProductCategoryService categoryService;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<ProductResponse> findAll(String search, Pageable pageable) {
-        Page<Product> products = (search != null && !search.trim().isEmpty())
-                ? repository.search(search.trim(), pageable)
-                : repository.findAll(pageable);
+        return findAll(search, null, null, null, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> findAll(String search, String categoryName, String brand, String stockStatus, Pageable pageable) {
+        String cleanSearch = (search != null && !search.trim().isEmpty()) ? search.trim() : null;
+        String cleanCategory = (categoryName != null && !categoryName.trim().isEmpty() && !"Todas".equalsIgnoreCase(categoryName.trim()) && !"Categoría".equalsIgnoreCase(categoryName.trim())) ? categoryName.trim() : null;
+        String cleanBrand = (brand != null && !brand.trim().isEmpty() && !"Todas".equalsIgnoreCase(brand.trim()) && !"Marca".equalsIgnoreCase(brand.trim())) ? brand.trim() : null;
+        String cleanStockStatus = (stockStatus != null && !stockStatus.trim().isEmpty() && !"Todos".equalsIgnoreCase(stockStatus.trim())) ? stockStatus.trim() : null;
+
+        Page<Product> products = repository.searchWithFilters(cleanSearch, cleanCategory, cleanBrand, cleanStockStatus, pageable);
         return products.map(mapper::toResponse);
     }
 
