@@ -57,6 +57,7 @@ public class EmployeeService {
     public void delete(String code) {
         Employee employee = findByCodeOrThrow(code);
         repository.delete(employee);
+        personService.delete(employee.getPerson().getCode());
     }
 
     public Employee findByCodeOrThrow(String code) {

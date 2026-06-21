@@ -1,6 +1,7 @@
 package com.electro.store.api.domain.people.web.request;
 
 import com.electro.store.api.domain.people.model.enums.EmployeePosition;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 
 public record CreateEmployeeRequest(
         @NotNull(message = "Employee data is required")
+        @Valid
         CreatePersonRequest person,
         @NotNull(message = "Employee position is required")
         EmployeePosition position,

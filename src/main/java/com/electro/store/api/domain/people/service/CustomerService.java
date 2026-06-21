@@ -60,13 +60,13 @@ public class CustomerService {
     }
 
     private void verifyTaxId(String taxId, String code) {
-        if (repository.existsByTaxIdAndCodeNot(taxId, code) && taxId != null) {
+        if (taxId != null && repository.existsByTaxIdAndCodeNot(taxId, code)) {
             throw new CustomerTaxIdAlreadyExistsException(taxId);
         }
     }
 
     private void verifyTaxId(String taxId) {
-        if (repository.existsByTaxId(taxId) && taxId != null) {
+        if (taxId != null && repository.existsByTaxId(taxId)) {
             throw new CustomerTaxIdAlreadyExistsException(taxId);
         }
     }

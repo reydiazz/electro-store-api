@@ -50,25 +50,25 @@ public class PersonService {
     }
 
     private void verifyPhone(String phone) {
-        if (repository.existsByPhone(phone) && phone != null) {
+        if (phone != null && repository.existsByPhone(phone)) {
             throw new PersonPhoneAlreadyExistsException(phone);
         }
     }
 
-    private void verifyPhone(String phone,String code) {
-        if (repository.existsByPhoneAndCodeNot(phone, code) && phone != null ) {
+    private void verifyPhone(String phone, String code) {
+        if (phone != null && repository.existsByPhoneAndCodeNot(phone, code)) {
             throw new PersonPhoneAlreadyExistsException(phone);
         }
     }
 
-    private void verifyNationalId(String nationalId){
-        if (repository.existsByNationalId(nationalId) && nationalId != null) {
+    private void verifyNationalId(String nationalId) {
+        if (nationalId != null && repository.existsByNationalId(nationalId)) {
             throw new PersonNationalIdAlreadyExistsException(nationalId);
         }
     }
 
-    private void verifyNationalId(String nationalId,String code) {
-        if (repository.existsByNationalIdAndCodeNot(nationalId, code) && nationalId != null) {
+    private void verifyNationalId(String nationalId, String code) {
+        if (nationalId != null && repository.existsByNationalIdAndCodeNot(nationalId, code)) {
             throw new PersonNationalIdAlreadyExistsException(nationalId);
         }
     }
