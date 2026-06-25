@@ -20,6 +20,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.electro.store.api.domain.buys.web.response.PurchaseMetricsResponse;
+import org.springframework.data.domain.PageRequest;
+import java.util.List;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,9 +50,40 @@ public class PurchaseService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PurchasesResponse> findAll(Pageable pageable) {
-        Page<Purchases> purchases = repository.findAll(pageable);
+    public Page<PurchasesResponse> findAll(String search, Pageable pageable) {
+        Page<Purchases> purchases;
+        if (search != null && !search.trim().isEmpty()) {
+            purchases = repository.search(search.trim(), pageable);
+        } else {
+            purchases = repository.findAll(pageable);
+        }
         return purchases.map(mapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public PurchaseMetricsResponse getMetrics() {
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+
+        long weeklyPurchases = repository.countWeeklyPurchases(sevenDaysAgo);
+        long monthlyProducts = repository.countMonthlyProductsEntered(thirtyDaysAgo);
+
+        String supplierName = "Ninguno";
+        long supplierCount = 0;
+
+        List<Object[]> supplierData = repository.findFrequentSupplier(PageRequest.of(0, 1));
+        if (supplierData != null && !supplierData.isEmpty()) {
+            Object[] row = supplierData.get(0);
+            supplierName = (String) row[0];
+            supplierCount = ((Number) row[1]).longValue();
+        }
+
+        return new PurchaseMetricsResponse(
+                weeklyPurchases,
+                monthlyProducts,
+                supplierName,
+                supplierCount
+        );
     }
 
     @Transactional
@@ -75,6 +110,7 @@ public class PurchaseService {
                     detailReq.quantity()
             );
             detailsRepository.save(detail);
+            savedPurchase.addDetail(detail);
         }
 
         return mapper.toResponse(savedPurchase);

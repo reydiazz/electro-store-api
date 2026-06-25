@@ -3,6 +3,7 @@ package com.electro.store.api.domain.buys.web.controller;
 import com.electro.store.api.domain.buys.service.PurchaseService;
 import com.electro.store.api.domain.buys.web.request.CreatePurchaseRequest;
 import com.electro.store.api.domain.buys.web.response.PurchasesResponse;
+import com.electro.store.api.domain.buys.web.response.PurchaseMetricsResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,18 @@ public class PurchaseController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<Page<PurchasesResponse>> findAll(Pageable pageable){
-         Page<PurchasesResponse> response = service.findAll(pageable);
+    public ResponseEntity<Page<PurchasesResponse>> findAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable){
+         Page<PurchasesResponse> response = service.findAll(search, pageable);
 
          return  ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/metrics")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public ResponseEntity<PurchaseMetricsResponse> getMetrics() {
+        return ResponseEntity.ok(service.getMetrics());
     }
 
     @GetMapping("/{code}")
@@ -35,6 +44,7 @@ public class PurchaseController {
         PurchasesResponse response = service.findByCode(code);
         return ResponseEntity.ok(response);
     }
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
     public  ResponseEntity<PurchasesResponse> create(@Valid @RequestBody CreatePurchaseRequest request){
