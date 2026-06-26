@@ -16,6 +16,8 @@ import com.electro.store.api.domain.sales.repository.SaleRepository;
 import com.electro.store.api.domain.sales.web.request.CreateSaleDetailRequest;
 import com.electro.store.api.domain.sales.web.request.CreateSaleRequest;
 import com.electro.store.api.domain.sales.web.response.SaleResponse;
+import com.electro.store.api.domain.sales.web.response.SaleSummaryResponse;
+import com.electro.store.api.domain.sales.web.response.SalesDashboardResponse;
 import com.electro.store.api.shared.utils.CodeGenerator;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -33,6 +40,8 @@ public class SaleService {
 
     public static final String PREFIX = "SAL";
     public static final String DETAIL_PREFIX = "SDT";
+
+    private static final BigDecimal IGV_RATE = new BigDecimal("0.18");
 
     private final SaleRepository repository;
     private final SaleDetailRepository detailRepository;
@@ -51,6 +60,65 @@ public class SaleService {
     public SaleResponse findByCode(String code) {
         Sale sale = findByCodeOrThrow(code);
         return mapper.toResponse(sale);
+    }
+
+    @Transactional(readOnly = true)
+    public SaleSummaryResponse getSummary(String code) {
+
+        Sale sale = findByCodeOrThrow(code);
+
+        BigDecimal subtotal = calculateSaleSubtotal(sale);
+
+        BigDecimal igv = calculateSaleIgv(subtotal);
+
+        BigDecimal total = calculateSaleTotal(
+                subtotal,
+                igv
+        );
+
+        return new SaleSummaryResponse(
+                subtotal,
+                igv,
+                total
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public SalesDashboardResponse getDashboard() {
+
+        LocalDate today = LocalDate.now();
+
+        LocalDateTime startDate = today.atStartOfDay();
+
+        LocalDateTime endDate = today.atTime(LocalTime.MAX);
+
+        List<Sale> sales = repository.findBySaleDateBetween(
+                startDate,
+                endDate
+        );
+
+        Long transactions = (long) sales.size();
+
+        BigDecimal todaySales = sales.stream()
+                .map(this::calculateSaleFinalAmount)
+                .reduce(
+                        BigDecimal.ZERO,
+                        BigDecimal::add
+                );
+
+        BigDecimal averageTicket = transactions == 0
+                ? BigDecimal.ZERO
+                : todaySales.divide(
+                BigDecimal.valueOf(transactions),
+                2,
+                RoundingMode.HALF_UP
+        );
+
+        return new SalesDashboardResponse(
+                todaySales,
+                transactions,
+                averageTicket
+        );
     }
 
     @Transactional(readOnly = true)
@@ -128,4 +196,50 @@ public class SaleService {
 
         return mapper.toResponse(savedSale);
     }
+
+    private BigDecimal calculateSaleSubtotal(Sale sale) {
+        return sale.getDetails()
+                .stream()
+                .map(detail ->
+                        detail.getSalePrice()
+                                .multiply(
+                                        BigDecimal.valueOf(
+                                                detail.getQuantity()
+                                        )
+                                )
+                )
+                .reduce(
+                        BigDecimal.ZERO,
+                        BigDecimal::add
+                );
+    }
+
+    private BigDecimal calculateSaleIgv(BigDecimal subtotal) {
+        return subtotal
+                .multiply(IGV_RATE)
+                .setScale(
+                        2,
+                        RoundingMode.HALF_UP
+                );
+    }
+
+    private BigDecimal calculateSaleTotal(
+            BigDecimal subtotal,
+            BigDecimal igv) {
+        return subtotal.add(igv);
+    }
+
+    private BigDecimal calculateSaleFinalAmount(Sale sale) {
+
+        BigDecimal subtotal = calculateSaleSubtotal(sale);
+
+        BigDecimal igv = calculateSaleIgv(subtotal);
+
+        return calculateSaleTotal(
+                subtotal,
+                igv
+        );
+    }
+
+
 }
