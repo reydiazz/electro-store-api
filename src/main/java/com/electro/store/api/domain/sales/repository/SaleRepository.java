@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface SaleRepository extends JpaRepository<Sale, String> {
     @Query("SELECT s FROM Sale s WHERE " +
            "LOWER(s.code) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
@@ -19,4 +22,14 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
            "LOWER(s.user.employee.person.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "LOWER(s.user.employee.person.lastName) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Sale> search(@Param("search") String search, Pageable pageable);
+
+    @Query("""
+       SELECT s
+       FROM Sale s
+       WHERE s.saleDate BETWEEN :startDate AND :endDate
+       """)
+    List<Sale> findBySaleDateBetween(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }
