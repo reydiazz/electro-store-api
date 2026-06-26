@@ -3,6 +3,8 @@ package com.electro.store.api.domain.sales.controller;
 import com.electro.store.api.domain.sales.service.SaleService;
 import com.electro.store.api.domain.sales.web.request.CreateSaleRequest;
 import com.electro.store.api.domain.sales.web.response.SaleResponse;
+import com.electro.store.api.domain.sales.web.response.SaleSummaryResponse;
+import com.electro.store.api.domain.sales.web.response.SalesDashboardResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,16 @@ public class SaleController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/dashboard")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public ResponseEntity<SalesDashboardResponse> getDashboard() {
+
+        SalesDashboardResponse response =
+                service.getDashboard();
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{code}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
     public ResponseEntity<SaleResponse> findByCode(
@@ -39,6 +51,17 @@ public class SaleController {
 
         SaleResponse response =
                 service.findByCode(code);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{code}/summary")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public ResponseEntity<SaleSummaryResponse> getSummary(
+            @PathVariable String code
+    ) {
+        SaleSummaryResponse response =
+                service.getSummary(code);
 
         return ResponseEntity.ok(response);
     }
