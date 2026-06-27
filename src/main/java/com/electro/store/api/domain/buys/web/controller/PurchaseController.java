@@ -2,6 +2,8 @@ package com.electro.store.api.domain.buys.web.controller;
 
 import com.electro.store.api.domain.buys.service.PurchaseService;
 import com.electro.store.api.domain.buys.web.request.CreatePurchaseRequest;
+import com.electro.store.api.domain.buys.web.response.PurchaseDashboardResponse;
+import com.electro.store.api.domain.buys.web.response.PurchaseSummaryResponse;
 import com.electro.store.api.domain.buys.web.response.PurchasesResponse;
 import com.electro.store.api.domain.buys.web.response.PurchaseMetricsResponse;
 import jakarta.validation.Valid;
@@ -28,6 +30,19 @@ public class PurchaseController {
          Page<PurchasesResponse> response = service.findAll(search, pageable);
 
          return  ResponseEntity.ok(response);
+    }
+    @GetMapping("/dashboard")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public  ResponseEntity<PurchaseDashboardResponse> getDashboard (){
+        PurchaseDashboardResponse response = service.getDashboard();
+        return  ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{code}/summary")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public ResponseEntity<PurchaseSummaryResponse> getSummary (@PathVariable String code){
+        PurchaseSummaryResponse response = service.getSummary(code);
+        return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/metrics")
