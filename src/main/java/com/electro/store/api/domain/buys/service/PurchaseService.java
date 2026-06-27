@@ -72,13 +72,11 @@ public class PurchaseService {
     public PurchaseSummaryResponse getSummary(String code) {
 
         Purchases purchases = findByCodeOrThrow(code);
-        BigDecimal subtotal = calculatePurchasesSubtotal(purchases);
-        BigDecimal igv = calculatePurchaseIgv(subtotal);
-        BigDecimal total = calculatePurchaseTotal(
-                subtotal,
-                igv
-        );
-        return  new PurchaseSummaryResponse(subtotal,igv,total);
+        BigDecimal total = calculatePurchasesTotal(purchases);
+        BigDecimal subtotal = total.divide(BigDecimal.valueOf(1.18), 2, RoundingMode.HALF_UP);
+        BigDecimal igv = total.subtract(subtotal);
+        
+        return new PurchaseSummaryResponse(subtotal, igv, total);
     }
 
     @Transactional (readOnly = true)
@@ -91,7 +89,7 @@ public class PurchaseService {
 
         Long transactions = (long) purchases.size();
 
-        BigDecimal todayPurchase = purchases.stream().map(this::calculatePurchaseFinalAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+        BigDecimal todayPurchase = purchases.stream().map(this::calculatePurchasesTotal).reduce(BigDecimal.ZERO,BigDecimal::add);
         BigDecimal averageTicket = transactions == 0 ? BigDecimal.ZERO : todayPurchase.divide(BigDecimal.valueOf(transactions),2,RoundingMode.HALF_UP);
 
         return new PurchaseDashboardResponse(todayPurchase,transactions,averageTicket);
@@ -158,23 +156,8 @@ public class PurchaseService {
                 .orElseThrow(() -> new PurchaseNotFoundException(code));
     }
 
-    private BigDecimal calculatePurchasesSubtotal(Purchases purchases) {
+    private BigDecimal calculatePurchasesTotal(Purchases purchases) {
         return purchases.getDetails().stream().map(details -> details.getPurchasePrice().multiply(BigDecimal.valueOf(details.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private BigDecimal calculatePurchaseIgv(BigDecimal subtotal) {
-        return subtotal.multiply(IGV_RATE).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    private BigDecimal calculatePurchaseTotal(BigDecimal subtotal, BigDecimal igv) {
-        return subtotal.add(igv);
-    }
-
-    private BigDecimal calculatePurchaseFinalAmount(Purchases purchases) {
-        BigDecimal subtotal = calculatePurchasesSubtotal(purchases);
-        BigDecimal igv = calculatePurchaseIgv(subtotal);
-
-        return calculatePurchaseTotal(subtotal, igv);
     }
 
 }

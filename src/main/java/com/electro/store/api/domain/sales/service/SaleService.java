@@ -67,14 +67,11 @@ public class SaleService {
 
         Sale sale = findByCodeOrThrow(code);
 
-        BigDecimal subtotal = calculateSaleSubtotal(sale);
+        BigDecimal total = calculateSaleTotal(sale);
 
-        BigDecimal igv = calculateSaleIgv(subtotal);
+        BigDecimal subtotal = total.divide(BigDecimal.valueOf(1.18), 2, RoundingMode.HALF_UP);
 
-        BigDecimal total = calculateSaleTotal(
-                subtotal,
-                igv
-        );
+        BigDecimal igv = total.subtract(subtotal);
 
         return new SaleSummaryResponse(
                 subtotal,
@@ -100,7 +97,7 @@ public class SaleService {
         Long transactions = (long) sales.size();
 
         BigDecimal todaySales = sales.stream()
-                .map(this::calculateSaleFinalAmount)
+                .map(this::calculateSaleTotal)
                 .reduce(
                         BigDecimal.ZERO,
                         BigDecimal::add
@@ -197,7 +194,7 @@ public class SaleService {
         return mapper.toResponse(savedSale);
     }
 
-    private BigDecimal calculateSaleSubtotal(Sale sale) {
+    private BigDecimal calculateSaleTotal(Sale sale) {
         return sale.getDetails()
                 .stream()
                 .map(detail ->
@@ -206,39 +203,12 @@ public class SaleService {
                                         BigDecimal.valueOf(
                                                 detail.getQuantity()
                                         )
-                                )
+                                 )
                 )
                 .reduce(
                         BigDecimal.ZERO,
                         BigDecimal::add
                 );
-    }
-
-    private BigDecimal calculateSaleIgv(BigDecimal subtotal) {
-        return subtotal
-                .multiply(IGV_RATE)
-                .setScale(
-                        2,
-                        RoundingMode.HALF_UP
-                );
-    }
-
-    private BigDecimal calculateSaleTotal(
-            BigDecimal subtotal,
-            BigDecimal igv) {
-        return subtotal.add(igv);
-    }
-
-    private BigDecimal calculateSaleFinalAmount(Sale sale) {
-
-        BigDecimal subtotal = calculateSaleSubtotal(sale);
-
-        BigDecimal igv = calculateSaleIgv(subtotal);
-
-        return calculateSaleTotal(
-                subtotal,
-                igv
-        );
     }
 
 
