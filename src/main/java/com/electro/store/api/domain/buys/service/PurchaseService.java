@@ -11,6 +11,8 @@ import com.electro.store.api.domain.buys.repository.PurchasesDetailsRepository;
 import com.electro.store.api.domain.buys.repository.PurchasesRepository;
 import com.electro.store.api.domain.buys.web.request.CreatePurchaseDetailRequest;
 import com.electro.store.api.domain.buys.web.request.CreatePurchaseRequest;
+import com.electro.store.api.domain.buys.web.response.PurchaseDashboardResponse;
+import com.electro.store.api.domain.buys.web.response.PurchaseSummaryResponse;
 import com.electro.store.api.domain.buys.web.response.PurchasesResponse;
 import com.electro.store.api.domain.product.service.ProductService;
 import com.electro.store.api.shared.utils.CodeGenerator;
@@ -22,6 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.electro.store.api.domain.buys.web.response.PurchaseMetricsResponse;
 import org.springframework.data.domain.PageRequest;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import java.time.LocalDateTime;
@@ -34,6 +41,7 @@ public class PurchaseService {
 
     public static final String PREFIX = "PUR";
     public static final String DETAIL_PREFIX = "PDT";
+    private static final BigDecimal IGV_RATE = new BigDecimal("0.18");
 
     private final PurchasesRepository repository;
     private final PurchasesDetailsRepository detailsRepository;
@@ -58,6 +66,35 @@ public class PurchaseService {
             purchases = repository.findAll(pageable);
         }
         return purchases.map(mapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public PurchaseSummaryResponse getSummary(String code) {
+
+        Purchases purchases = findByCodeOrThrow(code);
+        BigDecimal subtotal = calculatePurchasesSubtotal(purchases);
+        BigDecimal igv = calculatePurchaseIgv(subtotal);
+        BigDecimal total = calculatePurchaseTotal(
+                subtotal,
+                igv
+        );
+        return  new PurchaseSummaryResponse(subtotal,igv,total);
+    }
+
+    @Transactional (readOnly = true)
+    public PurchaseDashboardResponse getDashboard (){
+        LocalDate today = LocalDate.now();
+        LocalDateTime startDate = today.atStartOfDay();
+        LocalDateTime endDate = today.atTime(LocalTime.MAX);
+
+        List<Purchases> purchases = repository.findByPurchaseDateBetween(startDate,endDate);
+
+        Long transactions = (long) purchases.size();
+
+        BigDecimal todayPurchase = purchases.stream().map(this::calculatePurchaseFinalAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+        BigDecimal averageTicket = transactions == 0 ? BigDecimal.ZERO : todayPurchase.divide(BigDecimal.valueOf(transactions),2,RoundingMode.HALF_UP);
+
+        return new PurchaseDashboardResponse(todayPurchase,transactions,averageTicket);
     }
 
     @Transactional(readOnly = true)
@@ -120,4 +157,24 @@ public class PurchaseService {
         return repository.findById(code)
                 .orElseThrow(() -> new PurchaseNotFoundException(code));
     }
+
+    private BigDecimal calculatePurchasesSubtotal(Purchases purchases) {
+        return purchases.getDetails().stream().map(details -> details.getPurchasePrice().multiply(BigDecimal.valueOf(details.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private BigDecimal calculatePurchaseIgv(BigDecimal subtotal) {
+        return subtotal.multiply(IGV_RATE).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calculatePurchaseTotal(BigDecimal subtotal, BigDecimal igv) {
+        return subtotal.add(igv);
+    }
+
+    private BigDecimal calculatePurchaseFinalAmount(Purchases purchases) {
+        BigDecimal subtotal = calculatePurchasesSubtotal(purchases);
+        BigDecimal igv = calculatePurchaseIgv(subtotal);
+
+        return calculatePurchaseTotal(subtotal, igv);
+    }
+
 }

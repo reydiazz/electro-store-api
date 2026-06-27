@@ -34,4 +34,9 @@ public interface PurchasesRepository extends JpaRepository<Purchases, String> {
             "GROUP BY p.supplier.tradeName " +
             "ORDER BY COUNT(p) DESC")
     List<Object[]> findFrequentSupplier(Pageable pageable);
+
+    List<Purchases> findByPurchaseDateBetween(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }
