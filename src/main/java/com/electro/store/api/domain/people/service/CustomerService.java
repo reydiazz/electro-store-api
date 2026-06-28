@@ -24,7 +24,10 @@ public class CustomerService {
     public final PersonService personService;
 
     @Transactional(readOnly = true)
-    public Page<Customer> findAll(Pageable pageable) {
+    public Page<Customer> findAll(String search, Pageable pageable) {
+        if (search != null && !search.trim().isEmpty()) {
+            return repository.search(search.trim(), pageable);
+        }
         return repository.findAll(pageable);
     }
 

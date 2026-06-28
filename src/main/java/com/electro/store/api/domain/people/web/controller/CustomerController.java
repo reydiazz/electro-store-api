@@ -25,8 +25,11 @@ public class CustomerController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
-    public ResponseEntity<Page<CustomerResponse>> findAll(Pageable pageable) {
-        Page<Customer> page = service.findAll(pageable);
+    public ResponseEntity<Page<CustomerResponse>> findAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable
+    ) {
+        Page<Customer> page = service.findAll(search, pageable);
         return ResponseEntity.ok(page.map(mapper::toResponse));
     }
 
