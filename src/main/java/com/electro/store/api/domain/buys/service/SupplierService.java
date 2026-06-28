@@ -23,7 +23,10 @@ public class SupplierService {
     public final SupplierRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<Supplier> findAll(Pageable pageable) {
+    public Page<Supplier> findAll(String search, Pageable pageable) {
+        if (search != null && !search.trim().isEmpty()) {
+            return repository.search(search.trim(), pageable);
+        }
         return repository.findAll(pageable);
     }
 

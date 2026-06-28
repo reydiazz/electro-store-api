@@ -26,8 +26,11 @@ public class SupplierController {
     private final SupplierMapper mapper;
 
     @GetMapping
-    public ResponseEntity<Page<SupplierResponse>> findAll(Pageable pageable) {
-        Page<Supplier> page = service.findAll(pageable);
+    public ResponseEntity<Page<SupplierResponse>> findAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable
+    ) {
+        Page<Supplier> page = service.findAll(search, pageable);
         return ResponseEntity.ok(page.map(mapper::toResponse));
     }
 
