@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.electro.store.api.domain.buys.web.response.SupplierMetricsResponse;
+
 @RestController
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN')")
@@ -24,6 +26,11 @@ public class SupplierController {
 
     private final SupplierService service;
     private final SupplierMapper mapper;
+
+    @GetMapping("/metrics")
+    public ResponseEntity<SupplierMetricsResponse> getMetrics() {
+        return ResponseEntity.ok(service.getMetrics());
+    }
 
     @GetMapping
     public ResponseEntity<Page<SupplierResponse>> findAll(

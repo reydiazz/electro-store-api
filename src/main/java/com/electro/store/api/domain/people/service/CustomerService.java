@@ -8,6 +8,7 @@ import com.electro.store.api.domain.people.repository.CustomerRepository;
 import com.electro.store.api.domain.people.web.request.CreateCustomerRequest;
 import com.electro.store.api.domain.people.web.request.UpdateCustomerRequest;
 import com.electro.store.api.shared.utils.CodeGenerator;
+import com.electro.store.api.domain.people.web.response.CustomerMetricsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,14 @@ public class CustomerService {
     public final CustomerRepository repository;
 
     public final PersonService personService;
+
+    @Transactional(readOnly = true)
+    public CustomerMetricsResponse getMetrics() {
+        long total = repository.count();
+        long withDni = repository.countWithDni();
+        long withRuc = repository.countWithRuc();
+        return new CustomerMetricsResponse(total, withDni, withRuc);
+    }
 
     @Transactional(readOnly = true)
     public Page<Customer> findAll(String search, Pageable pageable) {

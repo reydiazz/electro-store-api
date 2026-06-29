@@ -9,6 +9,7 @@ import com.electro.store.api.domain.buys.repository.SupplierRepository;
 import com.electro.store.api.domain.buys.web.request.CreateSupplierRequest;
 import com.electro.store.api.domain.buys.web.request.UpdateSupplierRequest;
 import com.electro.store.api.shared.utils.CodeGenerator;
+import com.electro.store.api.domain.buys.web.response.SupplierMetricsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,14 @@ public class SupplierService {
 
     public static final String PREFIX = "SUP";
     public final SupplierRepository repository;
+
+    @Transactional(readOnly = true)
+    public SupplierMetricsResponse getMetrics() {
+        long total = repository.count();
+        Supplier last = repository.findFirstByOrderByCodeDesc();
+        String lastSupplierName = (last != null) ? last.getTradeName() : "Ninguno";
+        return new SupplierMetricsResponse(total, lastSupplierName);
+    }
 
     @Transactional(readOnly = true)
     public Page<Supplier> findAll(String search, Pageable pageable) {

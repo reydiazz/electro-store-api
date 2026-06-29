@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.electro.store.api.domain.people.web.response.CustomerMetricsResponse;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/customers")
@@ -22,6 +24,12 @@ public class CustomerController {
 
     private final CustomerService service;
     private final CustomerMapper mapper;
+
+    @GetMapping("/metrics")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    public ResponseEntity<CustomerMetricsResponse> getMetrics() {
+        return ResponseEntity.ok(service.getMetrics());
+    }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")

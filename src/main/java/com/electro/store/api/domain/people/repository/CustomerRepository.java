@@ -21,5 +21,11 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             "LOWER(c.person.nationalId) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Customer> search(@Param("search") String search, Pageable pageable);
 
+    @Query("SELECT COUNT(c) FROM Customer c WHERE c.person.nationalId IS NOT NULL AND c.person.nationalId <> ''")
+    long countWithDni();
+
+    @Query("SELECT COUNT(c) FROM Customer c WHERE c.taxId IS NOT NULL AND c.taxId <> ''")
+    long countWithRuc();
+
 }
 

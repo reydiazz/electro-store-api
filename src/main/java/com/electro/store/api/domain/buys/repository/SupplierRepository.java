@@ -16,6 +16,7 @@ public interface SupplierRepository extends JpaRepository<Supplier,String> {
             "LOWER(s.legalName) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Supplier> search(@Param("search") String search, Pageable pageable);
 
+    Supplier findFirstByOrderByCodeDesc();
 
     boolean existsByTaxId(String taxId);
 
