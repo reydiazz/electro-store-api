@@ -107,8 +107,25 @@ public class InventoryGuideService {
     }
 
     @Transactional(readOnly = true)
-    public Page<InventoryGuideResponse> findAll(Pageable pageable) {
-        Page<InventoryGuide> guides = repository.findAll(pageable);
+    public Page<InventoryGuideResponse> findAll(
+            String search,
+            GuideType type,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Pageable pageable
+    ) {
+        Page<InventoryGuide> guides;
+        if ((search != null && !search.trim().isEmpty()) || type != null || startDate != null || endDate != null) {
+            guides = repository.search(
+                    search != null ? search.trim() : null,
+                    type,
+                    startDate,
+                    endDate,
+                    pageable
+            );
+        } else {
+            guides = repository.findAll(pageable);
+        }
         return guides.map(mapper::toResponse);
     }
 }
