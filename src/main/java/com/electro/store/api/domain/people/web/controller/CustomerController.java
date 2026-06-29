@@ -26,13 +26,13 @@ public class CustomerController {
     private final CustomerMapper mapper;
 
     @GetMapping("/metrics")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<CustomerMetricsResponse> getMetrics() {
         return ResponseEntity.ok(service.getMetrics());
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Page<CustomerResponse>> findAll(
             @RequestParam(required = false) String search,
             Pageable pageable
@@ -42,14 +42,14 @@ public class CustomerController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CreateCustomerRequest request) {
         Customer customer = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(customer));
     }
 
     @PutMapping("/{code}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<CustomerResponse> update(@PathVariable String code, @RequestBody @Valid UpdateCustomerRequest request) {
         Customer customer = service.update(code, request);
         return ResponseEntity.ok(mapper.toResponse(customer));

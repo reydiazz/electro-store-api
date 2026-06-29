@@ -24,7 +24,7 @@ public class ProductCategoryController {
     private final ProductCategoryMapper mapper;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'STOREKEEPER')")
     public ResponseEntity<Page<ProductCategoryResponse>> findAll(Pageable pageable) {
         Page<ProductCategory> page = service.findAll(pageable);
         return ResponseEntity.ok(page.map(mapper::toResponse));

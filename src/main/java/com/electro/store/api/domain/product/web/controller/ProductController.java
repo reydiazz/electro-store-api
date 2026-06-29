@@ -24,7 +24,7 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'STOREKEEPER')")
     public ResponseEntity<Page<ProductResponse>> findAll(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String categoryName,
@@ -36,13 +36,13 @@ public class ProductController {
     }
 
     @GetMapping("/metrics")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'STOREKEEPER')")
     public ResponseEntity<ProductMetricsResponse> getMetrics() {
         return ResponseEntity.ok(service.getMetrics());
     }
 
     @GetMapping("/brands")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'STOREKEEPER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'STOREKEEPER')")
     public ResponseEntity<List<String>> getBrands() {
         return ResponseEntity.ok(service.findDistinctBrands());
     }

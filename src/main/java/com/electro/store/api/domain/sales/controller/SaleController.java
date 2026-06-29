@@ -21,7 +21,7 @@ public class SaleController {
     private final SaleService service;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Page<SaleResponse>> findAll(
             @RequestParam(required = false) String search,
             Pageable pageable
@@ -34,7 +34,7 @@ public class SaleController {
     }
 
     @GetMapping("/dashboard")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<SalesDashboardResponse> getDashboard() {
 
         SalesDashboardResponse response =
@@ -44,7 +44,7 @@ public class SaleController {
     }
 
     @GetMapping("/{code}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<SaleResponse> findByCode(
             @PathVariable String code
     ) {
@@ -56,7 +56,7 @@ public class SaleController {
     }
 
     @GetMapping("/{code}/summary")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<SaleSummaryResponse> getSummary(
             @PathVariable String code
     ) {
@@ -67,7 +67,7 @@ public class SaleController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<SaleResponse> create(
             @Valid @RequestBody CreateSaleRequest request
     ) {

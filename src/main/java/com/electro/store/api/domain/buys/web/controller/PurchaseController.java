@@ -23,7 +23,7 @@ public class PurchaseController {
     private final PurchaseService service;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Page<PurchasesResponse>> findAll(
             @RequestParam(required = false) String search,
             Pageable pageable){
@@ -32,27 +32,27 @@ public class PurchaseController {
          return  ResponseEntity.ok(response);
     }
     @GetMapping("/dashboard")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public  ResponseEntity<PurchaseDashboardResponse> getDashboard (){
         PurchaseDashboardResponse response = service.getDashboard();
         return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/{code}/summary")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<PurchaseSummaryResponse> getSummary (@PathVariable String code){
         PurchaseSummaryResponse response = service.getSummary(code);
         return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/metrics")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<PurchaseMetricsResponse> getMetrics() {
         return ResponseEntity.ok(service.getMetrics());
     }
 
     @GetMapping("/{code}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<PurchasesResponse> findByCode(
             @PathVariable String code
     ) {
@@ -61,7 +61,7 @@ public class PurchaseController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public  ResponseEntity<PurchasesResponse> create(@Valid @RequestBody CreatePurchaseRequest request){
         PurchasesResponse response = service.create(request);
 
