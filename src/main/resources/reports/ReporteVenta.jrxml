@@ -66,18 +66,26 @@
 	<dataset name="dsGraficoTopIngresos" uuid="def8967a-ceae-43a1-968a-9478ed1c22b3">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<query language="sql"><![CDATA[]]></query>
+		<field name="totalRevenue" class="java.math.BigDecimal"/>
+		<field name="productName" class="java.lang.String"/>
 	</dataset>
 	<dataset name="dsGraficoBottomIngresos" uuid="63b25d43-61b0-4826-89c4-be9dcf5185c0">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<query language="sql"><![CDATA[]]></query>
+		<field name="totalRevenue" class="java.math.BigDecimal"/>
+		<field name="productName" class="java.lang.String"/>
 	</dataset>
 	<dataset name="dsGraficoTopVendidos" uuid="faadae3a-d628-45dd-ae89-faea301e08ad">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<query language="sql"><![CDATA[]]></query>
+		<field name="productName" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
 	<dataset name="dsGraficoBottomVendidos" uuid="aae6446b-c8e7-483b-8a4d-83aad1e2ed79">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<query language="sql"><![CDATA[]]></query>
+		<field name="productName" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
 	<parameter name="logoEmpresa" class="java.io.InputStream"/>
 	<parameter name="dsTopIngresos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -183,12 +191,9 @@
 		<band height="4" splitType="Stretch"/>
 	</detail>
 	<pageFooter height="34" splitType="Stretch">
-		<element kind="staticText" uuid="5b356a29-bee7-4405-834f-383e7a1920db" x="1" y="3" width="554" height="28">
+		<element kind="staticText" uuid="92721b95-0183-46b3-ae50-1aac7473021c" x="0" y="2" width="554" height="30">
 			<text><![CDATA[Representación impresa de reportes de inventario de la tienda Electro Store.
-
 Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<property name="com.jaspersoft.studio.unit.y" value="px"/>
 		</element>
 	</pageFooter>
 	<summary height="770">
@@ -491,24 +496,26 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
 		</element>
-		<element kind="chart" chartType="bar" uuid="254356d6-71f8-49a8-87bc-884216adc872" x="1" y="610" width="268" height="160" evaluationTime="Report">
+		<element kind="chart" chartType="bar" uuid="5964f308-dd7c-4389-86a3-a36eb79e1646" x="1" y="610" width="268" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
 			<dataset kind="category">
-				<datasetRun uuid="da363400-27b5-43e0-8437-383c6bd9bc72" subDataset="dsGraficoTopVendidos">
+				<datasetRun uuid="00d5a0ba-67d8-4c15-8242-6d02173d1df7" subDataset="dsGraficoTopVendidos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoTopVendidos}]]></dataSourceExpression>
 				</datasetRun>
 				<series>
 					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
 					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{quantitySold}]]></valueExpression>
+					<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
 				</series>
 			</dataset>
-			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+			<plot orientation="Horizontal" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
+				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="b48cad15-4631-4e07-ba44-088237037659" x="1" y="325" width="268" height="165" evaluationTime="Report" linkTarget="Self">
+		<element kind="chart" chartType="bar" uuid="baf74328-b64e-45c6-94aa-de73984398a7" x="1" y="325" width="268" height="165" showLegend="false" evaluationTime="Page" linkTarget="Self">
 			<dataset kind="category">
-				<datasetRun uuid="fb01c22b-bed0-4f2a-85e4-a4162d438515" subDataset="dsGraficoTopIngresos">
+				<datasetRun uuid="60059062-03fd-432c-8502-c399be50cc3a" subDataset="dsGraficoTopIngresos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoTopIngresos}]]></dataSourceExpression>
 				</datasetRun>
 				<series>
@@ -518,11 +525,14 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<itemHyperlink linkType="None" linkTarget="Self"/>
 				</series>
 			</dataset>
-			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+			<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisVerticalTickLabels="false" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" showLabels="false" categoryAxisTickLabelRotation="0.0">
+				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
+				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
+				<valueAxisLabelFont fontSize="10.0"/>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="4eb7a594-5981-4aec-baf9-fecd443a8ce7" x="295" y="325" width="259" height="165" evaluationTime="Report">
+		<element kind="chart" chartType="bar" uuid="4eb7a594-5981-4aec-baf9-fecd443a8ce7" x="295" y="325" width="259" height="165" showLegend="false" evaluationTime="Report" linkTarget="Self">
 			<dataset kind="category">
 				<datasetRun uuid="ec3cb1ec-625b-4b06-9cb0-4b2ade5d7d3f" subDataset="dsGraficoBottomIngresos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoBottomIngresos}]]></dataSourceExpression>
@@ -531,24 +541,29 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
 					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
 					<valueExpression><![CDATA[$F{totalRevenue}]]></valueExpression>
+					<itemHyperlink linkTarget="Self"/>
 				</series>
 			</dataset>
-			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+			<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" categoryAxisTickLabelRotation="0.0">
+				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
+				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="0157425c-5923-42e7-a06e-5ce00b5e555b" x="295" y="610" width="260" height="160" evaluationTime="Report">
+		<element kind="chart" chartType="bar" uuid="108ed029-0406-4253-88a0-c6ad8845f293" x="295" y="610" width="260" height="160" showLegend="false" evaluationTime="Report">
 			<dataset kind="category">
-				<datasetRun uuid="84b6ac46-fcf5-4a32-9231-8b967191d883" subDataset="dsGraficoBottomVendidos">
+				<datasetRun uuid="ca69cd82-8ea7-4326-b4c2-47aeff17659d" subDataset="dsGraficoBottomVendidos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoBottomVendidos}]]></dataSourceExpression>
 				</datasetRun>
 				<series>
 					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
 					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{quantitySold}]]></valueExpression>
+					<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
 				</series>
 			</dataset>
-			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+			<plot orientation="Horizontal" backgroundAlpha="1.0" foregroundAlpha="1.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisTickLabelMask="" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
+				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
 				<itemLabel/>
 			</plot>
 		</element>
