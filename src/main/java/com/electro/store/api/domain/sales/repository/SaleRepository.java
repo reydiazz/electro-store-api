@@ -32,4 +32,12 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
+
+    @Query(""" 
+        SELECT s 
+        FROM Sale s
+        WHERE YEAR(s.saleDate) = :year
+        """)
+    List<Sale> findSalesByYear(@Param("year") int year);
+
 }

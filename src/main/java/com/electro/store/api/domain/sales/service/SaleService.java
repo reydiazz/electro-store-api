@@ -194,7 +194,7 @@ public class SaleService {
         return mapper.toResponse(savedSale);
     }
 
-    private BigDecimal calculateSaleTotal(Sale sale) {
+    public BigDecimal calculateSaleTotal(Sale sale) {
         return sale.getDetails()
                 .stream()
                 .map(detail ->
