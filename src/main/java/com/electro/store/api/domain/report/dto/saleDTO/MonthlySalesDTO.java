@@ -13,8 +13,13 @@ import java.math.BigDecimal;
 public class MonthlySalesDTO {
 
     private String month;
+    // Ventas totales del mes
     private BigDecimal totalRevenue;
+    // Diferencia de dinero respecto al anterior
+    private BigDecimal absoluteGrowth;
+    // El porcentaje de crecimiento respecto al mes anterior
     private BigDecimal increase;
+    // EL porcentaje de la ganancia total del mes en el año
     private Double percentage;
 
 }

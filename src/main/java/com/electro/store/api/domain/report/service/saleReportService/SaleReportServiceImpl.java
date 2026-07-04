@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +28,11 @@ public class SaleReportServiceImpl implements SaleReportService{
 
     @Override
     public List<MonthlySalesDTO> getMonthlySales(int year){
-        List<Sale> sales = saleRepository.findSalesByYear(year);
+
+        LocalDateTime startDate = LocalDate.of(year, 1, 1).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(year,12,31).atTime(LocalTime.MAX);
+
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
         List<MonthlySalesDTO> result = new ArrayList<>();
 
         String[] months = {
@@ -62,15 +69,21 @@ public class SaleReportServiceImpl implements SaleReportService{
             }
         }
 
+        MonthlySalesDTO january = result.get(0);
+        january.setAbsoluteGrowth(january.getTotalRevenue());
+        january.setIncrease(BigDecimal.ZERO);
+
         for (int i = 1; i < result.size(); i++) {
             BigDecimal previous = result.get(i - 1).getTotalRevenue();
             BigDecimal current = result.get(i).getTotalRevenue();
+            BigDecimal growthAbsolute = current.subtract(previous);
+            result.get(i).setAbsoluteGrowth(growthAbsolute);
+
             if (previous.compareTo(BigDecimal.ZERO) > 0) {
-                BigDecimal increase = current
-                        .subtract(previous)
+                BigDecimal increasePercentage = growthAbsolute
                         .multiply(BigDecimal.valueOf(100))
                         .divide(previous, 2, RoundingMode.HALF_UP);
-                result.get(i).setIncrease(increase);
+                result.get(i).setIncrease(increasePercentage);
             } else {
                 result.get(i).setIncrease(BigDecimal.ZERO);
             }
