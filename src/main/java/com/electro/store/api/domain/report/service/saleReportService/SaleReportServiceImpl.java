@@ -1,13 +1,17 @@
 package com.electro.store.api.domain.report.service.saleReportService;
 
+import com.electro.store.api.domain.product.model.entity.Product;
 import com.electro.store.api.domain.report.dto.saleDTO.MonthlySalesDTO;
 import com.electro.store.api.domain.report.dto.saleDTO.RankingRevenueDTO;
 import com.electro.store.api.domain.report.dto.saleDTO.RankingSellingDTO;
 import com.electro.store.api.domain.report.service.ReportService;
 import com.electro.store.api.domain.sales.model.entity.Sale;
+import com.electro.store.api.domain.sales.model.entity.SaleDetail;
 import com.electro.store.api.domain.sales.repository.SaleRepository;
 import com.electro.store.api.domain.sales.service.SaleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +21,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Map.Entry.comparingByValue;
 
 @Service
 @RequiredArgsConstructor
@@ -93,12 +101,60 @@ public class SaleReportServiceImpl implements SaleReportService{
 
     @Override
     public List<RankingRevenueDTO> getTopRevenue(int year){
-        return new ArrayList<>();
+
+        LocalDateTime startDate = LocalDate.of(year, 1, 1).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(year, 12, 31).atTime(LocalTime.MAX);
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
+
+        Map<Product, BigDecimal> revenueByProduct = sales.stream()
+                .flatMap(sale -> sale.getDetails().stream())
+                .collect(Collectors.toMap(
+                        SaleDetail::getProduct,
+                        detail -> detail.getSalePrice().multiply(BigDecimal.valueOf(detail.getQuantity())),
+                        BigDecimal::add
+                ));
+
+        return revenueByProduct.entrySet().stream()
+                .sorted(Map.Entry.<Product, BigDecimal>comparingByValue().reversed()).limit(8)
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    BigDecimal totalRevenue = entry.getValue();
+
+                    return new RankingRevenueDTO(
+                            product.getName(),
+                            product.getCategory().getName(),
+                            totalRevenue
+                    );
+                }).toList();
     }
 
     @Override
     public List<RankingRevenueDTO> getBottomRevenue(int year){
-        return new ArrayList<>();
+
+        LocalDateTime startDate = LocalDate.of(year, 1,1).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(year, 12,31).atTime(LocalTime.MAX);
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
+
+        Map<Product, BigDecimal> revenueByProduct = sales.stream()
+                .flatMap(sale -> sale.getDetails().stream())
+                .collect(Collectors.toMap(
+                        SaleDetail::getProduct,
+                        detail -> detail.getSalePrice().multiply(BigDecimal.valueOf(detail.getQuantity())),
+                        BigDecimal::add
+                ));
+
+        return revenueByProduct.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(8)
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    BigDecimal totalRevenue = entry.getValue();
+                    return new RankingRevenueDTO(
+                            product.getName(),
+                            product.getCategory().getName(),
+                            totalRevenue
+                    );
+                }).toList();
     }
 
     @Override
