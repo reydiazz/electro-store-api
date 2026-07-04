@@ -159,12 +159,60 @@ public class SaleReportServiceImpl implements SaleReportService{
 
     @Override
     public List<RankingSellingDTO> getTopSelling(int year){
-        return new ArrayList<>();
+        LocalDateTime startDate = LocalDate.of(year, 1, 1).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(year, 12, 31).atTime(LocalTime.MAX);
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
+
+        Map<Product, Integer> quantityByProduct = sales.stream()
+                .flatMap(sale -> sale.getDetails().stream())
+                .collect(Collectors.groupingBy(
+                        SaleDetail::getProduct,
+                        Collectors.summingInt(SaleDetail::getQuantity)
+                ));
+
+        return quantityByProduct.entrySet().stream()
+                .sorted(Map.Entry.<Product, Integer>comparingByValue().reversed())
+                .limit(8)
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    Integer totalQuantity = entry.getValue();
+
+                    return new RankingSellingDTO(
+                            product.getName(),
+                            product.getCategory().getName(),
+                            totalQuantity
+                    );
+                })
+                .toList();
     }
 
     @Override
     public List<RankingSellingDTO> getBottomSelling(int year){
-        return new ArrayList<>();
+        LocalDateTime startDate = LocalDate.of(year, 1, 1).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(year, 12, 31).atTime(LocalTime.MAX);
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
+
+        Map<Product, Integer> quantityByProduct = sales.stream()
+                .flatMap(sale -> sale.getDetails().stream())
+                .collect(Collectors.groupingBy(
+                        SaleDetail::getProduct,
+                        Collectors.summingInt(SaleDetail::getQuantity)
+                ));
+
+        return quantityByProduct.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(8)
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    Integer totalQuantity = entry.getValue();
+
+                    return new RankingSellingDTO(
+                            product.getName(),
+                            product.getCategory().getName(),
+                            totalQuantity
+                    );
+                })
+                .toList();
     }
 
 }
