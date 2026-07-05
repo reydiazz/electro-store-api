@@ -1,30 +1,24 @@
 <!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
 <jasperReport name="ReporteVenta" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bf83b833-9719-407f-ad8a-e7cc404e165f">
-	<style name="Table_CH" mode="Opaque" backcolor="#F1F5F9">
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
 		<box>
-			<topPen lineWidth="1.0" lineColor="#E2E8F0"/>
-			<leftPen lineWidth="0.0"/>
-			<bottomPen lineWidth="2.0" lineColor="#CBD5E1"/>
-			<rightPen lineWidth="0.0"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
 		<box>
-			<topPen lineWidth="0.0"/>
-			<leftPen lineWidth="0.0"/>
-			<bottomPen lineWidth="1.0" lineColor="#F1F5F9"/>
-			<rightPen lineWidth="0.0"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 		<conditionalStyle mode="Opaque" backcolor="#F8FAFC">
 			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
 		</conditionalStyle>
 	</style>
-	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
-			<topPen lineWidth="0.0"/>
-			<leftPen lineWidth="0.0"/>
-			<bottomPen lineWidth="0.0"/>
-			<rightPen lineWidth="0.0"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<dataset name="dsTopIngresos" uuid="8c5225c1-1153-4da2-b3a4-9475e703d86e">
@@ -196,12 +190,12 @@
 Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 		</element>
 	</pageFooter>
-	<summary height="770">
-		<element kind="staticText" uuid="270a4fd1-e475-4bf6-897b-2ef4d0408186" x="32" y="15" width="212" height="20" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
+	<summary height="802">
+		<element kind="staticText" uuid="270a4fd1-e475-4bf6-897b-2ef4d0408186" positionType="Float" x="32" y="570" width="212" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Tabla de análisis de ventas mensuales]]></text>
 			<property name="com.jaspersoft.studio.unit.x" value="px"/>
 		</element>
-		<element kind="chart" chartType="pie" uuid="aa92a618-cc9c-46d5-acac-0ee4b735d083" x="288" y="25" width="266" height="190" evaluationTime="Report" linkType="None" linkTarget="Self">
+		<element kind="chart" chartType="pie" uuid="aa92a618-cc9c-46d5-acac-0ee4b735d083" positionType="Float" x="288" y="580" width="266" height="190" evaluationTime="Report" linkType="None" linkTarget="Self">
 			<dataset kind="pie">
 				<datasetRun uuid="c00af02f-13ca-4198-bc67-d5ec9c73a7d9" subDataset="dsVentasMensuales">
 					<dataSourceExpression><![CDATA[$P{dsVentasMensuales}]]></dataSourceExpression>
@@ -218,31 +212,31 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="staticText" uuid="7f164ff5-af83-4428-ac26-e73acc7f0015" x="30" y="225" width="220" height="20" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="7f164ff5-af83-4428-ac26-e73acc7f0015" positionType="Float" x="20" y="10" width="240" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Productos con más ingresos en el año]]></text>
 		</element>
-		<element kind="staticText" uuid="1fad943a-400f-474f-bb43-0cf178eabfff" x="315" y="225" width="214" height="20" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="1fad943a-400f-474f-bb43-0cf178eabfff" positionType="Float" x="300" y="10" width="252" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Productos con menos ingresos en el año]]></text>
 			<property name="com.jaspersoft.studio.unit.x" value="px"/>
 		</element>
-		<element kind="staticText" uuid="a62a7f3d-116c-496e-994e-e1116417dbf1" x="25" y="510" width="220" height="20" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="a62a7f3d-116c-496e-994e-e1116417dbf1" positionType="Float" x="27" y="295" width="220" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Productos más vendidos en el año]]></text>
 		</element>
-		<element kind="staticText" uuid="7df98186-b7e9-40be-996d-d4c581b2de7f" x="315" y="510" width="214" height="20" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="7df98186-b7e9-40be-996d-d4c581b2de7f" positionType="Float" x="317" y="295" width="214" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Productos menos vendidos en el año]]></text>
 		</element>
-		<element kind="component" uuid="e669cd65-210d-47c3-83ec-da63d3dad264" x="1" y="255" width="268" height="60">
+		<element kind="component" uuid="e669cd65-210d-47c3-83ec-da63d3dad264" positionType="Float" x="0" y="40" width="271" height="60">
 			<component kind="table">
 				<datasetRun uuid="0781d5d6-15ab-4b68-b37a-5cb9587328d1" subDataset="dsTopIngresos">
 					<dataSourceExpression><![CDATA[$P{dsTopIngresos}]]></dataSourceExpression>
 				</datasetRun>
 				<column kind="single" uuid="abac1cce-0326-41f5-ad4e-47d68227e780" width="100">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="29f504a4-6298-42cd-a7f5-3d47e8da14c8" x="0" y="0" width="100" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Categoría Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="db8f0a42-74e1-4847-971c-2a3596ce5722" x="0" y="0" width="100" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
 						</element>
@@ -250,26 +244,26 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 				</column>
 				<column kind="single" uuid="c5cebb3c-aed2-4c59-a06e-4b26ab5e069e" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="87df607a-e38b-4326-acbe-377edeeb8201" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="08645464-fa26-4df7-8b8e-89d9077b1cf5" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameProduct}]]></expression>
 						</element>
 					</detailCell>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 				</column>
-				<column kind="single" uuid="937ff833-9153-4a6d-a860-6f9fcfafa006" width="78">
-					<columnHeader height="30" rowSpan="1">
-						<element kind="staticText" uuid="6e352b3d-aa52-4d82-ac83-23725e6df6d5" x="0" y="0" width="78" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<column kind="single" uuid="937ff833-9153-4a6d-a860-6f9fcfafa006" width="81">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
+						<element kind="staticText" uuid="6e352b3d-aa52-4d82-ac83-23725e6df6d5" x="0" y="0" width="81" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Ingreso]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
-						<element kind="textField" uuid="c34ceb14-2f7e-4ee2-a3e4-497470a148d0" x="0" y="0" width="78" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="c34ceb14-2f7e-4ee2-a3e4-497470a148d0" x="0" y="0" width="81" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{saleByTotalProduct}]]></expression>
 						</element>
 					</detailCell>
@@ -280,19 +274,28 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
 		</element>
-		<element kind="component" uuid="bb5c4224-4e56-49f3-b744-8cdf59f9bea7" x="295" y="255" width="259" height="60">
+		<element kind="component" uuid="bb5c4224-4e56-49f3-b744-8cdf59f9bea7" positionType="Float" x="295" y="40" width="259" height="60">
 			<component kind="table">
 				<datasetRun uuid="3c94735c-0695-4a14-ac77-4053e2e70e2d" subDataset="dsBottomIngresos">
 					<dataSourceExpression><![CDATA[$P{dsBottomIngresos}]]></dataSourceExpression>
 				</datasetRun>
 				<column kind="single" uuid="975098b2-f8d5-4505-918c-d77cd7071e25" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="05f48584-0064-4994-81e0-914c88fda8f3" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Categoría producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="1162edc5-fcc0-4ae9-bda7-268286620af5" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
 						</element>
@@ -300,12 +303,12 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 				</column>
 				<column kind="single" uuid="95da227c-f9a9-47fb-86b3-5f178e5b8ef2" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="5f40b80a-a134-4008-8e43-eb2243c7b6ef" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="e8455cbc-f0fb-4c56-ae3a-3ee8d3d92211" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameProduct}]]></expression>
 						</element>
@@ -330,19 +333,28 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
 		</element>
-		<element kind="component" uuid="5855c185-2ba8-48ee-a615-ef47471b1676" x="0" y="540" width="269" height="60">
+		<element kind="component" uuid="5855c185-2ba8-48ee-a615-ef47471b1676" positionType="Float" x="0" y="325" width="269" height="60">
 			<component kind="table">
 				<datasetRun uuid="f47e796a-1049-44c6-a1f3-e05bdde04816" subDataset="dsTopVendidos">
 					<dataSourceExpression><![CDATA[$P{dsTopVendidos}]]></dataSourceExpression>
 				</datasetRun>
 				<column kind="single" uuid="d6db769d-53be-4a39-89c6-f1c398395de4" width="100">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="75ff1534-9ef5-42eb-add2-8023ade37641" x="0" y="0" width="100" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Categoría Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="91034580-0375-4bd1-8044-e849021145c2" x="0" y="0" width="100" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
 						</element>
@@ -350,26 +362,26 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 				</column>
 				<column kind="single" uuid="0bb8f277-e3b0-44f5-b0cf-e085246aba01" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="29c4837b-218a-4246-8dde-6ecb773666fa" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="875ec506-8e51-48b1-9901-af25e2e20353" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameProduct}]]></expression>
 						</element>
 					</detailCell>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 				</column>
-				<column kind="single" uuid="18294c4e-ef27-432d-a79f-fbb3a482dbd2" width="76">
+				<column kind="single" uuid="18294c4e-ef27-432d-a79f-fbb3a482dbd2" width="79">
 					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="e44e6474-dce8-4767-831e-e1de703585e4" x="0" y="0" width="76" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+						<element kind="staticText" uuid="e44e6474-dce8-4767-831e-e1de703585e4" x="0" y="0" width="79" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Cantidad de ventas total]]></text>
 						</element>
 					</columnHeader>
 					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="e5afb5f5-f795-485a-847f-5668b9f27506" x="0" y="0" width="76" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+						<element kind="textField" uuid="e5afb5f5-f795-485a-847f-5668b9f27506" x="0" y="0" width="79" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{quantity}]]></expression>
 						</element>
 					</detailCell>
@@ -380,19 +392,28 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
 		</element>
-		<element kind="component" uuid="a3601622-57d2-400d-be9b-af40eafc370f" x="295" y="540" width="259" height="60">
+		<element kind="component" uuid="a3601622-57d2-400d-be9b-af40eafc370f" positionType="Float" x="295" y="325" width="260" height="60">
 			<component kind="table">
 				<datasetRun uuid="81b50d5e-71a7-4341-b2a7-41d0437bb109" subDataset="dsBottomVendidos">
 					<dataSourceExpression><![CDATA[$P{dsBottomVendidos}]]></dataSourceExpression>
 				</datasetRun>
 				<column kind="single" uuid="d18cf046-b1ab-438b-b4e6-3591594d0387" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="c2cbaf24-8723-46a2-ace7-2e72a4d73c65" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Categoría Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="f45699b4-5588-4159-9f19-140754f4d295" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
 						</element>
@@ -400,12 +421,12 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 				</column>
 				<column kind="single" uuid="512e5c70-e86e-4db6-b3c2-2cca66f97831" width="90">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="487f5b50-5880-4f79-a8c1-2edeadbab658" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Producto]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="9f3d0829-2762-4cec-8ea6-9811509e4e59" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{nameProduct}]]></expression>
 						</element>
@@ -430,19 +451,28 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
 		</element>
-		<element kind="component" uuid="2df71162-0782-42c9-b0b3-eeb9df9f28f0" x="1" y="45" width="268" height="160">
+		<element kind="component" uuid="2df71162-0782-42c9-b0b3-eeb9df9f28f0" positionType="Float" x="1" y="600" width="268" height="60">
 			<component kind="table">
 				<datasetRun uuid="96247d19-3742-4a0f-8751-29c9743466f1" subDataset="dsVentasMensuales">
 					<dataSourceExpression><![CDATA[$P{dsVentasMensuales}]]></dataSourceExpression>
 				</datasetRun>
 				<column kind="single" uuid="c3be0567-5678-4674-a27b-72aee86e663e" width="60">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="6c2420e2-3c26-4fe8-aca5-cca0a46f1257" x="0" y="0" width="60" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Mes]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="c198a6b2-9aa2-49e0-a999-23417ca21bb1" x="0" y="0" width="60" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{month}]]></expression>
 						</element>
@@ -450,14 +480,14 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 				</column>
 				<column kind="single" uuid="a46388b2-4544-4e80-819c-d51cd9fab6db" width="70">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="6b38425b-7405-42b0-91cf-1ebb38aca0c0" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Ventas]]></text>
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="c0eb135a-1029-4c63-a4cd-6ea5729ed6b1" x="0" y="0" width="70" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{totalRevenue}]]></expression>
 						</element>
@@ -465,12 +495,12 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 				</column>
 				<column kind="single" uuid="8afd5e80-9638-4782-aefe-6dcbaf877e88" width="70">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="b583c683-6684-47b8-8ca7-81ab6eb5c408" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Crecimiento]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="5a932d3a-3ede-4a22-8938-d0c69a3c42b4" x="0" y="0" width="70" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{increase}]]></expression>
 						</element>
@@ -478,12 +508,12 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 				</column>
 				<column kind="single" uuid="fa666b5a-cc52-4610-bc03-e58bd6e01d24" width="68">
-					<columnHeader height="30" rowSpan="1">
+					<columnHeader height="30" rowSpan="1" style="Table_CH">
 						<element kind="staticText" uuid="114b0589-5b9e-40cb-b1ae-9f917b31cb72" x="0" y="0" width="68" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 							<text><![CDATA[Frente % al mes anterior]]></text>
 						</element>
 					</columnHeader>
-					<detailCell height="30">
+					<detailCell height="30" style="Table_TD">
 						<element kind="textField" uuid="e1fec5f0-d4ff-4fbe-ac3d-dd56230b0034" x="0" y="0" width="68" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
 							<expression><![CDATA[$F{percentage}]]></expression>
 						</element>
@@ -495,8 +525,17 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
 		</element>
-		<element kind="chart" chartType="bar" uuid="5964f308-dd7c-4389-86a3-a36eb79e1646" x="1" y="610" width="268" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
+		<element kind="chart" chartType="bar" uuid="5964f308-dd7c-4389-86a3-a36eb79e1646" positionType="Float" x="0" y="395" width="270" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
 			<dataset kind="category">
 				<datasetRun uuid="00d5a0ba-67d8-4c15-8242-6d02173d1df7" subDataset="dsGraficoTopVendidos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoTopVendidos}]]></dataSourceExpression>
@@ -513,7 +552,7 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="baf74328-b64e-45c6-94aa-de73984398a7" x="1" y="325" width="268" height="165" showLegend="false" evaluationTime="Page" linkTarget="Self">
+		<element kind="chart" chartType="bar" uuid="baf74328-b64e-45c6-94aa-de73984398a7" positionType="Float" x="0" y="110" width="270" height="165" showLegend="false" evaluationTime="Page" linkTarget="Self">
 			<dataset kind="category">
 				<datasetRun uuid="60059062-03fd-432c-8502-c399be50cc3a" subDataset="dsGraficoTopIngresos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoTopIngresos}]]></dataSourceExpression>
@@ -532,7 +571,7 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="4eb7a594-5981-4aec-baf9-fecd443a8ce7" x="295" y="325" width="259" height="165" showLegend="false" evaluationTime="Report" linkTarget="Self">
+		<element kind="chart" chartType="bar" uuid="4eb7a594-5981-4aec-baf9-fecd443a8ce7" positionType="Float" x="297" y="110" width="256" height="165" showLegend="false" evaluationTime="Report" linkTarget="Self">
 			<dataset kind="category">
 				<datasetRun uuid="ec3cb1ec-625b-4b06-9cb0-4b2ade5d7d3f" subDataset="dsGraficoBottomIngresos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoBottomIngresos}]]></dataSourceExpression>
@@ -550,7 +589,7 @@ Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 				<itemLabel/>
 			</plot>
 		</element>
-		<element kind="chart" chartType="bar" uuid="108ed029-0406-4253-88a0-c6ad8845f293" x="295" y="610" width="260" height="160" showLegend="false" evaluationTime="Report">
+		<element kind="chart" chartType="bar" uuid="108ed029-0406-4253-88a0-c6ad8845f293" positionType="Float" x="297" y="395" width="258" height="160" showLegend="false" evaluationTime="Report">
 			<dataset kind="category">
 				<datasetRun uuid="ca69cd82-8ea7-4326-b4c2-47aeff17659d" subDataset="dsGraficoBottomVendidos">
 					<dataSourceExpression><![CDATA[$P{dsGraficoBottomVendidos}]]></dataSourceExpression>

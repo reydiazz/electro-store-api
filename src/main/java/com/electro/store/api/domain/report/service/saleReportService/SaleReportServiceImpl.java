@@ -115,7 +115,7 @@ public class SaleReportServiceImpl implements SaleReportService{
                 ));
 
         return revenueByProduct.entrySet().stream()
-                .sorted(Map.Entry.<Product, BigDecimal>comparingByValue().reversed()).limit(8)
+                .sorted(Map.Entry.<Product, BigDecimal>comparingByValue().reversed()).limit(5)
                 .map(entry -> {
                     Product product = entry.getKey();
                     BigDecimal totalRevenue = entry.getValue();
@@ -145,7 +145,7 @@ public class SaleReportServiceImpl implements SaleReportService{
 
         return revenueByProduct.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
-                .limit(8)
+                .limit(5)
                 .map(entry -> {
                     Product product = entry.getKey();
                     BigDecimal totalRevenue = entry.getValue();
@@ -172,7 +172,7 @@ public class SaleReportServiceImpl implements SaleReportService{
 
         return quantityByProduct.entrySet().stream()
                 .sorted(Map.Entry.<Product, Integer>comparingByValue().reversed())
-                .limit(8)
+                .limit(5)
                 .map(entry -> {
                     Product product = entry.getKey();
                     Integer totalQuantity = entry.getValue();
@@ -201,7 +201,7 @@ public class SaleReportServiceImpl implements SaleReportService{
 
         return quantityByProduct.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
-                .limit(8)
+                .limit(5)
                 .map(entry -> {
                     Product product = entry.getKey();
                     Integer totalQuantity = entry.getValue();
