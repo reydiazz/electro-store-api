@@ -32,4 +32,22 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
+
+    @Query("""
+       SELECT CAST(s.saleDate AS date), COALESCE(SUM(d.salePrice * d.quantity), 0)
+       FROM Sale s JOIN s.details d
+       WHERE s.saleDate >= :startDate
+       GROUP BY CAST(s.saleDate AS date)
+       ORDER BY CAST(s.saleDate AS date)
+       """)
+    List<Object[]> findDailySalesTotals(@Param("startDate") LocalDateTime startDate);
+
+    @Query("""
+       SELECT d.product.name, COALESCE(SUM(d.quantity), 0)
+       FROM SaleDetail d
+       WHERE d.sale.saleDate >= :startDate
+       GROUP BY d.product.name
+       ORDER BY COALESCE(SUM(d.quantity), 0) DESC
+       """)
+    List<Object[]> findTopSellingProducts(@Param("startDate") LocalDateTime startDate, Pageable pageable);
 }
