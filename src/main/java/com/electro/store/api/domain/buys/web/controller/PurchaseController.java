@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/purchases")
@@ -66,5 +67,13 @@ public class PurchaseController {
         PurchasesResponse response = service.create(request);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/daily-summary")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
+    public ResponseEntity<List<com.electro.store.api.domain.sales.web.response.DailySummaryResponse>> getDailySummary(
+            @RequestParam(defaultValue = "7") int days
+    ) {
+        return ResponseEntity.ok(service.getDailyPurchasesTotals(days));
     }
 }

@@ -39,4 +39,13 @@ public interface PurchasesRepository extends JpaRepository<Purchases, String> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
-}
+
+    @Query("""
+       SELECT CAST(p.purchaseDate AS date), COALESCE(SUM(d.purchasePrice * d.quantity), 0)
+       FROM Purchases p JOIN p.details d
+       WHERE p.purchaseDate >= :startDate
+       GROUP BY CAST(p.purchaseDate AS date)
+       ORDER BY CAST(p.purchaseDate AS date)
+       """)
+    List<Object[]> findDailyPurchasesTotals(@Param("startDate") LocalDateTime startDate);
+}

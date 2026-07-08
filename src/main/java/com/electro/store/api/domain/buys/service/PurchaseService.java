@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.time.LocalDateTime;
@@ -160,4 +161,22 @@ public class PurchaseService {
         return purchases.getDetails().stream().map(details -> details.getPurchasePrice().multiply(BigDecimal.valueOf(details.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    @Transactional(readOnly = true)
+    public List<com.electro.store.api.domain.sales.web.response.DailySummaryResponse> getDailyPurchasesTotals(int days) {
+        LocalDateTime startDate = LocalDate.now().minusDays(days - 1).atStartOfDay();
+        List<Object[]> results = repository.findDailyPurchasesTotals(startDate);
+
+        Map<String, BigDecimal> dataMap = results.stream().collect(Collectors.toMap(
+                row -> row[0].toString(),
+                row -> (BigDecimal) row[1]
+        ));
+
+        List<com.electro.store.api.domain.sales.web.response.DailySummaryResponse> response = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            String dateStr = LocalDate.now().minusDays(days - 1 - i).toString();
+            BigDecimal total = dataMap.getOrDefault(dateStr, BigDecimal.ZERO);
+            response.add(new com.electro.store.api.domain.sales.web.response.DailySummaryResponse(dateStr, total));
+        }
+        return response;
+    }
 }
