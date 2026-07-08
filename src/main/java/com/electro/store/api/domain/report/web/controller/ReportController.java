@@ -1,7 +1,6 @@
-package com.electro.store.api.domain.report.controller;
+package com.electro.store.api.domain.report.web.controller;
 
 import com.electro.store.api.domain.report.service.ReportService;
-import com.electro.store.api.domain.report.service.saleReportService.SaleReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

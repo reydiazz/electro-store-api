@@ -1,9 +1,10 @@
 package com.electro.store.api.domain.report.service;
 
-import com.electro.store.api.domain.report.dto.saleDTO.MonthlySalesDTO;
-import com.electro.store.api.domain.report.dto.saleDTO.RankingRevenueDTO;
-import com.electro.store.api.domain.report.dto.saleDTO.RankingSellingDTO;
-import com.electro.store.api.domain.report.service.saleReportService.SaleReportService;
+import com.electro.store.api.domain.report.dto.sale.MonthlySalesDTO;
+import com.electro.store.api.domain.report.dto.sale.RankingRevenueDTO;
+import com.electro.store.api.domain.report.dto.sale.RankingSellingDTO;
+import com.electro.store.api.domain.report.service.sale.SaleRanking;
+import com.electro.store.api.domain.report.service.sale.SaleReportService;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -27,10 +28,11 @@ public class ReportServiceImpl implements ReportService {
     public byte[] generatePdfSalesReport(int year) throws Exception {
 
         List<MonthlySalesDTO> monthlySales = saleReportService.getMonthlySales(year);
-        List<RankingRevenueDTO> topRevenue = saleReportService.getTopRevenue(year);
-        List<RankingRevenueDTO> bottomRevenue = saleReportService.getBottomRevenue(year);
-        List<RankingSellingDTO> topSelling = saleReportService.getTopSelling(year);
-        List<RankingSellingDTO> bottomSelling = saleReportService.getBottomSelling(year);
+        SaleRanking rankings = saleReportService.getSaleRankings(year);
+        List<RankingRevenueDTO> topRevenue = rankings.topRevenue();
+        List<RankingRevenueDTO> bottomRevenue = rankings.bottomRevenue();
+        List<RankingSellingDTO> topSelling = rankings.topSelling();
+        List<RankingSellingDTO> bottomSelling = rankings.bottomSelling();
 
         InputStream reportStream = new ClassPathResource("reports/ReporteVenta.jrxml").getInputStream();
         InputStream logoStream = new ClassPathResource("reports/logo.png").getInputStream();

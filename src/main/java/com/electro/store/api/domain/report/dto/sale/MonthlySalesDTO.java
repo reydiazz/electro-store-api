@@ -1,4 +1,4 @@
-package com.electro.store.api.domain.report.dto.saleDTO;
+package com.electro.store.api.domain.report.dto.sale;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
