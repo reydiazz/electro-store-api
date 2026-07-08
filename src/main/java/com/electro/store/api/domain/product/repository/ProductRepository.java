@@ -41,4 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("SELECT DISTINCT p.brand FROM Product p WHERE p.brand IS NOT NULL ORDER BY p.brand")
     List<String> findDistinctBrands();
+
+    @Query("SELECT p.category.name, COUNT(p) FROM Product p GROUP BY p.category.name ORDER BY COUNT(p) DESC")
+    List<Object[]> countByCategory();
 }
