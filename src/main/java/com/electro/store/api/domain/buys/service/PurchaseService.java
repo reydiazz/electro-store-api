@@ -86,11 +86,10 @@ public class PurchaseService {
         LocalDateTime startDate = today.atStartOfDay();
         LocalDateTime endDate = today.atTime(LocalTime.MAX);
 
-        List<Purchases> purchases = repository.findByPurchaseDateBetween(startDate,endDate);
+        com.electro.store.api.domain.buys.web.response.PurchaseDashboardProjection totals = repository.getDashboardTotals(startDate, endDate);
 
-        Long transactions = (long) purchases.size();
-
-        BigDecimal todayPurchase = purchases.stream().map(this::calculatePurchasesTotal).reduce(BigDecimal.ZERO,BigDecimal::add);
+        Long transactions = totals.transactionCount();
+        BigDecimal todayPurchase = totals.totalAmount() != null ? totals.totalAmount() : BigDecimal.ZERO;
         BigDecimal averageTicket = transactions == 0 ? BigDecimal.ZERO : todayPurchase.divide(BigDecimal.valueOf(transactions),2,RoundingMode.HALF_UP);
 
         return new PurchaseDashboardResponse(todayPurchase,transactions,averageTicket);

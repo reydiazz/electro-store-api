@@ -24,7 +24,7 @@ public class Purchases {
     @JoinColumn(name = "user_code", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_code", nullable = false)
     private Supplier supplier;
 

@@ -50,4 +50,17 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
        ORDER BY COALESCE(SUM(d.quantity), 0) DESC
        """)
     List<Object[]> findTopSellingProducts(@Param("startDate") LocalDateTime startDate, Pageable pageable);
+
+    @Query("""
+       SELECT new com.electro.store.api.domain.sales.web.response.DashboardProjection(
+           COALESCE(SUM(d.salePrice * d.quantity), 0),
+           COUNT(DISTINCT s)
+       )
+       FROM Sale s LEFT JOIN s.details d
+       WHERE s.saleDate BETWEEN :startDate AND :endDate
+       """)
+    com.electro.store.api.domain.sales.web.response.DashboardProjection getDashboardTotals(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }

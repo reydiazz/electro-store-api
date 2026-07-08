@@ -90,19 +90,13 @@ public class SaleService {
 
         LocalDateTime endDate = today.atTime(LocalTime.MAX);
 
-        List<Sale> sales = repository.findBySaleDateBetween(
+        com.electro.store.api.domain.sales.web.response.DashboardProjection totals = repository.getDashboardTotals(
                 startDate,
                 endDate
         );
 
-        Long transactions = (long) sales.size();
-
-        BigDecimal todaySales = sales.stream()
-                .map(this::calculateSaleTotal)
-                .reduce(
-                        BigDecimal.ZERO,
-                        BigDecimal::add
-                );
+        Long transactions = totals.transactionCount();
+        BigDecimal todaySales = totals.totalAmount() != null ? totals.totalAmount() : BigDecimal.ZERO;
 
         BigDecimal averageTicket = transactions == 0
                 ? BigDecimal.ZERO
