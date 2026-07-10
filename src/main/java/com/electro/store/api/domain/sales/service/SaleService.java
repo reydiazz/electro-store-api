@@ -30,6 +30,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,19 +90,13 @@ public class SaleService {
 
         LocalDateTime endDate = today.atTime(LocalTime.MAX);
 
-        List<Sale> sales = repository.findBySaleDateBetween(
+        com.electro.store.api.domain.sales.web.response.DashboardProjection totals = repository.getDashboardTotals(
                 startDate,
                 endDate
         );
 
-        Long transactions = (long) sales.size();
-
-        BigDecimal todaySales = sales.stream()
-                .map(this::calculateSaleTotal)
-                .reduce(
-                        BigDecimal.ZERO,
-                        BigDecimal::add
-                );
+        Long transactions = totals.transactionCount();
+        BigDecimal todaySales = totals.totalAmount() != null ? totals.totalAmount() : BigDecimal.ZERO;
 
         BigDecimal averageTicket = transactions == 0
                 ? BigDecimal.ZERO
@@ -211,5 +206,32 @@ public class SaleService {
                 );
     }
 
+    @Transactional(readOnly = true)
+    public List<com.electro.store.api.domain.sales.web.response.DailySummaryResponse> getDailySalesTotals(int days) {
+        LocalDateTime startDate = LocalDate.now().minusDays(days - 1).atStartOfDay();
+        List<Object[]> results = repository.findDailySalesTotals(startDate);
+        
 
+        Map<String, BigDecimal> dataMap = results.stream().collect(Collectors.toMap(
+                row -> row[0].toString(),
+                row -> (BigDecimal) row[1]
+        ));
+
+        List<com.electro.store.api.domain.sales.web.response.DailySummaryResponse> response = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            String dateStr = LocalDate.now().minusDays(days - 1 - i).toString();
+            BigDecimal total = dataMap.getOrDefault(dateStr, BigDecimal.ZERO);
+            response.add(new com.electro.store.api.domain.sales.web.response.DailySummaryResponse(dateStr, total));
+        }
+        return response;
+    }
+
+    @Transactional(readOnly = true)
+    public List<com.electro.store.api.domain.sales.web.response.TopProductResponse> getTopSellingProducts(int limit) {
+        LocalDateTime startDate = LocalDate.now().minusDays(30).atStartOfDay();
+        List<Object[]> results = repository.findTopSellingProducts(startDate, org.springframework.data.domain.PageRequest.of(0, limit));
+        return results.stream()
+                .map(row -> new com.electro.store.api.domain.sales.web.response.TopProductResponse((String) row[0], ((Number) row[1]).longValue()))
+                .collect(Collectors.toList());
+    }
 }

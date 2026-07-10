@@ -12,8 +12,12 @@ import java.util.List;
 
 public interface PurchasesRepository extends JpaRepository<Purchases, String> {
 
-    @Query("SELECT p FROM Purchases p WHERE " +
-            "(:search IS NULL OR " +
+    @Query("SELECT DISTINCT p FROM Purchases p " +
+            "JOIN FETCH p.supplier " +
+            "JOIN FETCH p.user u " +
+            "JOIN FETCH u.employee e " +
+            "JOIN FETCH e.person " +
+            "WHERE (:search IS NULL OR " +
             "LOWER(p.code) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.supplier.tradeName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.supplier.legalName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
@@ -39,4 +43,26 @@ public interface PurchasesRepository extends JpaRepository<Purchases, String> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
-}
+
+    @Query("""
+       SELECT CAST(p.purchaseDate AS date), COALESCE(SUM(d.purchasePrice * d.quantity), 0)
+       FROM Purchases p JOIN p.details d
+       WHERE p.purchaseDate >= :startDate
+       GROUP BY CAST(p.purchaseDate AS date)
+       ORDER BY CAST(p.purchaseDate AS date)
+       """)
+    List<Object[]> findDailyPurchasesTotals(@Param("startDate") LocalDateTime startDate);
+
+    @Query("""
+       SELECT new com.electro.store.api.domain.buys.web.response.PurchaseDashboardProjection(
+           COALESCE(SUM(d.purchasePrice * d.quantity), 0),
+           COUNT(DISTINCT p)
+       )
+       FROM Purchases p LEFT JOIN p.details d
+       WHERE p.purchaseDate BETWEEN :startDate AND :endDate
+       """)
+    com.electro.store.api.domain.buys.web.response.PurchaseDashboardProjection getDashboardTotals(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
+}

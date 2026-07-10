@@ -68,4 +68,10 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/category-distribution")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'STOREKEEPER')")
+    public ResponseEntity<List<com.electro.store.api.domain.product.web.response.CategoryDistributionResponse>> getCategoryDistribution() {
+        return ResponseEntity.ok(service.getCategoryDistribution());
+    }
+
 }

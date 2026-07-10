@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -86,4 +87,11 @@ public class ProductService {
         return repository.findDistinctBrands();
     }
 
+    @Transactional(readOnly = true)
+    public List<com.electro.store.api.domain.product.web.response.CategoryDistributionResponse> getCategoryDistribution() {
+        List<Object[]> results = repository.countByCategory();
+        return results.stream()
+                .map(row -> new com.electro.store.api.domain.product.web.response.CategoryDistributionResponse((String) row[0], ((Number) row[1]).longValue()))
+                .collect(Collectors.toList());
+    }
 }
