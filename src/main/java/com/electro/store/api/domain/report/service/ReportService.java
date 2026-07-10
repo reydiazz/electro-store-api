@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface ReportService {
 
-    byte[] generatePdfSalesReport(int year) throws Exception;
+    byte[] generatePdfSalesReport(int year);
 
 }

@@ -22,17 +22,14 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/sales-report/{year}")
-    public ResponseEntity<byte[]> reporteVenta(@PathVariable int year) {
-        try{
-            byte[] pdf = reportService.generatePdfSalesReport(year);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=Reporte_Ventas_" + year + ".pdf")
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(pdf);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+    public ResponseEntity<byte[]> generateSalesReport(@PathVariable int year) {
+
+        byte[] pdf = reportService.generatePdfSalesReport(year);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=Reporte_Ventas_" + year + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 
 

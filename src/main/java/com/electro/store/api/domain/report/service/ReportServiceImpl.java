@@ -1,8 +1,11 @@
 package com.electro.store.api.domain.report.service;
 
+import com.electro.store.api.domain.report.component.JasperPdfGenerator;
 import com.electro.store.api.domain.report.dto.sale.MonthlySalesDTO;
 import com.electro.store.api.domain.report.dto.sale.RankingRevenueDTO;
 import com.electro.store.api.domain.report.dto.sale.RankingSellingDTO;
+import com.electro.store.api.domain.report.exception.InvalidReportYearException;
+import com.electro.store.api.domain.report.exception.ReportGenerationException;
 import com.electro.store.api.domain.report.service.sale.SaleRanking;
 import com.electro.store.api.domain.report.service.sale.SaleReportService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,74 +27,80 @@ import java.util.stream.Collectors;
 
 public class ReportServiceImpl implements ReportService {
 
+    private static final String SALES_REPORT_TEMPLATE = "reports/ReporteVenta.jrxml";
+    private static final String LOGO_PATH = "reports/logo.png";
+    private static final int MIN_REPORT_YEAR = 2000;
+
     private final SaleReportService saleReportService;
+    private final JasperPdfGenerator pdfGenerator;
 
     @Override
-    public byte[] generatePdfSalesReport(int year) throws Exception {
+    public byte[] generatePdfSalesReport(int year) {
+
+        validateYear(year);
 
         List<MonthlySalesDTO> monthlySales = saleReportService.getMonthlySales(year);
         SaleRanking rankings = saleReportService.getSaleRankings(year);
-        List<RankingRevenueDTO> topRevenue = rankings.topRevenue();
-        List<RankingRevenueDTO> bottomRevenue = rankings.bottomRevenue();
-        List<RankingSellingDTO> topSelling = rankings.topSelling();
-        List<RankingSellingDTO> bottomSelling = rankings.bottomSelling();
 
-        InputStream reportStream = new ClassPathResource("reports/ReporteVenta.jrxml").getInputStream();
-        InputStream logoStream = new ClassPathResource("reports/logo.png").getInputStream();
-        JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("logoEmpresa", loadLogo());
 
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("logoEmpresa", logoStream);
+        parameters.put("dsVentasMensuales", new JRBeanCollectionDataSource(monthlySales));
+        parameters.put("dsTopIngresos", new JRBeanCollectionDataSource(rankings.topRevenue()));
+        parameters.put("dsBottomIngresos", new JRBeanCollectionDataSource(rankings.bottomRevenue()));
+        parameters.put("dsTopVendidos", new JRBeanCollectionDataSource(rankings.topSelling()));
+        parameters.put("dsBottomVendidos", new JRBeanCollectionDataSource(rankings.bottomSelling()));
 
-        parametros.put("dsVentasMensuales", new JRBeanCollectionDataSource(monthlySales));
-        parametros.put("dsTopIngresos", new JRBeanCollectionDataSource(topRevenue));
-        parametros.put("dsBottomIngresos", new JRBeanCollectionDataSource(bottomRevenue));
-        parametros.put("dsTopVendidos", new JRBeanCollectionDataSource(topSelling));
-        parametros.put("dsBottomVendidos", new JRBeanCollectionDataSource(bottomSelling));
+        parameters.put("dsGraficoTopIngresos", revenueChartSource(rankings.topRevenue()));
+        parameters.put("dsGraficoBottomIngresos", revenueChartSource(rankings.bottomRevenue()));
+        parameters.put("dsGraficoTopVendidos", sellingChartSource(rankings.topSelling()));
+        parameters.put("dsGraficoBottomVendidos", sellingChartSource(rankings.bottomSelling()));
+        parameters.put("dsGraficoVentasMensuales", monthlyChartSource(monthlySales));
 
-        List<Map<String, Object>> chartTopRevenue = topRevenue.stream().map(dto -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("productName", dto.getNameProduct());
-            map.put("totalRevenue", dto.getSaleByTotalProduct());
-            return map;
-        }).collect(Collectors.toList());
+        return pdfGenerator.generate(SALES_REPORT_TEMPLATE, parameters);
+    }
 
-        List<Map<String, Object>> chartBottomRevenue = bottomRevenue.stream().map(dto -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("productName", dto.getNameProduct());
-            map.put("totalRevenue", dto.getSaleByTotalProduct());
-            return map;
-        }).collect(Collectors.toList());
+    private void validateYear(int year) {
+        if (year < MIN_REPORT_YEAR || year > LocalDate.now().getYear()) {
+            throw new InvalidReportYearException(year);
+        }
+    }
 
-        List<Map<String, Object>> chartTopSelling = topSelling.stream().map(dto -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("productName", dto.getNameProduct());
-            map.put("quantity", dto.getQuantity());
-            return map;
-        }).collect(Collectors.toList());
+    private InputStream loadLogo() {
+        try {
+            return new ClassPathResource(LOGO_PATH).getInputStream();
+        } catch (IOException e) {
+            throw new ReportGenerationException(LOGO_PATH, e);
+        }
+    }
 
-        List<Map<String, Object>> chartBottomSelling = bottomSelling.stream().map(dto -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("productName", dto.getNameProduct());
-            map.put("quantity", dto.getQuantity());
-            return map;
-        }).collect(Collectors.toList());
+    private JRBeanCollectionDataSource revenueChartSource(List<RankingRevenueDTO> ranking) {
+        List<Map<String, Object>> rows = ranking.stream().map(dto -> {
+            Map<String, Object> row = new HashMap<String, Object>();
+            row.put("productName", dto.getNameProduct());
+            row.put("totalRevenue", dto.getSaleByTotalProduct());
+            return row;
+        }).toList();
+        return new JRBeanCollectionDataSource(rows);
+    }
 
-        List<Map<String, Object>> chartMonthlySales = monthlySales.stream().map(dto -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("monthName", dto.getMonth());
-            map.put("totalSales", dto.getTotalRevenue());
-            return map;
-        }).collect(Collectors.toList());
+    private JRBeanCollectionDataSource sellingChartSource(List<RankingSellingDTO> ranking) {
+        List<Map<String, Object>> rows = ranking.stream().map(dto -> {
+            Map<String, Object> row = new HashMap<String, Object>();
+            row.put("productName", dto.getNameProduct());
+            row.put("quantity", dto.getQuantity());
+            return row;
+        }).toList();
+        return new JRBeanCollectionDataSource(rows);
+    }
 
-        parametros.put("dsGraficoTopIngresos", new JRBeanCollectionDataSource(chartTopRevenue));
-        parametros.put("dsGraficoBottomIngresos", new JRBeanCollectionDataSource(chartBottomRevenue));
-        parametros.put("dsGraficoTopVendidos", new JRBeanCollectionDataSource(chartTopSelling));
-        parametros.put("dsGraficoBottomVendidos", new JRBeanCollectionDataSource(chartBottomSelling));
-        parametros.put("dsGraficoVentasMensuales", new JRBeanCollectionDataSource(chartMonthlySales));
-
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, new JREmptyDataSource());
-
-        return JasperExportManager.exportReportToPdf(jasperPrint);
+    private JRBeanCollectionDataSource monthlyChartSource(List<MonthlySalesDTO> monthlySales) {
+        List<Map<String, Object>> rows = monthlySales.stream().map(dto -> {
+            Map<String, Object> row = new HashMap<String, Object>();
+            row.put("monthName", dto.getMonth());
+            row.put("totalSales", dto.getTotalRevenue());
+            return row;
+        }).toList();
+        return new JRBeanCollectionDataSource(rows);
     }
 }
