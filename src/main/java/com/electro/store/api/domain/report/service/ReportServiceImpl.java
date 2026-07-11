@@ -51,11 +51,12 @@ public class ReportServiceImpl implements ReportService {
         parameters.put("dsTopVendidos", new JRBeanCollectionDataSource(rankings.topSelling()));
         parameters.put("dsBottomVendidos", new JRBeanCollectionDataSource(rankings.bottomSelling()));
 
-        parameters.put("dsGraficoTopIngresos", revenueChartSource(rankings.topRevenue()));
-        parameters.put("dsGraficoBottomIngresos", revenueChartSource(rankings.bottomRevenue()));
-        parameters.put("dsGraficoTopVendidos", sellingChartSource(rankings.topSelling()));
-        parameters.put("dsGraficoBottomVendidos", sellingChartSource(rankings.bottomSelling()));
-        parameters.put("dsGraficoVentasMensuales", monthlyChartSource(monthlySales));
+        parameters.put("dsGraficoVentasMensuales", new JRBeanCollectionDataSource(monthlySales));
+        parameters.put("dsGraficoTopIngresos", new JRBeanCollectionDataSource(rankings.topRevenue()));
+        parameters.put("dsGraficoBottomIngresos", new JRBeanCollectionDataSource(rankings.bottomRevenue()));
+        parameters.put("dsGraficoTopVendidos", new JRBeanCollectionDataSource(rankings.topSelling()));
+        parameters.put("dsGraficoBottomVendidos", new JRBeanCollectionDataSource(rankings.bottomSelling()));
+        parameters.put("anio", year);
 
         return pdfGenerator.generate(SALES_REPORT_TEMPLATE, parameters);
     }
@@ -72,35 +73,5 @@ public class ReportServiceImpl implements ReportService {
         } catch (IOException e) {
             throw new ReportGenerationException(LOGO_PATH, e);
         }
-    }
-
-    private JRBeanCollectionDataSource revenueChartSource(List<RankingRevenueDTO> ranking) {
-        List<Map<String, Object>> rows = ranking.stream().map(dto -> {
-            Map<String, Object> row = new HashMap<String, Object>();
-            row.put("productName", dto.getNameProduct());
-            row.put("totalRevenue", dto.getSaleByTotalProduct());
-            return row;
-        }).toList();
-        return new JRBeanCollectionDataSource(rows);
-    }
-
-    private JRBeanCollectionDataSource sellingChartSource(List<RankingSellingDTO> ranking) {
-        List<Map<String, Object>> rows = ranking.stream().map(dto -> {
-            Map<String, Object> row = new HashMap<String, Object>();
-            row.put("productName", dto.getNameProduct());
-            row.put("quantity", dto.getQuantity());
-            return row;
-        }).toList();
-        return new JRBeanCollectionDataSource(rows);
-    }
-
-    private JRBeanCollectionDataSource monthlyChartSource(List<MonthlySalesDTO> monthlySales) {
-        List<Map<String, Object>> rows = monthlySales.stream().map(dto -> {
-            Map<String, Object> row = new HashMap<String, Object>();
-            row.put("monthName", dto.getMonth());
-            row.put("totalSales", dto.getTotalRevenue());
-            return row;
-        }).toList();
-        return new JRBeanCollectionDataSource(rows);
     }
 }

@@ -1,5 +1,11 @@
 <!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
 <jasperReport name="ReporteVenta" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bf83b833-9719-407f-ad8a-e7cc404e165f">
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
 		<box>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -15,43 +21,32 @@
 			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
 		</conditionalStyle>
 	</style>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
 	<dataset name="dsTopIngresos" uuid="8c5225c1-1153-4da2-b3a4-9475e703d86e">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
 		<field name="nameProduct" class="java.lang.String"/>
 		<field name="nameCategoryProduct" class="java.lang.String"/>
 		<field name="saleByTotalProduct" class="java.math.BigDecimal"/>
 	</dataset>
 	<dataset name="dsBottomIngresos" uuid="74f08a56-743a-478a-a8d7-e67041cb4099">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
 		<field name="nameProduct" class="java.lang.String"/>
 		<field name="nameCategoryProduct" class="java.lang.String"/>
 		<field name="saleByTotalProduct" class="java.math.BigDecimal"/>
 	</dataset>
 	<dataset name="dsTopVendidos" uuid="e1f3c989-8e3f-4040-99ca-56eb733780b8">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
 		<field name="nameProduct" class="java.lang.String"/>
 		<field name="nameCategoryProduct" class="java.lang.String"/>
 		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
 	<dataset name="dsBottomVendidos" uuid="cfcd8186-c015-4518-92ad-ecadd37eccfe">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
 		<field name="nameProduct" class="java.lang.String"/>
 		<field name="nameCategoryProduct" class="java.lang.String"/>
 		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
 	<dataset name="dsVentasMensuales" uuid="c8b7b1e3-6d75-4360-bb82-2988d4d0c524">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
 		<field name="month" class="java.lang.String"/>
 		<field name="totalRevenue" class="java.math.BigDecimal"/>
 		<field name="increase" class="java.math.BigDecimal"/>
@@ -59,41 +54,43 @@
 	</dataset>
 	<dataset name="dsGraficoTopIngresos" uuid="def8967a-ceae-43a1-968a-9478ed1c22b3">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
-		<field name="totalRevenue" class="java.math.BigDecimal"/>
-		<field name="productName" class="java.lang.String"/>
+		<field name="saleByTotalProduct" class="java.math.BigDecimal"/>
+		<field name="nameProduct" class="java.lang.String"/>
 	</dataset>
 	<dataset name="dsGraficoBottomIngresos" uuid="63b25d43-61b0-4826-89c4-be9dcf5185c0">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
-		<field name="totalRevenue" class="java.math.BigDecimal"/>
-		<field name="productName" class="java.lang.String"/>
+		<field name="saleByTotalProduct" class="java.math.BigDecimal"/>
+		<field name="nameProduct" class="java.lang.String"/>
 	</dataset>
 	<dataset name="dsGraficoTopVendidos" uuid="faadae3a-d628-45dd-ae89-faea301e08ad">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
-		<field name="productName" class="java.lang.String"/>
+		<field name="nameProduct" class="java.lang.String"/>
 		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
 	<dataset name="dsGraficoBottomVendidos" uuid="aae6446b-c8e7-483b-8a4d-83aad1e2ed79">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<query language="sql"><![CDATA[]]></query>
-		<field name="productName" class="java.lang.String"/>
+		<field name="nameProduct" class="java.lang.String"/>
 		<field name="quantity" class="java.lang.Integer"/>
 	</dataset>
+	<dataset name="dsGraficoVentasMensuales" uuid="ca6cd607-404f-41ff-ae4b-44fc26919cb9">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="month" class="java.lang.String"/>
+		<field name="totalRevenue" class="java.math.BigDecimal"/>
+	</dataset>
 	<parameter name="logoEmpresa" class="java.io.InputStream"/>
-	<parameter name="dsTopIngresos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsBottomIngresos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsTopVendidos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsBottomVendidos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsVentasMensuales" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsGraficoTopIngresos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsGraficoBottomIngresos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsGraficoTopVendidos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dsGraficoBottomVendidos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<query language="sql"><![CDATA[]]></query>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="dsTopIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsBottomIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsTopVendidos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsBottomVendidos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsVentasMensuales" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoTopIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoBottomIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoTopVendidos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoBottomVendidos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoVentasMensuales" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<background splitType="Stretch"/>
-	<title height="120" splitType="Stretch">
+	<title height="153" splitType="Stretch">
 		<element kind="image" uuid="7720c905-4385-4634-9661-13dcb9891076" x="0" y="15" width="80" height="80" onErrorType="Blank">
 			<expression><![CDATA[$P{logoEmpresa}]]></expression>
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -160,7 +157,7 @@
 			<property name="com.jaspersoft.studio.unit.x" value="px"/>
 			<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 		</element>
-		<element kind="textField" uuid="17c11c5e-c251-4a12-a3d7-79476aa7f291" x="405" y="18" width="75" height="14" pattern="MMMMM dd, yyyy">
+		<element kind="textField" uuid="17c11c5e-c251-4a12-a3d7-79476aa7f291" x="405" y="18" width="75" height="14" pattern="MMMM dd, yyyy">
 			<expression><![CDATA[new java.util.Date()]]></expression>
 			<property name="com.jaspersoft.studio.unit.x" value="px"/>
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -172,439 +169,453 @@
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
 			<property name="com.jaspersoft.studio.unit.y" value="px"/>
 		</element>
-		<property name="com.jaspersoft.studio.unit.height" value="px"/>
-	</title>
-	<pageHeader height="30" splitType="Stretch">
-		<element kind="staticText" uuid="e2aebf0e-1d9f-4686-b9e4-3dee082209f3" mode="Opaque" x="0" y="0" width="555" height="30" forecolor="#FFFFFF" backcolor="#336B87" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[REPORTE DE VENTAS - ELECTRO STORE]]></text>
+		<element kind="textField" uuid="e2aebf0e-1d9f-4686-b9e4-3dee082209f3" mode="Opaque" x="0" y="120" width="555" height="30" forecolor="#FFFFFF" backcolor="#336B87" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{anio} == null ? "REPORTE DE VENTAS - ELECTRO STORE" : "REPORTE DE VENTAS " + $P{anio} + " - ELECTRO STORE"]]></expression>
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
 		</element>
 		<property name="com.jaspersoft.studio.unit.height" value="px"/>
-	</pageHeader>
+	</title>
 	<detail>
-		<band height="4" splitType="Stretch"/>
+		<band height="323" splitType="Stretch">
+			<element kind="staticText" uuid="c5fcf01e-bcfd-46ff-9bc1-ad0d31b8b988" positionType="Float" x="190" y="10" width="184" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Tabla de análisis de ventas mensuales]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			</element>
+			<element kind="component" uuid="57b0d452-c4e5-4602-b663-8beb232aaf8a" positionType="Float" x="20" y="40" width="519" height="40">
+				<component kind="table">
+					<datasetRun uuid="b50301b8-3b79-4a46-a63f-de87c63bf62d" subDataset="dsVentasMensuales">
+						<dataSourceExpression><![CDATA[$P{dsVentasMensuales}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="6281a02a-757e-4927-8117-c85925867b70" width="110">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="7f67c13a-a3d8-4ea0-903e-cf8c939451b6" x="0" y="0" width="110" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Mes]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="4755b81b-ec03-4f81-8aea-ce64f1f41ef2" x="0" y="0" width="110" height="20" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{month}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="06cb9d05-93d8-4aba-9ebb-43d66d8d4f23" width="120">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="5b1fd9a2-794e-46e4-a319-7d4f36403d8c" x="0" y="0" width="120" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Ventas (S/)]]></text>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="e0f750c0-e8d0-451f-992a-5a3c41e9bd05" x="0" y="0" width="120" height="20" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{totalRevenue}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="20d302e1-5927-49f8-945a-5bae1bada962" width="138">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b81b0f34-e029-4cd9-b0f3-7925947c226d" x="0" y="0" width="138" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Variación % vs mes anterior]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="f4c8d903-d904-4783-80ce-eb83f959344a" x="0" y="0" width="138" height="20" fontSize="8.0" pattern="#,##0.00 '%'" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{increase}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+					<column kind="single" uuid="1fa8ca17-4ef7-48d3-9f9f-4b98d4cc26b1" width="151">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="9cb1cad6-4c08-4d1b-a295-75d7a87eaf5c" x="0" y="0" width="151" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[% del total anual]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="b2be78fe-7ab6-48f6-9e25-50ca74cda476" x="0" y="0" width="151" height="20" fontSize="8.0" pattern="#,##0.00 '%'" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{percentage}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			</element>
+			<element kind="chart" chartType="line" uuid="33b95867-7946-495a-a53b-c70696a53db4" positionType="Float" x="20" y="100" width="518" height="200" showLegend="false" evaluationTime="Report">
+				<dataset kind="category">
+					<datasetRun uuid="447aef69-80ac-41b1-8c72-f8c6e1a55ace" subDataset="dsGraficoVentasMensuales">
+						<dataSourceExpression><![CDATA[$P{dsGraficoVentasMensuales}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{month}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{totalRevenue}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+				</plot>
+			</element>
+		</band>
+		<band height="282" splitType="Stretch">
+			<element kind="staticText" uuid="dcf7a43c-db4d-450b-999a-7cf9b660e8ce" positionType="Float" x="19" y="10" width="240" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Productos con más ingresos en el año]]></text>
+			</element>
+			<element kind="staticText" uuid="9b04ddc7-c8c8-4aec-80a9-6fdee995c536" positionType="Float" x="299" y="10" width="252" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Productos con menos ingresos en el año]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			</element>
+			<element kind="component" uuid="81e47f57-a3e0-4047-88dc-5e83382f9755" positionType="Float" x="1" y="44" width="271" height="50">
+				<component kind="table">
+					<datasetRun uuid="4ee6dd92-5522-4b11-a5d1-4f20242fd41d" subDataset="dsTopIngresos">
+						<dataSourceExpression><![CDATA[$P{dsTopIngresos}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="73cf7b67-7adb-4034-9fec-6a725d0ebdb7" width="100">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="6a4b76cd-3156-46e8-8c4b-ab1513f44738" x="0" y="0" width="100" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Categoría Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="33a09f93-8bbb-403a-ae08-77fe1b777c2f" x="0" y="0" width="100" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="e467a857-6e97-4404-83aa-1be52d3a11f3" width="110">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="098ab354-cd19-4e87-b9d5-45c2d76677db" x="0" y="0" width="110" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="9fe70baa-25ec-4829-964a-1ed0547548a6" x="0" y="0" width="110" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="0d0eaff2-bc25-4b78-a4cf-681545c4d93f" width="61">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="0b9c6645-abd6-4800-9a75-b8ac63b62a76" x="0" y="0" width="61" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Ingreso]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="76774e88-a838-4121-ad18-e63105892086" x="0" y="0" width="61" height="30" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{saleByTotalProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="component" uuid="62bd5cbc-1fca-4fc1-be94-317e6512fc68" positionType="Float" x="296" y="44" width="259" height="50">
+				<component kind="table">
+					<datasetRun uuid="b3b2e2af-a071-4619-b713-30d482e815d5" subDataset="dsBottomIngresos">
+						<dataSourceExpression><![CDATA[$P{dsBottomIngresos}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="5d0e5e1a-277b-4342-87c7-9dd35812fcf7" width="90">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="6f4abd55-a094-4f88-bff9-e03426089bb1" x="0" y="0" width="90" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Categoría producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="c1f65eaf-bfe0-4e88-99e4-22c3ec8f0093" x="0" y="0" width="90" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="dc51fdf1-90a4-42a5-b1f2-00fb7e9646c9" width="110">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="16a106d2-48ee-4a8d-b976-33ab9bed5321" x="0" y="0" width="110" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="e603cdb2-a642-4c62-ade6-2d625a4ae539" x="0" y="0" width="110" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="d08595c8-5c81-42b0-822c-bdd0e82a76f9" width="59">
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="18e92a50-29ff-44cd-9934-811dee058112" x="0" y="0" width="59" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Ingreso]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="534fdbb4-ef4b-4542-9673-c16fb4a66e16" x="0" y="0" width="59" height="30" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{saleByTotalProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="chart" chartType="bar" uuid="a7ca94aa-f911-4101-8968-d76b3838c93d" positionType="Float" x="0" y="110" width="270" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
+				<dataset kind="category">
+					<datasetRun uuid="40227eb2-9cf8-4bbe-a3fb-355270c5a44e" subDataset="dsGraficoTopIngresos">
+						<dataSourceExpression><![CDATA[$P{dsGraficoTopIngresos}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nameProduct}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{saleByTotalProduct}]]></valueExpression>
+						<itemHyperlink linkType="None" linkTarget="Self"/>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisVerticalTickLabels="false" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" showLabels="false" categoryAxisTickLabelRotation="0.0">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
+					<valueAxisLabelFont fontSize="10.0"/>
+					<itemLabel/>
+				</plot>
+			</element>
+			<element kind="chart" chartType="bar" uuid="4b2e47ae-7048-4678-9a35-47d9095dd925" positionType="Float" x="295" y="110" width="259" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
+				<dataset kind="category">
+					<datasetRun uuid="26010242-593f-49a8-ac2e-8bde22d0993e" subDataset="dsGraficoBottomIngresos">
+						<dataSourceExpression><![CDATA[$P{dsGraficoBottomIngresos}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nameProduct}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{saleByTotalProduct}]]></valueExpression>
+						<itemHyperlink linkTarget="Self"/>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" categoryAxisTickLabelRotation="0.0">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
+					<itemLabel/>
+				</plot>
+			</element>
+		</band>
+		<band height="294" splitType="Stretch">
+			<element kind="staticText" uuid="cd15514a-3b51-420c-97d2-cae557dae3b5" positionType="Float" x="27" y="10" width="220" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Productos más vendidos en el año]]></text>
+			</element>
+			<element kind="staticText" uuid="6abdcee7-a771-476e-89db-e4ba3a63dd71" positionType="Float" x="317" y="10" width="214" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Productos menos vendidos en el año]]></text>
+			</element>
+			<element kind="component" uuid="7c811a29-8268-461b-bf47-48902eee2c29" positionType="Float" x="0" y="44" width="269" height="60">
+				<component kind="table">
+					<datasetRun uuid="cf72b2d8-66f2-4c62-b54e-04f08896824b" subDataset="dsTopVendidos">
+						<dataSourceExpression><![CDATA[$P{dsTopVendidos}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="74b96fd0-722e-409c-8f66-4fbc7b4c29bb" width="100">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="8941053b-35ce-490c-a8d1-8325d2ab66f6" x="0" y="0" width="100" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Categoría Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="2754a374-2c11-46ad-9268-414236949c62" x="0" y="0" width="100" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="aaaf7318-8480-4b1c-99e0-f64e6ec3016e" width="110">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="cbaa4de9-bd0b-4e06-b8fb-8267dd522d50" x="0" y="0" width="110" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="3552f9f9-1ada-4c5c-9127-402f8b11a139" x="0" y="0" width="110" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="b72e5f51-cece-4042-970a-e7563d914715" width="59">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="0f9eb8e3-76b0-432b-ac43-fa4ab2cddc46" x="0" y="0" width="59" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Cantidad de ventas total]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="909c101f-f8e2-4efa-a10b-3064d8936891" x="0" y="0" width="59" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{quantity}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="component" uuid="247815ce-eb71-49ce-9ec3-c73231325dfe" positionType="Float" x="295" y="44" width="260" height="60">
+				<component kind="table">
+					<datasetRun uuid="34a2afa9-07dc-4de8-9294-ddd7ae8f6096" subDataset="dsBottomVendidos">
+						<dataSourceExpression><![CDATA[$P{dsBottomVendidos}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="0b1a373c-17bc-4183-aa73-ec9b3305615f" width="90">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="bab4599c-0c2c-4459-83ae-72976c23ed24" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Categoría Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="d5143436-4235-46a8-bbe7-e0907996dfba" x="0" y="0" width="90" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="832590a4-ef63-4337-bf3c-5c9a55984ad7" width="110">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="bf5b02ec-12a4-4354-8f96-eb0ffe31e82d" x="0" y="0" width="110" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="f472c85f-2807-4d51-ab9f-8f0c9095d81c" x="0" y="0" width="110" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{nameProduct}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="63ecab16-731b-446f-ad73-1c0b96b90680" width="60">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="9a455e3d-4abf-4cf5-bd3a-146082acdc15" x="0" y="0" width="60" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Cantidad de ventas total]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="0bc02078-90ae-475b-895b-c2fb80bdc4f8" x="0" y="0" width="60" height="30" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{quantity}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
+				<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="chart" chartType="bar" uuid="73e53d01-1c27-4331-b9b9-48187d2b3bdb" positionType="Float" x="0" y="120" width="270" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
+				<dataset kind="category">
+					<datasetRun uuid="8b88efd4-2806-45ea-a627-27bad3444842" subDataset="dsGraficoTopVendidos">
+						<dataSourceExpression><![CDATA[$P{dsGraficoTopVendidos}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nameProduct}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Unidades vendidas"]]></valueAxisLabelExpression>
+					<itemLabel/>
+				</plot>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="chart" chartType="bar" uuid="e70dffdf-4da4-4c89-b8fe-7af0ab7f3094" positionType="Float" x="296" y="120" width="258" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
+				<dataset kind="category">
+					<datasetRun uuid="ac3a456a-f178-4988-965f-8322a244a3ed" subDataset="dsGraficoBottomVendidos">
+						<dataSourceExpression><![CDATA[$P{dsGraficoBottomVendidos}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nameProduct}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" backgroundAlpha="1.0" foregroundAlpha="1.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisTickLabelMask="" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Unidades vendidas"]]></valueAxisLabelExpression>
+					<itemLabel/>
+				</plot>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+		</band>
 	</detail>
-	<pageFooter height="34" splitType="Stretch">
-		<element kind="staticText" uuid="92721b95-0183-46b3-ae50-1aac7473021c" x="0" y="2" width="554" height="30">
-			<text><![CDATA[Representación impresa de reportes de inventario de la tienda Electro Store.
+	<pageFooter height="50" splitType="Stretch">
+		<element kind="staticText" uuid="92721b95-0183-46b3-ae50-1aac7473021c" x="0" y="20" width="440" height="30">
+			<text><![CDATA[Representación impresa de reportes de ventas de la tienda Electro Store.
 Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
 		</element>
+		<element kind="textField" uuid="0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5e" x="445" y="28" width="71" height="15" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER} + " de"]]></expression>
+		</element>
+		<element kind="textField" uuid="1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6f" x="516" y="28" width="39" height="15" evaluationTime="Report" vTextAlign="Middle">
+			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+		</element>
 	</pageFooter>
-	<summary height="802">
-		<element kind="staticText" uuid="270a4fd1-e475-4bf6-897b-2ef4d0408186" positionType="Float" x="32" y="570" width="212" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Tabla de análisis de ventas mensuales]]></text>
-			<property name="com.jaspersoft.studio.unit.x" value="px"/>
-		</element>
-		<element kind="chart" chartType="pie" uuid="aa92a618-cc9c-46d5-acac-0ee4b735d083" positionType="Float" x="288" y="580" width="266" height="190" evaluationTime="Report" linkType="None" linkTarget="Self">
-			<dataset kind="pie">
-				<datasetRun uuid="c00af02f-13ca-4198-bc67-d5ec9c73a7d9" subDataset="dsVentasMensuales">
-					<dataSourceExpression><![CDATA[$P{dsVentasMensuales}]]></dataSourceExpression>
-				</datasetRun>
-				<otherSectionHyperlink linkTarget="Self"/>
-				<series>
-					<keyExpression><![CDATA[$F{month}]]></keyExpression>
-					<valueExpression><![CDATA[$F{totalRevenue}]]></valueExpression>
-					<labelExpression><![CDATA[$F{month}]]></labelExpression>
-					<sectionHyperlink linkTarget="Self"/>
-				</series>
-			</dataset>
-			<plot>
-				<itemLabel/>
-			</plot>
-		</element>
-		<element kind="staticText" uuid="7f164ff5-af83-4428-ac26-e73acc7f0015" positionType="Float" x="20" y="10" width="240" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Productos con más ingresos en el año]]></text>
-		</element>
-		<element kind="staticText" uuid="1fad943a-400f-474f-bb43-0cf178eabfff" positionType="Float" x="300" y="10" width="252" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Productos con menos ingresos en el año]]></text>
-			<property name="com.jaspersoft.studio.unit.x" value="px"/>
-		</element>
-		<element kind="staticText" uuid="a62a7f3d-116c-496e-994e-e1116417dbf1" positionType="Float" x="27" y="295" width="220" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Productos más vendidos en el año]]></text>
-		</element>
-		<element kind="staticText" uuid="7df98186-b7e9-40be-996d-d4c581b2de7f" positionType="Float" x="317" y="295" width="214" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Productos menos vendidos en el año]]></text>
-		</element>
-		<element kind="component" uuid="e669cd65-210d-47c3-83ec-da63d3dad264" positionType="Float" x="0" y="40" width="271" height="60">
-			<component kind="table">
-				<datasetRun uuid="0781d5d6-15ab-4b68-b37a-5cb9587328d1" subDataset="dsTopIngresos">
-					<dataSourceExpression><![CDATA[$P{dsTopIngresos}]]></dataSourceExpression>
-				</datasetRun>
-				<column kind="single" uuid="abac1cce-0326-41f5-ad4e-47d68227e780" width="100">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="29f504a4-6298-42cd-a7f5-3d47e8da14c8" x="0" y="0" width="100" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Categoría Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="db8f0a42-74e1-4847-971c-2a3596ce5722" x="0" y="0" width="100" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="c5cebb3c-aed2-4c59-a06e-4b26ab5e069e" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="87df607a-e38b-4326-acbe-377edeeb8201" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="08645464-fa26-4df7-8b8e-89d9077b1cf5" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="937ff833-9153-4a6d-a860-6f9fcfafa006" width="81">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="6e352b3d-aa52-4d82-ac83-23725e6df6d5" x="0" y="0" width="81" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Ingreso]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="c34ceb14-2f7e-4ee2-a3e4-497470a148d0" x="0" y="0" width="81" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{saleByTotalProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
-		</element>
-		<element kind="component" uuid="bb5c4224-4e56-49f3-b744-8cdf59f9bea7" positionType="Float" x="295" y="40" width="259" height="60">
-			<component kind="table">
-				<datasetRun uuid="3c94735c-0695-4a14-ac77-4053e2e70e2d" subDataset="dsBottomIngresos">
-					<dataSourceExpression><![CDATA[$P{dsBottomIngresos}]]></dataSourceExpression>
-				</datasetRun>
-				<column kind="single" uuid="975098b2-f8d5-4505-918c-d77cd7071e25" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="05f48584-0064-4994-81e0-914c88fda8f3" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Categoría producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="1162edc5-fcc0-4ae9-bda7-268286620af5" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="95da227c-f9a9-47fb-86b3-5f178e5b8ef2" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="5f40b80a-a134-4008-8e43-eb2243c7b6ef" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="e8455cbc-f0fb-4c56-ae3a-3ee8d3d92211" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="92ce6687-08e6-4142-9454-32436e3d5f07" width="79">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="7b90d5d8-823f-43f4-ae19-e42583fef753" x="0" y="0" width="79" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Ingreso]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="a8702f7d-6368-4db6-a519-2d446706a64c" x="0" y="0" width="79" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{saleByTotalProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
-		</element>
-		<element kind="component" uuid="5855c185-2ba8-48ee-a615-ef47471b1676" positionType="Float" x="0" y="325" width="269" height="60">
-			<component kind="table">
-				<datasetRun uuid="f47e796a-1049-44c6-a1f3-e05bdde04816" subDataset="dsTopVendidos">
-					<dataSourceExpression><![CDATA[$P{dsTopVendidos}]]></dataSourceExpression>
-				</datasetRun>
-				<column kind="single" uuid="d6db769d-53be-4a39-89c6-f1c398395de4" width="100">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="75ff1534-9ef5-42eb-add2-8023ade37641" x="0" y="0" width="100" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Categoría Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="91034580-0375-4bd1-8044-e849021145c2" x="0" y="0" width="100" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="0bb8f277-e3b0-44f5-b0cf-e085246aba01" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="29c4837b-218a-4246-8dde-6ecb773666fa" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="875ec506-8e51-48b1-9901-af25e2e20353" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="18294c4e-ef27-432d-a79f-fbb3a482dbd2" width="79">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="e44e6474-dce8-4767-831e-e1de703585e4" x="0" y="0" width="79" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Cantidad de ventas total]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="e5afb5f5-f795-485a-847f-5668b9f27506" x="0" y="0" width="79" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{quantity}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
-		</element>
-		<element kind="component" uuid="a3601622-57d2-400d-be9b-af40eafc370f" positionType="Float" x="295" y="325" width="260" height="60">
-			<component kind="table">
-				<datasetRun uuid="81b50d5e-71a7-4341-b2a7-41d0437bb109" subDataset="dsBottomVendidos">
-					<dataSourceExpression><![CDATA[$P{dsBottomVendidos}]]></dataSourceExpression>
-				</datasetRun>
-				<column kind="single" uuid="d18cf046-b1ab-438b-b4e6-3591594d0387" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="c2cbaf24-8723-46a2-ace7-2e72a4d73c65" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Categoría Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="f45699b4-5588-4159-9f19-140754f4d295" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameCategoryProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="512e5c70-e86e-4db6-b3c2-2cca66f97831" width="90">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="487f5b50-5880-4f79-a8c1-2edeadbab658" x="0" y="0" width="90" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Producto]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="9f3d0829-2762-4cec-8ea6-9811509e4e59" x="0" y="0" width="90" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{nameProduct}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="c15dbcee-94d2-4ed4-a3ff-9b015a709d17" width="79">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="9bf3a8bd-b7e2-4c28-a6c8-c75320b440e3" x="0" y="0" width="79" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Cantidad de ventas total]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="d88ae235-c102-463d-867c-046ba56a93a4" x="0" y="0" width="79" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{quantity}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
-		</element>
-		<element kind="component" uuid="2df71162-0782-42c9-b0b3-eeb9df9f28f0" positionType="Float" x="1" y="600" width="268" height="60">
-			<component kind="table">
-				<datasetRun uuid="96247d19-3742-4a0f-8751-29c9743466f1" subDataset="dsVentasMensuales">
-					<dataSourceExpression><![CDATA[$P{dsVentasMensuales}]]></dataSourceExpression>
-				</datasetRun>
-				<column kind="single" uuid="c3be0567-5678-4674-a27b-72aee86e663e" width="60">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="6c2420e2-3c26-4fe8-aca5-cca0a46f1257" x="0" y="0" width="60" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Mes]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="c198a6b2-9aa2-49e0-a999-23417ca21bb1" x="0" y="0" width="60" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{month}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="a46388b2-4544-4e80-819c-d51cd9fab6db" width="70">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="6b38425b-7405-42b0-91cf-1ebb38aca0c0" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Ventas]]></text>
-							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="c0eb135a-1029-4c63-a4cd-6ea5729ed6b1" x="0" y="0" width="70" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{totalRevenue}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="8afd5e80-9638-4782-aefe-6dcbaf877e88" width="70">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="b583c683-6684-47b8-8ca7-81ab6eb5c408" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Crecimiento]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="5a932d3a-3ede-4a22-8938-d0c69a3c42b4" x="0" y="0" width="70" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{increase}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-				<column kind="single" uuid="fa666b5a-cc52-4610-bc03-e58bd6e01d24" width="68">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="114b0589-5b9e-40cb-b1ae-9f917b31cb72" x="0" y="0" width="68" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Frente % al mes anterior]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="e1fec5f0-d4ff-4fbe-ac3d-dd56230b0034" x="0" y="0" width="68" height="30" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{percentage}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first" value="Table 1_TH_FIRST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_last" value="Table 1_TH_LAST"/>
-			<property name="com.jaspersoft.studio.table.style.table_header_first_and_last" value="Table 1_TH_FIRSTANDLAST"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header_first_and_last" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_last" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.table.style.detail_first_and_last" value="Table_TD"/>
-		</element>
-		<element kind="chart" chartType="bar" uuid="5964f308-dd7c-4389-86a3-a36eb79e1646" positionType="Float" x="0" y="395" width="270" height="160" showLegend="false" evaluationTime="Report" linkTarget="Self">
-			<dataset kind="category">
-				<datasetRun uuid="00d5a0ba-67d8-4c15-8242-6d02173d1df7" subDataset="dsGraficoTopVendidos">
-					<dataSourceExpression><![CDATA[$P{dsGraficoTopVendidos}]]></dataSourceExpression>
-				</datasetRun>
-				<series>
-					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
-				</series>
-			</dataset>
-			<plot orientation="Horizontal" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
-				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
-				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
-				<itemLabel/>
-			</plot>
-		</element>
-		<element kind="chart" chartType="bar" uuid="baf74328-b64e-45c6-94aa-de73984398a7" positionType="Float" x="0" y="110" width="270" height="165" showLegend="false" evaluationTime="Page" linkTarget="Self">
-			<dataset kind="category">
-				<datasetRun uuid="60059062-03fd-432c-8502-c399be50cc3a" subDataset="dsGraficoTopIngresos">
-					<dataSourceExpression><![CDATA[$P{dsGraficoTopIngresos}]]></dataSourceExpression>
-				</datasetRun>
-				<series>
-					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{totalRevenue}]]></valueExpression>
-					<itemHyperlink linkType="None" linkTarget="Self"/>
-				</series>
-			</dataset>
-			<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisVerticalTickLabels="false" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" showLabels="false" categoryAxisTickLabelRotation="0.0">
-				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
-				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
-				<valueAxisLabelFont fontSize="10.0"/>
-				<itemLabel/>
-			</plot>
-		</element>
-		<element kind="chart" chartType="bar" uuid="4eb7a594-5981-4aec-baf9-fecd443a8ce7" positionType="Float" x="297" y="110" width="256" height="165" showLegend="false" evaluationTime="Report" linkTarget="Self">
-			<dataset kind="category">
-				<datasetRun uuid="ec3cb1ec-625b-4b06-9cb0-4b2ade5d7d3f" subDataset="dsGraficoBottomIngresos">
-					<dataSourceExpression><![CDATA[$P{dsGraficoBottomIngresos}]]></dataSourceExpression>
-				</datasetRun>
-				<series>
-					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{totalRevenue}]]></valueExpression>
-					<itemHyperlink linkTarget="Self"/>
-				</series>
-			</dataset>
-			<plot orientation="Horizontal" labelRotation="0.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000" categoryAxisTickLabelRotation="0.0">
-				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
-				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
-				<itemLabel/>
-			</plot>
-		</element>
-		<element kind="chart" chartType="bar" uuid="108ed029-0406-4253-88a0-c6ad8845f293" positionType="Float" x="297" y="395" width="258" height="160" showLegend="false" evaluationTime="Report">
-			<dataset kind="category">
-				<datasetRun uuid="ca69cd82-8ea7-4326-b4c2-47aeff17659d" subDataset="dsGraficoBottomVendidos">
-					<dataSourceExpression><![CDATA[$P{dsGraficoBottomVendidos}]]></dataSourceExpression>
-				</datasetRun>
-				<series>
-					<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-					<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{quantity}]]></valueExpression>
-				</series>
-			</dataset>
-			<plot orientation="Horizontal" backgroundAlpha="1.0" foregroundAlpha="1.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisTickLabelMask="" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
-				<categoryAxisLabelExpression><![CDATA["Producto"]]></categoryAxisLabelExpression>
-				<valueAxisLabelExpression><![CDATA["Ingresos (S/)"]]></valueAxisLabelExpression>
-				<itemLabel/>
-			</plot>
-		</element>
-	</summary>
 </jasperReport>
