@@ -1,0 +1,269 @@
+<!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
+<jasperReport name="ReporteKardex" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3b61ecf4-93da-413c-a59d-2521519d06a3">
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<leftPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<rightPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<leftPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<rightPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+		<conditionalStyle mode="Opaque" backcolor="#F8FAFC">
+			<conditionExpression><![CDATA[$V{GrupoProducto_COUNT} % 2 == 0]]></conditionExpression>
+		</conditionalStyle>
+		<conditionalStyle mode="Opaque" backcolor="#FFF3D6">
+			<conditionExpression><![CDATA["SALDO INICIAL".equals($F{movementType})]]></conditionExpression>
+		</conditionalStyle>
+		<conditionalStyle mode="Opaque" backcolor="#DEEBF5" bold="true">
+			<conditionExpression><![CDATA["SALDO INICIAL".equals($F{movementType})]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<style name="Table_TF" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<leftPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<rightPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+	</style>
+	<parameter name="logoEmpresa" class="java.io.InputStream"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<field name="productCode" class="java.lang.String"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="productCategory" class="java.lang.String"/>
+	<field name="date" class="java.time.LocalDateTime"/>
+	<field name="documentCode" class="java.lang.String"/>
+	<field name="movementType" class="java.lang.String"/>
+	<field name="detail" class="java.lang.String"/>
+	<field name="entryQuantity" class="java.lang.Integer"/>
+	<field name="entryUnitCost" class="java.math.BigDecimal"/>
+	<field name="entryTotal" class="java.math.BigDecimal"/>
+	<field name="exitQuantity" class="java.lang.Integer"/>
+	<field name="exitUnitCost" class="java.math.BigDecimal"/>
+	<field name="exitTotal" class="java.math.BigDecimal"/>
+	<field name="balanceQuantity" class="java.lang.Integer"/>
+	<field name="balanceUnitCost" class="java.math.BigDecimal"/>
+	<field name="balanceTotal" class="java.math.BigDecimal"/>
+	<variable name="totalEntradas" resetType="Group" calculation="Sum" resetGroup="GrupoProducto" class="java.lang.Integer">
+		<expression><![CDATA[$F{entryQuantity}]]></expression>
+	</variable>
+	<variable name="totalSalidas" resetType="Group" calculation="Sum" resetGroup="GrupoProducto" class="java.lang.Integer">
+		<expression><![CDATA[$F{exitQuantity}]]></expression>
+	</variable>
+	<group name="GrupoProducto" startNewPage="true" reprintHeaderOnEachPage="true">
+		<expression><![CDATA[$F{productCode}]]></expression>
+		<groupHeader>
+			<band height="26" splitType="Stretch">
+				<element kind="textField" uuid="a0b1c2d3-e4f5-4a6b-8c7d-9e0f1a2b3c4d" mode="Opaque" x="1" y="0" width="800" height="24" forecolor="#FFFFFF" backcolor="#336B87" fontSize="11.0" bold="true" vTextAlign="Middle">
+					<expression><![CDATA["  Producto: " + $F{productName} + "   |   Código: " + $F{productCode} + "   |   Categoría: " + $F{productCategory}]]></expression>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26" splitType="Stretch">
+				<element kind="staticText" uuid="b1c2d3e4-f5a6-4b7c-9d8e-0f1a2b3c4d5e" x="1" y="0" width="390" height="24" bold="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TF">
+					<text><![CDATA[Totales del producto: ]]></text>
+					<box rightPadding="5" style="Table_TF"/>
+				</element>
+				<element kind="textField" uuid="c2d3e4f5-a6b7-4c8d-0e9f-1a2b3c4d5e6f" x="391" y="0" width="60" height="24" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TF">
+					<expression><![CDATA[$V{totalEntradas}]]></expression>
+				</element>
+				<element kind="staticText" uuid="d3e4f5a6-b7c8-4d9e-1f0a-2b3c4d5e6f7a" x="451" y="0" width="90" height="24" style="Table_TF">
+					<text><![CDATA[]]></text>
+				</element>
+				<element kind="textField" uuid="e4f5a6b7-c8d9-4e0f-2a1b-3c4d5e6f7a8b" x="541" y="0" width="50" height="24" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TF">
+					<expression><![CDATA[$V{totalSalidas}]]></expression>
+				</element>
+				<element kind="staticText" uuid="f5a6b7c8-d9e0-4f1a-3b2c-4d5e6f7a8b9c" x="591" y="0" width="80" height="24" style="Table_TF">
+					<text><![CDATA[]]></text>
+				</element>
+				<element kind="textField" uuid="a6b7c8d9-e0f1-4a2b-4c3d-5e6f7a8b9c0d" x="671" y="0" width="50" height="24" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TF">
+					<expression><![CDATA[$F{balanceQuantity}]]></expression>
+				</element>
+				<element kind="staticText" uuid="b7c8d9e0-f1a2-4b3c-5d4e-6f7a8b9c0d1e" x="721" y="0" width="40" height="24" style="Table_TF">
+					<text><![CDATA[]]></text>
+				</element>
+				<element kind="textField" uuid="c8d9e0f1-a2b3-4c4d-6e5f-7a8b9c0d1e2f" x="761" y="0" width="40" height="24" pattern="#,##0.00" blankWhenNull="true" bold="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TF">
+					<expression><![CDATA[$F{balanceTotal}]]></expression>
+					<box rightPadding="3" style="Table_TF"/>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="144" splitType="Stretch">
+		<element kind="image" uuid="0fa6b562-ca6c-4765-acb3-201b3578cabc" x="0" y="5" width="80" height="80" onErrorType="Blank">
+			<expression><![CDATA[$P{logoEmpresa}]]></expression>
+		</element>
+		<element kind="staticText" uuid="7a777400-5342-4e9b-8125-2c95e700c9f2" x="251" y="8" width="300" height="30" fontSize="22.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[ELECTRO STORE]]></text>
+		</element>
+		<element kind="staticText" uuid="4d0be6dd-c1bf-4258-a3d6-becc3a13260c" x="251" y="43" width="300" height="25" fontSize="15.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[KARDEX GENERAL DE INVENTARIO]]></text>
+		</element>
+		<element kind="staticText" uuid="4f7f5861-5be2-4028-bb1b-53f1bb39b5bc" x="0" y="92" width="50" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Empresa:]]></text>
+		</element>
+		<element kind="staticText" uuid="40163e27-9d99-46ad-80c4-c38d98f7d00e" x="52" y="92" width="80" height="15" vTextAlign="Middle">
+			<text><![CDATA[Electro Store]]></text>
+		</element>
+		<element kind="staticText" uuid="7a542f95-cc76-453e-9a97-4c136351c223" x="140" y="92" width="30" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[RUC:]]></text>
+		</element>
+		<element kind="staticText" uuid="42eb396e-7527-44e8-b058-fda0aee5f978" x="172" y="92" width="75" height="15" vTextAlign="Middle">
+			<text><![CDATA[20154826549]]></text>
+		</element>
+		<element kind="staticText" uuid="000ee1b8-6041-463f-8e6d-b101f32224e1" x="260" y="92" width="52" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Dirección:]]></text>
+		</element>
+		<element kind="staticText" uuid="bb16c10d-6186-4a76-88ec-25f3d3ff1928" x="314" y="92" width="160" height="15" vTextAlign="Middle">
+			<text><![CDATA[Primero de mayo - VES - Lima]]></text>
+		</element>
+		<element kind="staticText" uuid="e286a5af-1dd6-45f3-b0ba-7799f50429c1" x="490" y="92" width="42" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Correo:]]></text>
+		</element>
+		<element kind="staticText" uuid="43b5f291-c10c-43d9-a591-bbe01859c7db" x="534" y="92" width="180" height="15" vTextAlign="Middle">
+			<text><![CDATA[electrostorecontacto@gmail.com]]></text>
+		</element>
+		<element kind="staticText" uuid="8d1fa24f-aa4d-41e1-bb53-35b5067dc625" x="0" y="112" width="100" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Fecha de descarga:]]></text>
+		</element>
+		<element kind="textField" uuid="699e3b45-e51f-4f66-bcd0-f598f76dad20" x="102" y="112" width="110" height="15" pattern="dd/MM/yyyy HH:mm" vTextAlign="Middle">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="c3f52e43-9d67-4bf4-b0a5-7e82f9b4cd32" x="260" y="112" width="48" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Periodo:]]></text>
+		</element>
+		<element kind="textField" uuid="d4a63f54-ae78-4ca5-a1b6-8f93a0c5de43" x="314" y="112" width="200" height="15" blankWhenNull="true" vTextAlign="Middle">
+			<expression><![CDATA[$P{periodo}]]></expression>
+		</element>
+		<element kind="line" uuid="ee9bbd9e-c4ac-462a-ba23-4c8210c0a147" x="0" y="135" width="802" height="1">
+			<pen lineWidth="2.0"/>
+		</element>
+	</title>
+	<columnHeader height="70" splitType="Stretch">
+		<element kind="staticText" uuid="39f23db2-e960-4dc3-82b6-acad8be56ca7" x="1" y="0" width="390" height="30" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Datos del movimiento]]></text>
+		</element>
+		<element kind="staticText" uuid="2f649c3b-6f02-4c47-9ceb-e79d4f946057" x="391" y="0" width="150" height="30" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Entradas]]></text>
+		</element>
+		<element kind="staticText" uuid="e5d69a9f-d4b2-479a-9aa3-9968e88e854d" x="541" y="0" width="130" height="30" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Salidas]]></text>
+		</element>
+		<element kind="staticText" uuid="3c44f647-fe5d-4c0c-b405-13bbdc69fd96" x="671" y="0" width="130" height="30" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Saldos (Existencias)]]></text>
+		</element>
+		<element kind="staticText" uuid="d7d4b936-28c9-4592-bde9-e186348b1d67" x="1" y="30" width="70" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Fecha]]></text>
+		</element>
+		<element kind="staticText" uuid="eab0e677-c2a3-4671-a8c2-e6607e27e4dd" x="71" y="30" width="80" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Código]]></text>
+		</element>
+		<element kind="staticText" uuid="21ee7b0d-49a1-4516-9b6d-0db2e59075e5" x="151" y="30" width="90" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Tipo de movimiento]]></text>
+		</element>
+		<element kind="staticText" uuid="18bc46e6-43a4-48f0-b6d5-5e731d2ff251" x="241" y="30" width="150" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Detalle (cliente / proveedor / motivo)]]></text>
+		</element>
+		<element kind="staticText" uuid="bd1edb55-2129-44de-a0da-9a8153cc8775" x="391" y="30" width="60" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Cantidad]]></text>
+		</element>
+		<element kind="staticText" uuid="4daddaaf-923e-4e54-9e53-57147a131950" x="451" y="30" width="50" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Costo unitario]]></text>
+		</element>
+		<element kind="staticText" uuid="bd100ed3-65a5-41c4-99f8-08f31fecb3ed" x="501" y="30" width="40" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Total]]></text>
+		</element>
+		<element kind="staticText" uuid="a3b38ed8-7ac4-4ae3-8f59-7e0e45091db2" x="541" y="30" width="50" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Cantidad]]></text>
+		</element>
+		<element kind="staticText" uuid="8e899105-6b86-491f-8347-9343e37124a0" x="591" y="30" width="40" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Costo unitario]]></text>
+		</element>
+		<element kind="staticText" uuid="f25f863e-2476-465c-ab92-57ed328e06aa" x="631" y="30" width="40" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Total]]></text>
+		</element>
+		<element kind="staticText" uuid="d52d032e-fcda-43bf-8352-5061e824130a" x="671" y="30" width="50" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Cantidad]]></text>
+		</element>
+		<element kind="staticText" uuid="e07bf0c9-e18c-4f66-861c-233be82fcee0" x="721" y="30" width="40" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Costo Unitario]]></text>
+		</element>
+		<element kind="staticText" uuid="c2ae0287-6ef7-42d9-a519-b8ba2b5e80d3" x="761" y="30" width="40" height="40" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle" style="Table_CH">
+			<text><![CDATA[Total]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<element kind="textField" uuid="e5b74a65-bf89-4db6-a2c7-9aa4b1d6ef54" stretchType="ContainerHeight" x="1" y="0" width="70" height="22" fontSize="8.0" pattern="dd/MM/yyyy HH:mm" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{date}]]></expression>
+			</element>
+			<element kind="textField" uuid="f6c85b76-c09a-4ec7-a3d8-abb5c2e7f065" stretchType="ContainerHeight" x="71" y="0" width="80" height="22" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{documentCode}]]></expression>
+			</element>
+			<element kind="textField" uuid="07d96c87-d1ab-4fd8-a4e9-bcc6d3f80176" stretchType="ContainerHeight" x="151" y="0" width="90" height="22" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{movementType}]]></expression>
+			</element>
+			<element kind="textField" uuid="18ea7d98-e2bc-40e9-a5fa-cdd7e4a91287" stretchType="ContainerHeight" x="241" y="0" width="150" height="22" fontSize="8.0" textAdjust="StretchHeight" blankWhenNull="true" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{detail}]]></expression>
+				<box leftPadding="3" rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="3a0c9fba-04de-42ab-a7bc-eff906cb34a9" stretchType="ContainerHeight" x="391" y="0" width="60" height="22" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{entryQuantity}]]></expression>
+			</element>
+			<element kind="textField" uuid="4b1daacb-15ef-43bc-a8cd-f00a17dc45ba" stretchType="ContainerHeight" x="451" y="0" width="50" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{entryUnitCost}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="5c2ebbdc-26f0-44cd-a9de-011b28ed56cb" stretchType="ContainerHeight" x="501" y="0" width="40" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{entryTotal}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="6d3fccde-37a1-45de-aaef-1220390e67dc" stretchType="ContainerHeight" x="541" y="0" width="50" height="22" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{exitQuantity}]]></expression>
+			</element>
+			<element kind="textField" uuid="7e40ddef-48b2-46ef-abf0-2331401f78ed" stretchType="ContainerHeight" x="591" y="0" width="40" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{exitUnitCost}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="8f51eef0-59c3-47f0-ac01-3442512089fe" stretchType="ContainerHeight" x="631" y="0" width="40" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{exitTotal}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="ab730012-7be5-49b2-ae23-5664734201ba" stretchType="ContainerHeight" x="671" y="0" width="50" height="22" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{balanceQuantity}]]></expression>
+			</element>
+			<element kind="textField" uuid="bc841123-8cf6-4ac3-af34-6775845312cb" stretchType="ContainerHeight" x="721" y="0" width="40" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{balanceUnitCost}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="cd952234-9daf-4bd4-af45-7886956423dc" stretchType="ContainerHeight" x="761" y="0" width="40" height="22" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Right" vTextAlign="Middle" style="Table_TD">
+				<expression><![CDATA[$F{balanceTotal}]]></expression>
+				<box rightPadding="3" style="Table_TD"/>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="40" splitType="Stretch">
+		<element kind="staticText" uuid="21c76664-9562-49c8-aed1-e5fc268cff9b" x="1" y="4" width="600" height="30">
+			<text><![CDATA[Representación impresa de reportes de inventario de la tienda Electro Store.
+Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
+		</element>
+		<element kind="textField" uuid="de063345-aeb0-4ce5-a056-8997067534ed" x="662" y="10" width="80" height="15" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER} + " de"]]></expression>
+		</element>
+		<element kind="textField" uuid="ef174456-bfc1-4df6-a167-9aa8178645fe" x="742" y="10" width="40" height="15" evaluationTime="Report" vTextAlign="Middle">
+			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>

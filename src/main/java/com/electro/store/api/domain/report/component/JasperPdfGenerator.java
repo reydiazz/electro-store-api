@@ -19,9 +19,13 @@ public class JasperPdfGenerator {
     private final ConcurrentMap<String, JasperReport> compiledTemplates = new ConcurrentHashMap<>();
 
     public byte[] generate(String templatePath, Map<String, Object> parameters) {
+        return generate(templatePath, parameters, new JREmptyDataSource());
+    }
+
+    public byte[] generate(String templatePath, Map<String, Object> parameters, JRDataSource mainDataSource) {
         try {
             JasperReport template = compiledTemplates.computeIfAbsent(templatePath, this::compile);
-            JasperPrint filledReport = JasperFillManager.fillReport(template, parameters, new JREmptyDataSource());
+            JasperPrint filledReport = JasperFillManager.fillReport(template, parameters, mainDataSource);
             return JasperExportManager.exportReportToPdf(filledReport);
         } catch (JRException e) {
             log.error("Error generating PDF from template '{}'", templatePath, e);
