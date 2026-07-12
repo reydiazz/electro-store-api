@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 public enum ReportErrorCode implements ErrorCode {
 
     REPORT_GENERATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR),
-    REPORT_INVALID_YEAR(HttpStatus.BAD_REQUEST);
+    REPORT_INVALID_YEAR(HttpStatus.BAD_REQUEST),
+    REPORT_INVALID_DATE_RANGE(HttpStatus.BAD_REQUEST);
 
     private final HttpStatus httpStatus;
 

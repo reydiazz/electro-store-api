@@ -7,11 +7,6 @@ import java.util.List;
 
 public interface KardexReportService {
 
-    Integer calculateInitialBalance(
-            String productCode,
-            LocalDateTime startDate
-    );
-
     List<KardexItemDTO> generateKardex(
             String productCode,
             LocalDateTime startDate,
