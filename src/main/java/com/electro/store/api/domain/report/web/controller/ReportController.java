@@ -2,14 +2,14 @@ package com.electro.store.api.domain.report.web.controller;
 
 import com.electro.store.api.domain.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -32,5 +32,34 @@ public class ReportController {
                 .body(pdf);
     }
 
+    @GetMapping("/kardex-report")
+    public ResponseEntity<byte[]> generateKardexReport(
+
+            @RequestParam String productCode,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime startDate,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime endDate
+
+    ) {
+
+        byte[] pdf = reportService.generatePdfKardexReport(
+                productCode,
+                startDate,
+                endDate
+        );
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=Reporte_Kardex_" + productCode + ".pdf"
+                )
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
 
 }
