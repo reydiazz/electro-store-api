@@ -1,0 +1,345 @@
+<!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
+<jasperReport name="ReporteCompra" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1192bf03-af05-4d68-a524-29e667340124">
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#A9B7C6"/>
+			<bottomPen lineWidth="0.5" lineColor="#A9B7C6"/>
+		</box>
+		<conditionalStyle mode="Opaque" backcolor="#F8FAFC">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<dataset name="dsEvolucionCompras" uuid="a1b2c3d4-0001-4a6b-8c7d-9e0f1a2b3c01">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="periodLabel" class="java.lang.String"/>
+		<field name="totalAmount" class="java.math.BigDecimal"/>
+	</dataset>
+	<dataset name="dsTopProveedores" uuid="a1b2c3d4-0002-4a6b-8c7d-9e0f1a2b3c02">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="supplierName" class="java.lang.String"/>
+		<field name="purchaseCount" class="java.lang.Long"/>
+		<field name="totalAmount" class="java.math.BigDecimal"/>
+	</dataset>
+	<dataset name="dsTopProductos" uuid="a1b2c3d4-0003-4a6b-8c7d-9e0f1a2b3c03">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="productName" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Long"/>
+		<field name="totalAmount" class="java.math.BigDecimal"/>
+	</dataset>
+	<dataset name="dsDistribucionGasto" uuid="a1b2c3d4-0004-4a6b-8c7d-9e0f1a2b3c04">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="categoryName" class="java.lang.String"/>
+		<field name="totalAmount" class="java.math.BigDecimal"/>
+	</dataset>
+	<parameter name="logoEmpresa" class="java.io.InputStream"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<parameter name="kpiTotalInvertido" class="java.math.BigDecimal"/>
+	<parameter name="kpiNumeroCompras" class="java.lang.Long"/>
+	<parameter name="kpiTotalUnidades" class="java.lang.Long"/>
+	<parameter name="kpiProveedorPrincipal" class="java.lang.String"/>
+	<parameter name="dsEvolucionCompras" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsTopProveedores" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoTopProveedores" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsTopProductos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsGraficoTopProductos" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dsDistribucionGasto" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<background splitType="Stretch"/>
+	<title height="150" splitType="Stretch">
+		<element kind="image" uuid="be7d524e-2b08-440d-92c0-6097991958b0" x="0" y="15" width="80" height="80" onErrorType="Blank">
+			<expression><![CDATA[$P{logoEmpresa}]]></expression>
+		</element>
+		<element kind="staticText" uuid="fc0de516-ab8b-4b8b-9264-6fb98deac0ab" x="93" y="10" width="47" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Empresa: ]]></text>
+		</element>
+		<element kind="staticText" uuid="0f214874-82c0-4292-a4ee-09df83a3bf41" x="148" y="10" width="60" height="15" vTextAlign="Middle">
+			<text><![CDATA[Electro Store]]></text>
+		</element>
+		<element kind="staticText" uuid="1ed75318-688f-40b8-9450-979f10253b77" x="93" y="34" width="27" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[RUC:]]></text>
+		</element>
+		<element kind="staticText" uuid="8d18471c-f9cd-442a-8a7d-6bb80b85ad08" x="125" y="34" width="68" height="15" vTextAlign="Middle">
+			<text><![CDATA[20154826549]]></text>
+		</element>
+		<element kind="staticText" uuid="f0ac1698-f8f8-47b8-b585-da18e3a7d4d2" x="93" y="58" width="50" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Dirección:]]></text>
+		</element>
+		<element kind="staticText" uuid="6c2ef8b2-6a5d-4fed-85b5-f791e0f855d3" x="148" y="58" width="140" height="15" vTextAlign="Middle">
+			<text><![CDATA[Primero de mayo - VES - Lima]]></text>
+		</element>
+		<element kind="staticText" uuid="6aacc8bd-6c43-4cf9-9269-8d5314091f7d" x="93" y="82" width="95" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Correo Electrónico:]]></text>
+		</element>
+		<element kind="staticText" uuid="d291df9c-c640-4297-bb7b-b910ebbd071b" x="193" y="82" width="150" height="15" vTextAlign="Middle">
+			<text><![CDATA[electrostorecontacto@gmail.com]]></text>
+		</element>
+		<element kind="staticText" uuid="e1fe1865-6a81-4168-90f5-96b03dd24940" x="320" y="10" width="80" height="30" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Fecha y hora de impresión:]]></text>
+		</element>
+		<element kind="textField" uuid="d5775bf0-cf5b-4229-beee-a97bb75d5e54" x="405" y="18" width="75" height="14" pattern="MMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="textField" uuid="d4413353-690e-430b-81f1-3f168cb91566" x="480" y="18" width="72" height="14" pattern="HH:mm">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="6034f671-58fa-4571-a8db-22e018f729c5" x="320" y="49" width="50" height="15" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Teléfono:]]></text>
+		</element>
+		<element kind="staticText" uuid="f399bf70-8d15-4f99-8909-32b278885af0" x="375" y="49" width="60" height="15" vTextAlign="Middle">
+			<text><![CDATA[924 156 374]]></text>
+		</element>
+		<element kind="line" uuid="3f638e51-5872-46df-9a95-9a91a9ca4b33" x="0" y="115" width="555" height="1"/>
+		<element kind="textField" uuid="b3dd85d2-15bd-4437-a6b6-0e64fa9759eb" mode="Opaque" x="0" y="120" width="555" height="30" forecolor="#FFFFFF" backcolor="#336B87" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{periodo} == null ? "REPORTE DE COMPRAS - ELECTRO STORE" : "REPORTE DE COMPRAS - " + $P{periodo}]]></expression>
+		</element>
+	</title>
+	<detail>
+		<band height="115" splitType="Stretch">
+			<element kind="staticText" uuid="d7d65dc8-1f70-4f99-0001-501544038570" x="0" y="10" width="555" height="18" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Resumen del periodo]]></text>
+			</element>
+			<element kind="rectangle" uuid="dbd69cd5-05f5-4a95-8414-79cb336fe32f" mode="Opaque" x="5" y="38" width="125" height="62" backcolor="#F4F8FB" radius="8">
+				<pen lineWidth="0.75" lineColor="#A9B7C6"/>
+			</element>
+			<element kind="rectangle" uuid="9896e8e1-1c64-4e51-b3e8-ba0399fb9431" mode="Opaque" x="145" y="38" width="125" height="62" backcolor="#F4F8FB" radius="8">
+				<pen lineWidth="0.75" lineColor="#A9B7C6"/>
+			</element>
+			<element kind="rectangle" uuid="e91cfc9f-80d8-4f38-b62a-8300b80450a5" mode="Opaque" x="285" y="38" width="125" height="62" backcolor="#F4F8FB" radius="8">
+				<pen lineWidth="0.75" lineColor="#A9B7C6"/>
+			</element>
+			<element kind="rectangle" uuid="4e57120a-db40-4f1c-84f4-e12f652b2e56" mode="Opaque" x="425" y="38" width="125" height="62" backcolor="#F4F8FB" radius="8">
+				<pen lineWidth="0.75" lineColor="#A9B7C6"/>
+			</element>
+			<element kind="staticText" uuid="c1a2b3c4-0001-4d9e-b355-c52da95a61ce" x="5" y="46" width="125" height="14" forecolor="#46627A" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[TOTAL INVERTIDO (S/)]]></text>
+			</element>
+			<element kind="textField" uuid="c1a2b3c4-0002-4d9e-b355-c52da95a61ce" x="5" y="62" width="125" height="28" fontSize="14.0" pattern="#,##0.00" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{kpiTotalInvertido}]]></expression>
+			</element>
+			<element kind="staticText" uuid="c1a2b3c4-0003-4d9e-b355-c52da95a61ce" x="145" y="46" width="125" height="14" forecolor="#46627A" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[N° DE COMPRAS]]></text>
+			</element>
+			<element kind="textField" uuid="c1a2b3c4-0004-4d9e-b355-c52da95a61ce" x="145" y="62" width="125" height="28" fontSize="14.0" pattern="#,##0" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{kpiNumeroCompras}]]></expression>
+			</element>
+			<element kind="staticText" uuid="c1a2b3c4-0005-4d9e-b355-c52da95a61ce" x="285" y="46" width="125" height="14" forecolor="#46627A" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[UNIDADES ADQUIRIDAS]]></text>
+			</element>
+			<element kind="textField" uuid="c1a2b3c4-0006-4d9e-b355-c52da95a61ce" x="285" y="62" width="125" height="28" fontSize="14.0" pattern="#,##0" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{kpiTotalUnidades}]]></expression>
+			</element>
+			<element kind="staticText" uuid="c1a2b3c4-0007-4d9e-b355-c52da95a61ce" x="425" y="46" width="125" height="14" forecolor="#46627A" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PROVEEDOR PRINCIPAL]]></text>
+			</element>
+			<element kind="textField" uuid="c1a2b3c4-0008-4d9e-b355-c52da95a61ce" x="425" y="62" width="125" height="28" fontSize="9.0" textAdjust="StretchHeight" blankWhenNull="true" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{kpiProveedorPrincipal}]]></expression>
+			</element>
+		</band>
+		<band height="265" splitType="Stretch">
+			<element kind="staticText" uuid="0503bc4f-8d9c-49c3-aa07-78d11afbf3d9" x="0" y="10" width="555" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Evolución de compras]]></text>
+			</element>
+			<element kind="chart" chartType="line" uuid="e2884a54-0112-4184-8ecc-f63e248d65ea" positionType="Float" x="1" y="40" width="553" height="210" showLegend="false" evaluationTime="Report">
+				<dataset kind="category">
+					<datasetRun uuid="e2884a54-0112-4184-8ecc-f63e248d65eb" subDataset="dsEvolucionCompras">
+						<dataSourceExpression><![CDATA[$P{dsEvolucionCompras}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["Compras"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{periodLabel}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{totalAmount}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Monto (S/)"]]></valueAxisLabelExpression>
+				</plot>
+			</element>
+		</band>
+		<band height="300" splitType="Stretch">
+			<element kind="staticText" uuid="a6d7ccd4-c016-4d9f-b355-c52da95a61ce" x="0" y="10" width="270" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Top proveedores]]></text>
+			</element>
+			<element kind="staticText" uuid="27088684-10e3-4d4c-93a8-73cdbeee37c1" x="285" y="10" width="270" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Top productos comprados]]></text>
+			</element>
+			<element kind="component" uuid="b1000000-0001-4a6b-8c7d-9e0f1a2b3c05" positionType="Float" x="0" y="40" width="270" height="60">
+				<component kind="table">
+					<datasetRun uuid="b1000000-0002-4a6b-8c7d-9e0f1a2b3c05" subDataset="dsTopProveedores">
+						<dataSourceExpression><![CDATA[$P{dsTopProveedores}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="b1000000-0003-4a6b-8c7d-9e0f1a2b3c05" width="130">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b1000000-0004-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="130" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Proveedor]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b1000000-0005-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="130" height="30" fontSize="8.0" textAdjust="StretchHeight" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{supplierName}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="b1000000-0006-4a6b-8c7d-9e0f1a2b3c05" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b1000000-0007-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[N° compras]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b1000000-0008-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="70" height="30" fontSize="8.0" pattern="#,##0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{purchaseCount}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="b1000000-0009-4a6b-8c7d-9e0f1a2b3c05" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b1000000-0010-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Monto (S/)]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b1000000-0011-4a6b-8c7d-9e0f1a2b3c05" x="0" y="0" width="70" height="30" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{totalAmount}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+			<element kind="component" uuid="b2000000-0001-4a6b-8c7d-9e0f1a2b3c06" positionType="Float" x="285" y="40" width="270" height="60">
+				<component kind="table">
+					<datasetRun uuid="b2000000-0002-4a6b-8c7d-9e0f1a2b3c06" subDataset="dsTopProductos">
+						<dataSourceExpression><![CDATA[$P{dsTopProductos}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="b2000000-0003-4a6b-8c7d-9e0f1a2b3c06" width="130">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b2000000-0004-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="130" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Producto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b2000000-0005-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="130" height="30" fontSize="8.0" textAdjust="StretchHeight" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{productName}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="b2000000-0006-4a6b-8c7d-9e0f1a2b3c06" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b2000000-0007-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Unidades]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b2000000-0008-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="70" height="30" fontSize="8.0" pattern="#,##0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{quantity}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="b2000000-0009-4a6b-8c7d-9e0f1a2b3c06" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b2000000-0010-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="70" height="30" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Monto (S/)]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b2000000-0011-4a6b-8c7d-9e0f1a2b3c06" x="0" y="0" width="70" height="30" fontSize="8.0" pattern="#,##0.00" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{totalAmount}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+			<element kind="chart" chartType="bar" uuid="c1000000-0001-4a6b-8c7d-9e0f1a2b3c07" positionType="Float" x="0" y="130" width="270" height="140" showLegend="false" evaluationTime="Report">
+				<dataset kind="category">
+					<datasetRun uuid="c1000000-0002-4a6b-8c7d-9e0f1a2b3c07" subDataset="dsTopProveedores">
+						<dataSourceExpression><![CDATA[$P{dsGraficoTopProveedores}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{supplierName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{totalAmount}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Monto (S/)"]]></valueAxisLabelExpression>
+					<itemLabel/>
+				</plot>
+			</element>
+			<element kind="chart" chartType="bar" uuid="c2000000-0001-4a6b-8c7d-9e0f1a2b3c08" positionType="Float" x="285" y="130" width="270" height="140" showLegend="false" evaluationTime="Report">
+				<dataset kind="category">
+					<datasetRun uuid="c2000000-0002-4a6b-8c7d-9e0f1a2b3c08" subDataset="dsTopProductos">
+						<dataSourceExpression><![CDATA[$P{dsGraficoTopProductos}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{productName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{totalAmount}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot orientation="Horizontal" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+					<categoryAxisTickLabelFont fontSize="7.0"/>
+					<valueAxisLabelExpression><![CDATA["Monto (S/)"]]></valueAxisLabelExpression>
+					<itemLabel/>
+				</plot>
+			</element>
+		</band>
+		<band height="260" splitType="Stretch">
+			<element kind="staticText" uuid="c9cac1f8-a008-4323-8cbd-3976cc308bfe" x="0" y="10" width="555" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Distribución del gasto por categoría]]></text>
+			</element>
+			<element kind="chart" chartType="pie" uuid="90acb62c-c3cf-4390-86e3-1fbd9678bcd3" positionType="Float" x="90" y="40" width="375" height="200" evaluationTime="Report">
+				<dataset kind="pie">
+					<datasetRun uuid="90acb62c-c3cf-4390-86e3-1fbd9678bcd4" subDataset="dsDistribucionGasto">
+						<dataSourceExpression><![CDATA[$P{dsDistribucionGasto}]]></dataSourceExpression>
+					</datasetRun>
+					<series>
+						<keyExpression><![CDATA[$F{categoryName}]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalAmount}]]></valueExpression>
+						<labelExpression><![CDATA[$F{categoryName}]]></labelExpression>
+					</series>
+				</dataset>
+				<plot>
+					<itemLabel/>
+				</plot>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="35" splitType="Stretch">
+		<element kind="staticText" uuid="4a01d99b-277d-411e-a3d1-29c897636199" x="0" y="2" width="440" height="30">
+			<text><![CDATA[Representación impresa de reportes de compras de la tienda Electro Store.
+Para soporte o consultas: soporte@electrostore.com | +51 938 457 125]]></text>
+		</element>
+		<element kind="textField" uuid="4a01d99b-277d-411e-a3d1-29c897636200" x="445" y="10" width="71" height="15" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER} + " de"]]></expression>
+		</element>
+		<element kind="textField" uuid="4a01d99b-277d-411e-a3d1-29c897636201" x="516" y="10" width="39" height="15" evaluationTime="Report" vTextAlign="Middle">
+			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>

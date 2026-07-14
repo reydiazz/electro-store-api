@@ -3,12 +3,14 @@ package com.electro.store.api.domain.report.service;
 import com.electro.store.api.domain.report.component.JasperPdfGenerator;
 import com.electro.store.api.domain.report.dto.kardex.KardexItemDTO;
 import com.electro.store.api.domain.report.dto.sale.MonthlySalesDTO;
-import com.electro.store.api.domain.report.dto.sale.RankingRevenueDTO;
-import com.electro.store.api.domain.report.dto.sale.RankingSellingDTO;
 import com.electro.store.api.domain.report.exception.InvalidReportDateRangeException;
 import com.electro.store.api.domain.report.exception.InvalidReportYearException;
 import com.electro.store.api.domain.report.exception.ReportGenerationException;
+import com.electro.store.api.domain.report.model.ReportPeriod;
+import com.electro.store.api.domain.report.model.enums.ReportFrequency;
 import com.electro.store.api.domain.report.service.kardex.KardexReportService;
+import com.electro.store.api.domain.report.service.purchase.PurchaseReportData;
+import com.electro.store.api.domain.report.service.purchase.PurchaseReportService;
 import com.electro.store.api.domain.report.service.sale.SaleRanking;
 import com.electro.store.api.domain.report.service.sale.SaleReportService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,20 +34,21 @@ import java.util.stream.Collectors;
 public class ReportServiceImpl implements ReportService {
 
     private static final String SALES_REPORT_TEMPLATE = "reports/ReporteVenta.jrxml";
-    private static final String KARDEX_REPORT_TEMPLATE = "reports/ReportKardex.jrxml";
+    private static final String KARDEX_REPORT_TEMPLATE = "reports/ReporteKardex.jrxml";
+    private static final String PURCHASES_REPORT_TEMPLATE = "reports/ReporteCompra.jrxml";
     private static final String LOGO_PATH = "reports/logo.png";
     private static final int MIN_REPORT_YEAR = 2000;
     private static final DateTimeFormatter PERIOD_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final SaleReportService saleReportService;
     private final KardexReportService kardexReportService;
+    private final PurchaseReportService purchaseReportService;
     private final JasperPdfGenerator pdfGenerator;
 
     @Override
     public byte[] generatePdfSalesReport(int year) {
 
         validateYear(year);
-
         List<MonthlySalesDTO> monthlySales = saleReportService.getMonthlySales(year);
         SaleRanking rankings = saleReportService.getSaleRankings(year);
 
@@ -75,21 +77,42 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime startDate,
             LocalDateTime endDate
     ) {
-
         validateDateRange(startDate, endDate);
-
         List<KardexItemDTO> kardex = kardexReportService.generateKardex(productCode, startDate, endDate);
-
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("logoEmpresa", loadLogo());
         parameters.put("periodo",
                 startDate.format(PERIOD_FORMAT) + " - " + endDate.format(PERIOD_FORMAT));
-
         return pdfGenerator.generate(
                 KARDEX_REPORT_TEMPLATE,
                 parameters,
                 new JRBeanCollectionDataSource(kardex)
         );
+    }
+
+    @Override
+    public byte[] generatePdfPurchasesReport(ReportFrequency frequency, LocalDate referenceDate) {
+
+        ReportPeriod period = frequency.resolve(referenceDate);
+        PurchaseReportData data = purchaseReportService.getPurchaseReportData(frequency, period);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("logoEmpresa", loadLogo());
+        parameters.put("periodo", period.label());
+
+        parameters.put("kpiTotalInvertido", data.totalInvested());
+        parameters.put("kpiNumeroCompras", data.purchaseCount());
+        parameters.put("kpiTotalUnidades", data.totalUnits());
+        parameters.put("kpiProveedorPrincipal", data.mainSupplier());
+
+        parameters.put("dsEvolucionCompras", new JRBeanCollectionDataSource(data.evolution()));
+        parameters.put("dsTopProveedores", new JRBeanCollectionDataSource(data.topSuppliers()));
+        parameters.put("dsGraficoTopProveedores", new JRBeanCollectionDataSource(data.topSuppliers()));
+        parameters.put("dsTopProductos", new JRBeanCollectionDataSource(data.topProducts()));
+        parameters.put("dsGraficoTopProductos", new JRBeanCollectionDataSource(data.topProducts()));
+        parameters.put("dsDistribucionGasto", new JRBeanCollectionDataSource(data.categorySpending()));
+
+        return pdfGenerator.generate(PURCHASES_REPORT_TEMPLATE, parameters);
     }
 
     private void validateYear(int year) {

@@ -1,8 +1,9 @@
 package com.electro.store.api.domain.report.service;
 
+import com.electro.store.api.domain.report.model.enums.ReportFrequency;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 
 public interface ReportService {
 
@@ -14,6 +15,6 @@ public interface ReportService {
             LocalDateTime endDate
     ) ;
 
-
+    byte[] generatePdfPurchasesReport(ReportFrequency frequency, LocalDate referenceDate);
 
 }
