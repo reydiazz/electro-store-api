@@ -28,7 +28,9 @@ public class ReportController {
 
     @GetMapping("/sales-report/{year}")
     public ResponseEntity<byte[]> generateSalesReportByYear(@PathVariable int year) {
+
         byte[] pdf = reportService.generatePdfSalesReport(year);
+
         return pdfResponse(pdf, "Reporte_Ventas_" + year);
     }
 
@@ -50,18 +52,20 @@ public class ReportController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
 
         LocalDateTime effectiveStart;
         LocalDateTime effectiveEnd;
+
         if (startDate != null || endDate != null) {
-            effectiveStart = startDate != null
-                    ? startDate
-                    : LocalDate.now().withDayOfYear(1).atStartOfDay();
-            effectiveEnd = endDate != null ? endDate : LocalDateTime.now();
+            effectiveStart = (startDate != null ? startDate : LocalDate.now().withDayOfYear(1))
+                    .atStartOfDay();
+            effectiveEnd = endDate != null
+                    ? endDate.plusDays(1).atStartOfDay().minusNanos(1)
+                    : LocalDateTime.now();
         } else if (frequency != null) {
             ReportPeriod period = frequency.resolve(date != null ? date : LocalDate.now());
             effectiveStart = period.start();
