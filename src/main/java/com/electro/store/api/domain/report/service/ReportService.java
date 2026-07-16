@@ -9,12 +9,12 @@ public interface ReportService {
 
     byte[] generatePdfSalesReport(int year);
 
-    byte[] generatePdfKardexReport(
-            String productCode,
-            LocalDateTime startDate,
-            LocalDateTime endDate
-    ) ;
+    byte[] generatePdfSalesReport(ReportFrequency frequency, LocalDate referenceDate);
+
+    byte[] generatePdfKardexReport(String productCode, LocalDateTime startDate, LocalDateTime endDate);
 
     byte[] generatePdfPurchasesReport(ReportFrequency frequency, LocalDate referenceDate);
+
+    byte[] generatePdfInventoryReport(ReportFrequency frequency, LocalDate referenceDate);
 
 }

@@ -78,7 +78,7 @@
 		<field name="totalRevenue" class="java.math.BigDecimal"/>
 	</dataset>
 	<parameter name="logoEmpresa" class="java.io.InputStream"/>
-	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="periodo" class="java.lang.String"/>
 	<parameter name="dsTopIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="dsBottomIngresos" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="dsTopVendidos" class="net.sf.jasperreports.engine.JRDataSource"/>
@@ -170,7 +170,7 @@
 			<property name="com.jaspersoft.studio.unit.y" value="px"/>
 		</element>
 		<element kind="textField" uuid="e2aebf0e-1d9f-4686-b9e4-3dee082209f3" mode="Opaque" x="0" y="120" width="555" height="30" forecolor="#FFFFFF" backcolor="#336B87" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<expression><![CDATA[$P{anio} == null ? "REPORTE DE VENTAS - ELECTRO STORE" : "REPORTE DE VENTAS " + $P{anio} + " - ELECTRO STORE"]]></expression>
+			<expression><![CDATA[$P{periodo} == null ? "REPORTE DE VENTAS - ELECTRO STORE" : "REPORTE DE VENTAS - " + $P{periodo}]]></expression>
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
 		</element>
 		<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -178,7 +178,7 @@
 	<detail>
 		<band height="323" splitType="Stretch">
 			<element kind="staticText" uuid="c5fcf01e-bcfd-46ff-9bc1-ad0d31b8b988" positionType="Float" x="190" y="10" width="184" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-				<text><![CDATA[Tabla de análisis de ventas mensuales]]></text>
+				<text><![CDATA[Análisis de ventas por periodo]]></text>
 				<property name="com.jaspersoft.studio.unit.x" value="px"/>
 			</element>
 			<element kind="component" uuid="57b0d452-c4e5-4602-b663-8beb232aaf8a" positionType="Float" x="20" y="40" width="519" height="40">
@@ -189,7 +189,7 @@
 					<column kind="single" uuid="6281a02a-757e-4927-8117-c85925867b70" width="110">
 						<columnHeader height="20" rowSpan="1" style="Table_CH">
 							<element kind="staticText" uuid="7f67c13a-a3d8-4ea0-903e-cf8c939451b6" x="0" y="0" width="110" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Mes]]></text>
+								<text><![CDATA[Periodo]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="20" style="Table_TD">
@@ -217,7 +217,7 @@
 					<column kind="single" uuid="20d302e1-5927-49f8-945a-5bae1bada962" width="138">
 						<columnHeader height="20" rowSpan="1" style="Table_CH">
 							<element kind="staticText" uuid="b81b0f34-e029-4cd9-b0f3-7925947c226d" x="0" y="0" width="138" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Variación % vs mes anterior]]></text>
+								<text><![CDATA[Variación % vs periodo anterior]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="20" style="Table_TD">
@@ -230,7 +230,7 @@
 					<column kind="single" uuid="1fa8ca17-4ef7-48d3-9f9f-4b98d4cc26b1" width="151">
 						<columnHeader height="20" rowSpan="1" style="Table_CH">
 							<element kind="staticText" uuid="9cb1cad6-4c08-4d1b-a295-75d7a87eaf5c" x="0" y="0" width="151" height="20" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[% del total anual]]></text>
+								<text><![CDATA[% del total]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="20" style="Table_TD">
@@ -274,10 +274,10 @@
 		</band>
 		<band height="282" splitType="Stretch">
 			<element kind="staticText" uuid="dcf7a43c-db4d-450b-999a-7cf9b660e8ce" positionType="Float" x="19" y="10" width="240" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-				<text><![CDATA[Productos con más ingresos en el año]]></text>
+				<text><![CDATA[Productos con más ingresos del periodo]]></text>
 			</element>
 			<element kind="staticText" uuid="9b04ddc7-c8c8-4aec-80a9-6fdee995c536" positionType="Float" x="299" y="10" width="252" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-				<text><![CDATA[Productos con menos ingresos en el año]]></text>
+				<text><![CDATA[Productos con menos ingresos del periodo]]></text>
 				<property name="com.jaspersoft.studio.unit.x" value="px"/>
 			</element>
 			<element kind="component" uuid="81e47f57-a3e0-4047-88dc-5e83382f9755" positionType="Float" x="1" y="44" width="271" height="50">
@@ -440,10 +440,10 @@
 		</band>
 		<band height="294" splitType="Stretch">
 			<element kind="staticText" uuid="cd15514a-3b51-420c-97d2-cae557dae3b5" positionType="Float" x="27" y="10" width="220" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-				<text><![CDATA[Productos más vendidos en el año]]></text>
+				<text><![CDATA[Productos más vendidos del periodo]]></text>
 			</element>
 			<element kind="staticText" uuid="6abdcee7-a771-476e-89db-e4ba3a63dd71" positionType="Float" x="317" y="10" width="214" height="20" fontName="Arial" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-				<text><![CDATA[Productos menos vendidos en el año]]></text>
+				<text><![CDATA[Productos menos vendidos del periodo]]></text>
 			</element>
 			<element kind="component" uuid="7c811a29-8268-461b-bf47-48902eee2c29" positionType="Float" x="0" y="44" width="269" height="60">
 				<component kind="table">

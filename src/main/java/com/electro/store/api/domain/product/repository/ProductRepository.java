@@ -1,6 +1,7 @@
 package com.electro.store.api.domain.product.repository;
 
 import com.electro.store.api.domain.product.model.entity.Product;
+import com.electro.store.api.domain.product.repository.projection.InventoryItemProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,4 +45,13 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("SELECT p.category.name, COUNT(p) FROM Product p GROUP BY p.category.name ORDER BY COUNT(p) DESC")
     List<Object[]> countByCategory();
+
+    @Query("""
+        SELECT new com.electro.store.api.domain.product.repository.projection.InventoryItemProjection(
+            c.name, p.code, p.name, p.brand, p.model, p.stock, p.lowStock, p.salePrice)
+        FROM Product p
+        JOIN p.category c
+        ORDER BY c.name, p.name
+        """)
+    List<InventoryItemProjection> findInventorySnapshot();
 }

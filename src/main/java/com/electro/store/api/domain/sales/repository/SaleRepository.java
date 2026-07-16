@@ -4,6 +4,7 @@ import com.electro.store.api.domain.sales.model.entity.Sale;
 import com.electro.store.api.domain.sales.repository.projection.MonthlyRevenueProjection;
 import com.electro.store.api.domain.sales.repository.projection.ProductQuantityProjection;
 import com.electro.store.api.domain.sales.repository.projection.ProductRevenueProjection;
+import com.electro.store.api.domain.sales.repository.projection.SaleTotalProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.domain.Page;
@@ -119,5 +120,19 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
     com.electro.store.api.domain.sales.web.response.DashboardProjection getDashboardTotals(
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
+    );
+
+    @Query("""
+       SELECT new com.electro.store.api.domain.sales.repository.projection.SaleTotalProjection(
+           s.saleDate, SUM(d.salePrice * d.quantity))
+       FROM SaleDetail d
+       JOIN d.sale s
+       WHERE s.saleDate >= :startDate AND s.saleDate < :endDateExclusive
+       GROUP BY s.code, s.saleDate
+       ORDER BY s.saleDate
+       """)
+    List<SaleTotalProjection> findSaleTotals(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDateExclusive") LocalDateTime endDateExclusive
     );
 }

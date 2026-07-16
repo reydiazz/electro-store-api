@@ -30,7 +30,6 @@ public class KardexReportServiceImpl implements KardexReportService {
     private final GuideDetailRepository guideDetailRepository;
     private final ProductRepository productRepository;
 
-    /** Movimiento crudo unificado de las tres fuentes (compras, ventas, guías). */
     private record RawMovement(
             String productCode,
             LocalDateTime date,
