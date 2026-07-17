@@ -15,6 +15,5 @@ public interface ReportService {
 
     byte[] generatePdfPurchasesReport(ReportFrequency frequency, LocalDate referenceDate);
 
-    byte[] generatePdfInventoryReport(ReportFrequency frequency, LocalDate referenceDate);
 
 }

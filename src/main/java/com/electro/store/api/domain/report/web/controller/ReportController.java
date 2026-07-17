@@ -74,7 +74,9 @@ public class ReportController {
             effectiveStart = LocalDate.now().withDayOfYear(1).atStartOfDay();
             effectiveEnd = LocalDateTime.now();
         }
+
         byte[] pdf = reportService.generatePdfKardexReport(productCode, effectiveStart, effectiveEnd);
+
         String filename = productCode != null
                 ? "Reporte_Kardex_" + productCode
                 : "Reporte_Kardex_General";
@@ -88,20 +90,12 @@ public class ReportController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        LocalDate referenceDate = date != null ? date : LocalDate.now();
-        byte[] pdf = reportService.generatePdfPurchasesReport(frequency, referenceDate);
-        return pdfResponse(pdf, "Reporte_Compras_" + frequency.name());
-    }
 
-    @GetMapping("/inventory-report")
-    public ResponseEntity<byte[]> generateInventoryReport(
-            @RequestParam(required = false) ReportFrequency frequency,
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
         LocalDate referenceDate = date != null ? date : LocalDate.now();
-        byte[] pdf = reportService.generatePdfInventoryReport(frequency, referenceDate);
-        return pdfResponse(pdf, "Reporte_Inventario");
+
+        byte[] pdf = reportService.generatePdfPurchasesReport(frequency, referenceDate);
+
+        return pdfResponse(pdf, "Reporte_Compras_" + frequency.name());
     }
 
     private ResponseEntity<byte[]> pdfResponse(byte[] pdf, String filename) {

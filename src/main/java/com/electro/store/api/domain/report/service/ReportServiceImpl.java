@@ -8,8 +8,6 @@ import com.electro.store.api.domain.report.exception.InvalidReportYearException;
 import com.electro.store.api.domain.report.exception.ReportGenerationException;
 import com.electro.store.api.domain.report.model.ReportPeriod;
 import com.electro.store.api.domain.report.model.enums.ReportFrequency;
-import com.electro.store.api.domain.report.service.inventory.InventoryReportData;
-import com.electro.store.api.domain.report.service.inventory.InventoryReportService;
 import com.electro.store.api.domain.report.service.kardex.KardexReportService;
 import com.electro.store.api.domain.report.service.purchase.PurchaseReportData;
 import com.electro.store.api.domain.report.service.purchase.PurchaseReportService;
@@ -38,7 +36,6 @@ public class ReportServiceImpl implements ReportService {
     private static final String SALES_REPORT_TEMPLATE = "reports/ReporteVenta.jrxml";
     private static final String KARDEX_REPORT_TEMPLATE = "reports/ReporteKardex.jrxml";
     private static final String PURCHASES_REPORT_TEMPLATE = "reports/ReporteCompra.jrxml";
-    private static final String INVENTORY_REPORT_TEMPLATE = "reports/ReporteInventario.jrxml";
     private static final String LOGO_PATH = "reports/logo.png";
     private static final int MIN_REPORT_YEAR = 2000;
     private static final DateTimeFormatter PERIOD_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -46,7 +43,6 @@ public class ReportServiceImpl implements ReportService {
     private final SaleReportService saleReportService;
     private final KardexReportService kardexReportService;
     private final PurchaseReportService purchaseReportService;
-    private final InventoryReportService inventoryReportService;
     private final JasperPdfGenerator pdfGenerator;
 
     @Override
@@ -120,31 +116,6 @@ public class ReportServiceImpl implements ReportService {
         parameters.put("dsGraficoTopProductos", new JRBeanCollectionDataSource(data.topProducts()));
         parameters.put("dsDistribucionGasto", new JRBeanCollectionDataSource(data.categorySpending()));
         return pdfGenerator.generate(PURCHASES_REPORT_TEMPLATE, parameters);
-    }
-
-    @Override
-    public byte[] generatePdfInventoryReport(ReportFrequency frequency, LocalDate referenceDate) {
-
-        ReportPeriod rotationPeriod = frequency != null
-                ? frequency.resolve(referenceDate)
-                : new ReportPeriod(
-                LocalDateTime.now().minusDays(90),
-                LocalDateTime.now(),
-                "ÚLTIMOS 90 DÍAS");
-
-        InventoryReportData data = inventoryReportService.getInventoryReportData(rotationPeriod);
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("logoEmpresa", loadLogo());
-        parameters.put("ventanaRotacion", rotationPeriod.label());
-        parameters.put("kpiTotalProductos", data.totalProducts());
-        parameters.put("kpiUnidadesStock", data.totalUnits());
-        parameters.put("kpiValorInventario", data.totalValue());
-        parameters.put("kpiAlertasStock", data.lowStockCount() + " / " + data.outOfStockCount());
-        parameters.put("dsValorPorCategoria", new JRBeanCollectionDataSource(data.categoryValues()));
-        parameters.put("dsTendenciaInventario", new JRBeanCollectionDataSource(data.trend()));
-        parameters.put("dsMayorRotacion", new JRBeanCollectionDataSource(data.topRotation()));
-        parameters.put("dsMenorRotacion", new JRBeanCollectionDataSource(data.bottomRotation()));
-        return pdfGenerator.generate(INVENTORY_REPORT_TEMPLATE, parameters);
     }
 
     private void validateYear(int year) {
