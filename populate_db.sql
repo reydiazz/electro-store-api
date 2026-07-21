@@ -1,9 +1,6 @@
 -- =========================================================================
 -- 1. docker cp populate_db.sql electro_sqlserver:/tmp/populate_db.sql
--- 2. docker exec electro_sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost
--- ELECTRO STORE - SCRIPT DE POBLADO DE BASE DE DATOS ULTRA REALISTA
--- Con formatos de código del backend de 20 caracteres:
---   PREFIX (3) + Timestamp yyMMddHHmmss (12) + Suffix/Random (5)
+-- 2. docker exec electro_sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "DevOnly#SQL26!" -d electro_db -i /tmp/populate_db.sql -C
 -- Cubre: 2025-01-01 al 2026-07-18
 -- =========================================================================
 
