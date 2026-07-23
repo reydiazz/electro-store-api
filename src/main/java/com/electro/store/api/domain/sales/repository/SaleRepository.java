@@ -18,6 +18,7 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, String> {
 
     @Query("SELECT s FROM Sale s WHERE " +
+            "(:search IS NULL OR :search = '' OR " +
             "LOWER(s.code) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(s.customer.person.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(s.customer.person.lastName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
@@ -25,8 +26,19 @@ public interface SaleRepository extends JpaRepository<Sale, String> {
             "LOWER(s.customer.taxId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(s.user.username) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(s.user.employee.person.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(s.user.employee.person.lastName) LIKE LOWER(CONCAT('%', :search, '%'))")
-    Page<Sale> search(@Param("search") String search, Pageable pageable);
+            "LOWER(s.user.employee.person.lastName) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+            "(:user IS NULL OR :user = '' OR LOWER(s.user.username) = LOWER(:user)) AND " +
+            "(:startDate IS NULL OR s.saleDate >= :startDate) AND " +
+            "(:endDate IS NULL OR s.saleDate <= :endDate)")
+    Page<Sale> searchWithFilters(
+            @Param("search") String search,
+            @Param("user") String user,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
+            Pageable pageable);
+
+    @Query("SELECT DISTINCT s.user.username FROM Sale s WHERE s.user.username IS NOT NULL ORDER BY s.user.username")
+    List<String> findDistinctSellers();
 
     @Query("""
        SELECT s

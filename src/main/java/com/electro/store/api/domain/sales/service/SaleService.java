@@ -114,14 +114,17 @@ public class SaleService {
     }
 
     @Transactional(readOnly = true)
-    public Page<SaleResponse> findAll(String search, Pageable pageable) {
-        Page<Sale> sales;
-        if (search != null && !search.trim().isEmpty()) {
-            sales = repository.search(search.trim(), pageable);
-        } else {
-            sales = repository.findAll(pageable);
-        }
+    public Page<SaleResponse> findAll(String search, String user, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+        String cleanSearch = (search != null && !search.trim().isEmpty()) ? search.trim() : null;
+        String cleanUser = (user != null && !user.trim().isEmpty() && !"Todos".equalsIgnoreCase(user.trim())) ? user.trim() : null;
+
+        Page<Sale> sales = repository.searchWithFilters(cleanSearch, cleanUser, startDate, endDate, pageable);
         return sales.map(mapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getDistinctSellers() {
+        return repository.findDistinctSellers();
     }
 
     @Transactional
