@@ -27,10 +27,26 @@ public class PurchaseController {
     @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Page<PurchasesResponse>> findAll(
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String supplier,
+            @RequestParam(required = false) String user,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.LocalDateTime startDate,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.LocalDateTime endDate,
             Pageable pageable){
-         Page<PurchasesResponse> response = service.findAll(search, pageable);
+         Page<PurchasesResponse> response = service.findAll(search, supplier, user, startDate, endDate, pageable);
 
          return  ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/filter-suppliers")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
+    public ResponseEntity<List<String>> getFilterSuppliers() {
+        return ResponseEntity.ok(service.getDistinctSuppliers());
+    }
+
+    @GetMapping("/filter-users")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
+    public ResponseEntity<List<String>> getFilterUsers() {
+        return ResponseEntity.ok(service.getDistinctUsers());
     }
     @GetMapping("/dashboard")
     @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")

@@ -59,14 +59,23 @@ public class PurchaseService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PurchasesResponse> findAll(String search, Pageable pageable) {
-        Page<Purchases> purchases;
-        if (search != null && !search.trim().isEmpty()) {
-            purchases = repository.search(search.trim(), pageable);
-        } else {
-            purchases = repository.findAll(pageable);
-        }
+    public Page<PurchasesResponse> findAll(String search, String supplier, String user, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+        String cleanSearch = (search != null && !search.trim().isEmpty()) ? search.trim() : null;
+        String cleanSupplier = (supplier != null && !supplier.trim().isEmpty() && !"Todos".equalsIgnoreCase(supplier.trim())) ? supplier.trim() : null;
+        String cleanUser = (user != null && !user.trim().isEmpty() && !"Todos".equalsIgnoreCase(user.trim())) ? user.trim() : null;
+
+        Page<Purchases> purchases = repository.searchWithFilters(cleanSearch, cleanSupplier, cleanUser, startDate, endDate, pageable);
         return purchases.map(mapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getDistinctSuppliers() {
+        return repository.findDistinctSuppliers();
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getDistinctUsers() {
+        return repository.findDistinctUsers();
     }
 
     @Transactional(readOnly = true)

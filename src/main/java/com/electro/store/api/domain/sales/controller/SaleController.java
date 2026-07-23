@@ -25,13 +25,22 @@ public class SaleController {
     @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Page<SaleResponse>> findAll(
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String user,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.LocalDateTime startDate,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.LocalDateTime endDate,
             Pageable pageable
     ) {
 
         Page<SaleResponse> response =
-                service.findAll(search, pageable);
+                service.findAll(search, user, startDate, endDate, pageable);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/sellers")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
+    public ResponseEntity<List<String>> getSellers() {
+        return ResponseEntity.ok(service.getDistinctSellers());
     }
 
     @GetMapping("/dashboard")

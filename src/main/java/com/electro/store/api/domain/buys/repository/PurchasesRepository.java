@@ -17,15 +17,31 @@ public interface PurchasesRepository extends JpaRepository<Purchases, String> {
             "JOIN FETCH p.user u " +
             "JOIN FETCH u.employee e " +
             "JOIN FETCH e.person " +
-            "WHERE (:search IS NULL OR " +
+            "WHERE (:search IS NULL OR :search = '' OR " +
             "LOWER(p.code) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.supplier.tradeName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.supplier.legalName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.supplier.taxId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.user.username) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(p.user.employee.person.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(p.user.employee.person.lastName) LIKE LOWER(CONCAT('%', :search, '%')))")
-    Page<Purchases> search(@Param("search") String search, Pageable pageable);
+            "LOWER(p.user.employee.person.lastName) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+            "(:supplier IS NULL OR :supplier = '' OR LOWER(p.supplier.tradeName) = LOWER(:supplier)) AND " +
+            "(:user IS NULL OR :user = '' OR LOWER(p.user.username) = LOWER(:user)) AND " +
+            "(:startDate IS NULL OR p.purchaseDate >= :startDate) AND " +
+            "(:endDate IS NULL OR p.purchaseDate <= :endDate)")
+    Page<Purchases> searchWithFilters(
+            @Param("search") String search,
+            @Param("supplier") String supplier,
+            @Param("user") String user,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
+            Pageable pageable);
+
+    @Query("SELECT DISTINCT p.supplier.tradeName FROM Purchases p WHERE p.supplier.tradeName IS NOT NULL ORDER BY p.supplier.tradeName")
+    List<String> findDistinctSuppliers();
+
+    @Query("SELECT DISTINCT p.user.username FROM Purchases p WHERE p.user.username IS NOT NULL ORDER BY p.user.username")
+    List<String> findDistinctUsers();
 
     @Query("SELECT COUNT(p) FROM Purchases p WHERE p.purchaseDate >= :startDate")
     long countWeeklyPurchases(@Param("startDate") LocalDateTime startDate);
